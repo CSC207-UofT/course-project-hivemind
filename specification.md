@@ -13,6 +13,7 @@ Recipe - stores needed ingredients and instructions
 
 ## Use Case Classes:
 Recipe Calculator - for finding viable recipes
+
 Calender Manager - for tracking expiry dates and planning meals
 
 ## Controller Classes
