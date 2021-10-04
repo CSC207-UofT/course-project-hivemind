@@ -21,4 +21,5 @@ AppController - Controls both recipe calculator and calender manager
 
 ## User Interface
 Command line input - base interaction
+
 (optional) GUI - easier input and interaction in an app-like environment 
