@@ -13,8 +13,7 @@ Recipe - stores needed ingredients and instructions
 
 ## Use Case Classes:
 RecipeCalculator - for finding viable recipes
-
-CalenderManager - for tracking expiry dates and planning meals
+Calendar - for tracking expiry dates and planning meals
 
 ## Controller Classes
 RecipeController - Manages stored data and store data when needed from the data source of all recipes 
