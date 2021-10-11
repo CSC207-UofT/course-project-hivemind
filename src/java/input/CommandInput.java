@@ -1,3 +1,5 @@
+package input;
+
 public class CommandInput {
     // TODO: implement this class
 

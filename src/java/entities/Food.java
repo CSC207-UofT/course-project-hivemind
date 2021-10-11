@@ -1,3 +1,5 @@
+package entities;
+
 public abstract class Food {
     protected String name;
 
