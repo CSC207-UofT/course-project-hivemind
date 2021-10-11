@@ -1,3 +1,5 @@
+package entities;
+
 import java.time.LocalDate;
 
 public class PerishableFood extends Food {
