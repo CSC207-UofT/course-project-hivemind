@@ -1,3 +1,4 @@
+import entities.PerishableFood;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
