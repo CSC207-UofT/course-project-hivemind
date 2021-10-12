@@ -3,15 +3,15 @@ package entities;
 import java.time.LocalDate;
 
 public class PerishableFood extends Food {
-    private boolean isExpired;
+    private final boolean isExpired;
     private final LocalDate expiryDate;
 
     /**
      * @param name the name of this food
      * @param expiryDate the expiry date of this food, given as a LocalDate object
      */
-    public PerishableFood (String name, LocalDate expiryDate) {
-        super(name);
+    public PerishableFood (String name, Double quantity, LocalDate expiryDate) {
+        super(name, quantity);
         this.expiryDate = expiryDate;
         this.isExpired = this.updateExpired();
     }
@@ -19,9 +19,9 @@ public class PerishableFood extends Food {
     /**
      * @return returns whether this is expired yet
      */
-    private boolean updateExpired() {
+    public boolean updateExpired() {
         LocalDate today = LocalDate.now();
-        return today.isBefore(expiryDate);
+        return today.isAfter(expiryDate);
     }
 
     public boolean getExpiryStatus() {
