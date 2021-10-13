@@ -8,7 +8,7 @@ public class NonPerishableFood extends Food {
      * @param name the name of this item
      * @param quantity the quantity of this item
      */
-    public NonPerishableFood (String name, double quantity) {
+    public NonPerishableFood (String name, Float quantity) {
         super(name, quantity);
     }
 }

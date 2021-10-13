@@ -12,7 +12,7 @@ public class PerishableFood extends Food {
      * @param name the name of this food
      * @param expiryDate the expiry date of this food, given as a LocalDate object
      */
-    public PerishableFood (String name, Double quantity, LocalDate expiryDate) {
+    public PerishableFood (String name, Float quantity, LocalDate expiryDate) {
         super(name, quantity);
         this.expiryDate = expiryDate;
         this.isExpired = this.updateExpired();

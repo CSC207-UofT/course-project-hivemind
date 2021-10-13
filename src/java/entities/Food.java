@@ -2,7 +2,7 @@ package entities;
 
 public abstract class Food {
     protected String name;
-    protected Double quantity;
+    protected Float quantity;
 
     /**
      * Construct a Food item, giving it the given name and quantity.
@@ -10,7 +10,7 @@ public abstract class Food {
      * @param name the name of this item
      * @param quantity the quantity of this item
      */
-    public Food(String name, Double quantity) {
+    public Food(String name, Float quantity) {
         this.name = name;
         this.quantity = quantity;
     }
@@ -29,7 +29,7 @@ public abstract class Food {
      *
      * @return The quantity available of the given food object
      */
-    public Double getQuantity() {return this.quantity;}
+    public Float getQuantity() {return this.quantity;}
 
     /**
      * Change the available quantity of the Food item
@@ -37,6 +37,6 @@ public abstract class Food {
      * @param amount represents a change in quantity of Food. Is positive when adding a quantity,
      *               negative when subtracting a quantity
      */
-    public void changeQuantity(double amount) {this.quantity += amount;}
+    public void changeQuantity(Float amount) {this.quantity += amount;}
 
 }
