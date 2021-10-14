@@ -9,11 +9,13 @@ public class PerishableFood extends Food {
     /**
      * Construct a PerishableFood item, giving it the given name, quantity, and expiry date.
      *
-     * @param name the name of this food
-     * @param expiryDate the expiry date of this food, given as a LocalDate object
+     * @param name of the PerishableFood item
+     * @param quantity of the PerishableFood item
+     * @param unit of measurement for the given quantity
+     * @param expiryDate the expiry date of this food item, given as a LocalDate object
      */
-    public PerishableFood (String name, Float quantity, LocalDate expiryDate) {
-        super(name, quantity);
+    public PerishableFood (String name, Float quantity, String unit, LocalDate expiryDate) {
+        super(name, quantity, unit);
         this.expiryDate = expiryDate;
         this.isExpired = this.updateExpired();
     }
@@ -21,7 +23,7 @@ public class PerishableFood extends Food {
     /**
      * Update the expiry status of the PerishableFood
      *
-     * @return returns True if the PerishableFood is expired.
+     * @return True if the PerishableFood is expired.
      */
     private boolean updateExpired() {
         LocalDate today = LocalDate.now();
@@ -30,7 +32,6 @@ public class PerishableFood extends Food {
 
     /**
      * Return the expiry status of the PerishableFood
-     *
      * @return True if the PerishableFood is expired
      */
     public boolean getExpiryStatus() {
@@ -39,7 +40,6 @@ public class PerishableFood extends Food {
 
     /**
      * Return the expiry date of the PerishableFood
-     *
      * @return the expiry date of the PerishableFood
      */
     public LocalDate getExpiryDate() {
