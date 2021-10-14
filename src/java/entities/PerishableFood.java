@@ -3,7 +3,7 @@ package entities;
 import java.time.LocalDate;
 
 public class PerishableFood extends Food {
-    private final boolean isExpired;
+    private boolean isExpired;
     private final LocalDate expiryDate;
 
     /**
