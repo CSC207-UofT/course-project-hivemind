@@ -29,9 +29,9 @@ public class NonPerishableFoodTest {
     // Testing the changeQuantity method from superclass Food, for adding and subtracting quantities of food
     @Test(timeout=1000)
     public void test_changeQuantity() {
-        food.changeQuantity(6f);
+        food.addQuantity(6f);
         assertEquals(food.getQuantity(), 7.5, 0);
-        food.changeQuantity(-1.5f);
+        food.addQuantity(-1.5f);
         assertEquals(food.getQuantity(), 6.0, 0);
     }
 }

@@ -37,6 +37,6 @@ public abstract class Food {
      * @param amount represents a change in quantity of Food. Is positive when adding a quantity,
      *               negative when subtracting a quantity
      */
-    public void changeQuantity(Float amount) {this.quantity += amount;}
+    public void addQuantity(Float amount) {this.quantity += amount;}
 
 }
