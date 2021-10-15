@@ -8,10 +8,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class FoodHandler {
-    private ArrayList<Food> storeFoodList;
+    private static ArrayList<Food> storeFoodList;
 
     public FoodHandler() {
-        this.storeFoodList = new ArrayList<>();
+        storeFoodList = new ArrayList<>();
     }
 
 
@@ -25,7 +25,7 @@ public class FoodHandler {
 
         if (single_array.size() < 4){
             // Make a NonPerishable food item
-            this.storeFoodList.add(new NonPerishableFood(food, quantity, measurement));
+            storeFoodList.add(new NonPerishableFood(food, quantity, measurement));
         }else{
             // Make a Perishable food item
             int day = Integer.parseInt(single_array.get(3));
@@ -33,7 +33,7 @@ public class FoodHandler {
             int year = Integer.parseInt(single_array.get(5));
             LocalDate local_date = LocalDate.of(day, month, year);
 
-            this.storeFoodList.add(new PerishableFood(food,quantity, measurement, local_date));
+            storeFoodList.add(new PerishableFood(food,quantity, measurement, local_date));
         }
     }
 
@@ -51,7 +51,7 @@ public class FoodHandler {
     /**
      * Create a getter method so that RecipeHandler can access the array of foods storeFoodList.
      */
-    public ArrayList<Food> getStoreFoodList(){
-        return this.storeFoodList;
+    public static ArrayList<Food> getStoreFoodList(){
+        return storeFoodList;
     }
 }
