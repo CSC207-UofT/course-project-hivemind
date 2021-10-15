@@ -14,7 +14,7 @@ public class NonPerishableFoodTest {
     public void tearDown() {
     }
 
-    NonPerishableFood food = new NonPerishableFood("Bread", 1.5f, "Slices");
+    NonPerishableFood food = new NonPerishableFood("Bread", 1.5, "Slices");
 
     // Testing a general case of the getName method from superclass Food
     @Test(timeout=1000)
@@ -25,15 +25,15 @@ public class NonPerishableFoodTest {
     // Testing a general case of the getQuantity method from superclass Food
     @Test(timeout=1000)
     public void test_getQuantity() {
-        assertEquals(food.getQuantity(), 1.5f, 0);
+        assertEquals(food.getQuantity(), 1.5, 0);
     }
 
     // Testing the changeQuantity method from superclass Food, for adding and subtracting quantities of food
     @Test(timeout=1000)
     public void test_addQuantity() {
-        food.addQuantity(6f);
+        food.addQuantity(6.0);
         assertEquals(food.getQuantity(), 7.5, 0);
-        food.addQuantity(-1.5f);
+        food.addQuantity(-1.5);
         assertEquals(food.getQuantity(), 6.0, 0);
     }
     // Testing a general case of the getUnit method from superclass Food

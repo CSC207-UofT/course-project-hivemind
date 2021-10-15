@@ -16,7 +16,7 @@ public class PerishableFoodTest {
     public void tearDown() {
     }
 
-    PerishableFood food = new PerishableFood("Bagel", 2.0f, "individuals", LocalDate.of(2000, 1, 1));
+    PerishableFood food = new PerishableFood("Bagel", 2.0, "individuals", LocalDate.of(2000, 1, 1));
 
     // Testing a general case of getExpiryDate from PerishableFood
     @Test(timeout=1000)

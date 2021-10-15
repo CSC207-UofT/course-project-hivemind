@@ -8,7 +8,7 @@ public class NonPerishableFood extends Food {
      * @param quantity of the NonPerishableFood item
      * @param unit of measurement for the given quantity
      */
-    public NonPerishableFood (String name, Float quantity, String unit) {
+    public NonPerishableFood (String name, Double quantity, String unit) {
         super(name, quantity, unit);
     }
 }
