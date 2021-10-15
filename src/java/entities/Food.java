@@ -16,9 +16,6 @@ public abstract class Food {
         this.quantity = quantity;
         this.unit = unit;
     }
-    public Food(String name){
-        this.name = name;
-    }
 
     /**
      * Return the name of the Food item
