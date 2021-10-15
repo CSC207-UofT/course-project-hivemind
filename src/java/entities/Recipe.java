@@ -1,10 +1,11 @@
 package entities;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Recipe {
     private String name;
-    private final HashMap<String, Object[]> ingredients;
+    private final HashMap<String, ArrayList<String>> ingredients;
     private String instructions;
 
     /**
@@ -15,7 +16,7 @@ public class Recipe {
      *                    quantity needed. The value at index[1] represents the unit of measurement.
      * @param instructions on how to prepare the Recipe
      */
-    public Recipe (String name, HashMap<String, ArrayList<Object>> ingredients, String instructions) {
+    public Recipe (String name, HashMap<String, ArrayList<String>> ingredients, String instructions) {
         this.name = name;
         this.ingredients = ingredients;
         this.instructions = instructions;
@@ -38,19 +39,6 @@ public class Recipe {
     }
 
     /**
-     * Add an ingredient, with its respective quantity and unit of measurement to the Recipe
-     * @param ingredient string that represents a new ingredient
-     * @param quantity of the ingredient needed for the Recipe
-     * @param unit of measurement for the given quantity
-     */
-    public void addIngredient(String ingredient, Float quantity, String unit){
-        if (!(this.ingredients.containsKey(ingredient))){
-            Object[] ingredients = create_quantities(quantity, unit);
-            this.ingredients.put(ingredient, ingredients);
-        }
-    }
-
-    /**
      * Remove an ingredient from the Recipe
      * @param ingredient to be removed for the Recipe
      */
@@ -64,31 +52,10 @@ public class Recipe {
      * and Values represent an array containing the quantity and unit of measurement for each food item. The array at
      * index[0] represents the quantity needed. The array at index[1] represents the unit of measurement.
      */
-    public HashMap<String, Object[]> getIngredients(){
+    public HashMap<String, ArrayList<String>> getIngredients(){
         return this.ingredients;
     }
 
-    /**
-     * Change the quantity of a specified ingredient
-     * @param ingredient represent the ingredient
-     * @param quantity represents the new quantity of the respective ingredient
-     */
-    public void changeQuantity(String ingredient, Float quantity){
-        if (this.ingredients.containsKey(ingredient)){
-            this.ingredients.get(ingredient)[0] = quantity;
-        }
-    }
-
-    /**
-     * Change the unit of measurement for a specified ingredient
-     * @param ingredient represents the ingredient
-     * @param unit represents the new unit of the respective ingredient
-     */
-    public void changeUnit(String ingredient, String unit){
-        if (this.ingredients.containsKey(ingredient)){
-            this.ingredients.get(ingredient)[1] = unit;
-        }
-    }
     /**
      * Change the Recipe instructions
      * @param instructions represents the new Recipe instructions
@@ -105,17 +72,5 @@ public class Recipe {
         return this.instructions;
     }
 
-    /**
-     * Return an Array containing a quantity and its respective unit of measurement.
-     * @param quantity of an ingredient
-     * @param unit of measurement for quantity
-     * @return an Array containing a quantity (at index[0]) and its respective unit of measurement (at index[1]).
-     */
-    private Object[] create_quantities(Float quantity, String unit){
-        Object[] quantities = new Object[2];
-        quantities[0] = quantity;
-        quantities[1] = unit;
-        return quantities;
-    }
 
 }
