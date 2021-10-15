@@ -1,9 +1,10 @@
-## Hivemind Food Program
+# Hivemind Food Program
 
 ### How to start:
 To get started, clone the repository from git and run the CommandInput.java file.  This file will prompt you for input.  You can add food and search for recipes (more feature coming soon!)
 
 ##Command list:
+
 #### food:
 Syntax:
 > food add NAME QUANTITY UNIT (DAY MONTH YEAR)
