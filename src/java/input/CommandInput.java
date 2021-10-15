@@ -1,13 +1,30 @@
 package input;
 import java.util.Scanner;
+import controllers.FoodController;
+import controllers.RecipeController;
+import parsers.DataParser;
+import java.util.ArrayList;
 
 public class CommandInput {
+    private static final FoodController foodController = new FoodController();
+    private static final RecipeController recipeController = new RecipeController();
 
     public static void main (String[] args) {
         Scanner myObj = new Scanner(System.in);
         String lastCommand;
 
         //enter preload here
+        try {
+            ArrayList<String> foodData = DataParser.readFile(true);
+            foodController.initialLoad(foodData);
+            ArrayList<String> recipeData = DataParser.readFile(false);
+            recipeController.initialLoad(foodData);
+        }
+        catch (Exception e) {
+            System.out.println("Unfortunately, an error has occurred." +
+                    "  Please verify that all data files are in their correct spots and relaunch the program");
+        }
+
 
         while (true) {
             System.out.print("> ");
