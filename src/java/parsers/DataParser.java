@@ -11,8 +11,8 @@ public class DataParser {
 
     public static void writeToFile(String data, boolean useFood) throws IOException {
         FileWriter fw;
-        if (useFood){ fw = new FileWriter(FOOD_FILE); }
-        else { fw = new FileWriter(RECIPE_FILE); }
+        if (useFood){ fw = new FileWriter(FOOD_FILE, true); }
+        else { fw = new FileWriter(RECIPE_FILE, true); }
 
         fw.write(data + "\n");
         fw.close();
