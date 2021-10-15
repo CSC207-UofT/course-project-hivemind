@@ -1,8 +1,12 @@
+package entitiesTests;
+
 import entities.Food;
 import entities.NonPerishableFood;
 import entities.Recipe;
 
 import org.junit.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import static org.junit.Assert.*;
 
@@ -17,7 +21,7 @@ public class RecipeTest {
     }
 
     Food bread = new NonPerishableFood("Bread", 3.0f, "Loafs");
-    HashMap<String, Object[]> ingredient = new HashMap<>();
+    HashMap<String, ArrayList<Object>> ingredient = new HashMap<>();
     Recipe recipe = new Recipe("Sandwich", ingredient, "Figure it out yourself!");
     Object[] quantity = {2.0f, "Slices"};
 
