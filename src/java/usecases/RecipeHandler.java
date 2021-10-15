@@ -2,6 +2,7 @@ package usecases;
 
 import entities.Recipe;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class RecipeHandler<RecipeList, ingredients> {
 
-    private ArrayList<List<Object>> RecipeList;
-    private ArrayList<Recipe> RecipeHandlerRecipeList;
+    private ArrayList<ArrayList<Object>> recipeList;
+    private ArrayList<Recipe> recipeHandlerRecipeList;
 
     //HashMap<String, ArrayList<Object>> ingredient, String instructions
 
@@ -24,8 +25,12 @@ public class RecipeHandler<RecipeList, ingredients> {
      * @throws Exception when no recipe is available
      * @returns ArrayList of Recipe returned is the recommended recipe to the user.
      */
+    public RecipeHandler(){
+        this.recipeList = new ArrayList<ArrayList<Object>>();
+        this.recipeHandlerRecipeList = new ArrayList<Recipe>();
+    }
 
-    private void initializeRecipe(ArrayList<ArrayList<Object>> ListOfRecipes) {
+    public void initializeRecipe(ArrayList<ArrayList<Object>> ListOfRecipes) {
         // Looping through every Recipe on the list.
         for (ArrayList<Object> currentRecipe : ListOfRecipes) {
 

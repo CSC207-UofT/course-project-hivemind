@@ -10,11 +10,11 @@ import usecases.RecipeHandler;
 public class RecipeController {
     //TODO: implement this class
     protected ArrayList<Object> recipeRawArray;
-    private RecipeHandler handler;
+    private final RecipeHandler handler;
 
     public RecipeController() {
         this.recipeRawArray = new ArrayList<Object>();
-
+        this.handler = new RecipeHandler();
     }
 
     public void initialLoad(ArrayList<String> csvLines){
