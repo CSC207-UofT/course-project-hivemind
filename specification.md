@@ -2,7 +2,7 @@
 - at least three entity classes,
 - at least two use case classes,
 - at least one controller,
-- and at least a basic command line interface.
+- and at least a basic command line interface!
 
 ## Entity Classes:
 Food (abstract):
