@@ -1,9 +1,9 @@
 package usecases;
 
-public class Calendar {
+public class FoodHandler {
     // TODO: implement this method
 
-    public Calendar() {
+    public FoodHandler() {
 
     }
 }
