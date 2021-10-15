@@ -3,18 +3,18 @@ import java.util.HashMap;
 
 public class Recipe {
     private String name;
-    private final HashMap<Food, Object[]> ingredients;
+    private final HashMap<String, Object[]> ingredients;
     private String instructions;
 
     /**
      * Construct a Recipe with the given name, ingredients, and instructions
      * @param name of the Recipe
-     * @param ingredients a hashmap with Keys to represent Food items, and Values to represent an array containing the
-     *                    quantity and unit of each food item. The value at index[0] of the array represents the
+     * @param ingredients a hashmap with Keys to represent Strings of food items, and Values to represent an array
+     *                    containing the quantity and unit of each food item. The value at index[0] of the array represents the
      *                    quantity needed. The value at index[1] represents the unit of measurement.
      * @param instructions on how to prepare the Recipe
      */
-    public Recipe (String name, HashMap<Food, Object[]> ingredients, String instructions) {
+    public Recipe (String name, HashMap<String, Object[]> ingredients, String instructions) {
         this.name = name;
         this.ingredients = ingredients;
         this.instructions = instructions;
@@ -38,11 +38,11 @@ public class Recipe {
 
     /**
      * Add an ingredient, with its respective quantity and unit of measurement to the Recipe
-     * @param ingredient represents a new ingredient
+     * @param ingredient string that represents a new ingredient
      * @param quantity of the ingredient needed for the Recipe
      * @param unit of measurement for the given quantity
      */
-    public void addIngredient(Food ingredient, Float quantity, String unit){
+    public void addIngredient(String ingredient, Float quantity, String unit){
         if (!(this.ingredients.containsKey(ingredient))){
             Object[] ingredients = create_quantities(quantity, unit);
             this.ingredients.put(ingredient, ingredients);
@@ -53,17 +53,17 @@ public class Recipe {
      * Remove an ingredient from the Recipe
      * @param ingredient to be removed for the Recipe
      */
-    public void removeIngredient(Food ingredient){
+    public void removeIngredient(String ingredient){
         this.ingredients.remove(ingredient);
     }
 
     /**
      * Return the Recipe ingredients
-     * @return the ingredients of the Recipe, represented in a HashMap. Keys of the HashMap represent Food items,
+     * @return the ingredients of the Recipe, represented in a HashMap. Keys of the HashMap represent String items,
      * and Values represent an array containing the quantity and unit of measurement for each food item. The array at
      * index[0] represents the quantity needed. The array at index[1] represents the unit of measurement.
      */
-    public HashMap<Food, Object[]> getIngredients(){
+    public HashMap<String, Object[]> getIngredients(){
         return this.ingredients;
     }
 
@@ -72,7 +72,7 @@ public class Recipe {
      * @param ingredient represent the ingredient
      * @param quantity represents the new quantity of the respective ingredient
      */
-    public void changeQuantity(Food ingredient, Float quantity){
+    public void changeQuantity(String ingredient, Float quantity){
         if (this.ingredients.containsKey(ingredient)){
             this.ingredients.get(ingredient)[0] = quantity;
         }
@@ -83,7 +83,7 @@ public class Recipe {
      * @param ingredient represents the ingredient
      * @param unit represents the new unit of the respective ingredient
      */
-    public void changeUnit(Food ingredient, String unit){
+    public void changeUnit(String ingredient, String unit){
         if (this.ingredients.containsKey(ingredient)){
             this.ingredients.get(ingredient)[1] = unit;
         }
