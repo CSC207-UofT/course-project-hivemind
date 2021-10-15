@@ -1,4 +1,5 @@
 package entities;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Recipe {
@@ -14,7 +15,7 @@ public class Recipe {
      *                    quantity needed. The value at index[1] represents the unit of measurement.
      * @param instructions on how to prepare the Recipe
      */
-    public Recipe (String name, HashMap<String, Object[]> ingredients, String instructions) {
+    public Recipe (String name, HashMap<String, ArrayList<Object>> ingredients, String instructions) {
         this.name = name;
         this.ingredients = ingredients;
         this.instructions = instructions;
