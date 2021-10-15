@@ -1,49 +1,26 @@
 package controllers;
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import usecases.RecipeHandler;
 
 public class RecipeController {
     //TODO: implement this class
-    protected ArrayList<Object> recipeRawArray;
+    protected ArrayList<ArrayList<String>> recipeRawArray;
     private final RecipeHandler handler;
 
     public RecipeController() {
-        this.recipeRawArray = new ArrayList<Object>();
+        this.recipeRawArray = new ArrayList<>();
         this.handler = new RecipeHandler();
     }
 
     public void initialLoad(ArrayList<String> csvLines){
         for (String i : csvLines){
-            ArrayList<Object> out = new ArrayList<Object>();
-
+            // Separating csv lines into an array
             String[] separated = i.split(",");
-            List<String> a = Arrays.asList(separated);
-
-            String name = a.get(0);
-            String instructions = a.get(a.size() - 1);
-
-
-            HashMap<String, ArrayList<Object>> ingredients = new HashMap<String, ArrayList<Object>>();
-            for (int j = 1; j < a.size() -2; j = j+3){
-                ArrayList<Object> ingredientProperties = new ArrayList<Object>();
-                Double quantity = Double.parseDouble(a.get(j+1));
-                String unit = a.get(j+2);
-                ingredientProperties.add(quantity);
-                ingredientProperties.add(unit);
-                ingredients.put(a.get(j), ingredientProperties);
-
-            }
-
-            out.add(name);
-            out.add(ingredients);
-            out.add(instructions);
-
-            this.recipeRawArray.add(out);
+            List<String> a1;
+            a1 = Arrays.asList(separated);
+            ArrayList<String> a2 = new ArrayList<>(a1);
+            this.recipeRawArray.add(a2);
 
         }
         handler.initializeRecipe(this.recipeRawArray);
