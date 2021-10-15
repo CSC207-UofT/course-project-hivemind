@@ -33,21 +33,4 @@ public class DataParser {
         fr.close();
         return lines;
     }
-
-    public static void main (String[] args) {
-        try {
-            writeToFile("test", true);
-        }
-        catch (IOException e) {
-            System.out.println("error");
-        }
-
-        try {
-            ArrayList<String> list = readFile(false);
-            System.out.println(list.toString());
-        }
-        catch (IOException e) {
-            System.out.print("error");
-        }
-    }
 }
