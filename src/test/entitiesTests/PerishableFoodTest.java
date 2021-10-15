@@ -1,3 +1,5 @@
+package entitiesTests;
+
 import entities.PerishableFood;
 import org.junit.*;
 import static org.junit.Assert.*;
