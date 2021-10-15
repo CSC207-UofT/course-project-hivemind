@@ -52,16 +52,54 @@ public class RecipeHandler {
 
     }
 
-//    public ArrayList<Recipe> recommendRecipe(int rank) {
-//        //TODO: Create a method that recommends recipe considering
-//        // 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
-//        // 2. Give a score to each of these Recipes
-//        // 3. Return the number of recipes that the user wants, returning from best score to worst score recipe.
-//        // Percentage of food
-//        // 4. Food
+    public ArrayList<Recipe> recommendRecipe(int rank) {
+        //TODO: Create a method that recommends recipe considering
+        // 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
+        // 2. Give a score to each of these Recipes
+        // 3. Return the number of recipes that the user wants, returning from best score to worst score recipe.
+        // Percentage of food
+        // 4. Food scores are tracked by:
+        //      1. Find all recipes using the specific ingredient.
+        //      2. Find the score of each recipe by taking the total number of ingredients that overlap/total number of ingredient
+        //      3. Return the Recipe with the highest score.
+//        int currentRecipeScore = 0;
+//        HashMap<Integer, ArrayList<String>> RankTracker = new HashMap<>();
 //
+//        ArrayList<Recipe> RecommendedRecipe = new ArrayList<>();
 //
+//        for (Recipe currentRecipe : RecipeHandlerRecipeList) {
+//            for (String currentIngredient : currentRecipe.getIngredients().keySet()) ;
+//                if (FoodHandler.getStoreFoodList.contains(currentIngredient)) ;
+//                    currentRecipeScore += 1;
 //
-//        return
+//            int currentRecipeWeightedScore = currentRecipeScore / (currentRecipe.getIngredients().keySet().size());
+//            if (RankTracker.containsKey(currentRecipeWeightedScore))
+//                RankTracker.get(currentRecipeWeightedScore).add(currentRecipe.getRecipeName());
+//            ArrayList<String> value = new ArrayList<>();
+//            value.add(currentRecipe.getRecipeName());
+//            RankTracker.put(currentRecipeWeightedScore, value);
+//        }
+//        TreeSet<Integer> sortedRanks = new TreeSet<>();
+//        sortedRanks.addAll(RankTracker.keySet());
+//        ArrayList<String> BestRecipeNames = RankTracker.get(sortedRanks.first());
+//        Recipe BestRecipe = findRecipe(BestRecipeNames.get(0));
+//        RecommendedRecipe.add(BestRecipe);
+//        return RecommendedRecipe
+//
 //    }
+        for (Recipe currentRecipe: )
+    }
+
+    public ArrayList<Recipe> getAllRecipes() {
+        return this.recipeHandlerRecipeList;
+
+    }
+    public Recipe findRecipe(String foodName) {
+        for(Recipe currentRecipe : getAllRecipes()){
+
+        if (currentRecipe.getRecipeName().equals(foodName)){
+            return currentRecipe;
+        }
+    }
+}
 }
