@@ -1,3 +1,8 @@
+## Specification
+Every food has a name, a quantity, and a measurement. The user specifies which foods they have, and whether they are perishable or non perishable. Perishable foods have an expiry status and date. The system keeps track of the user’s foods, and keeps track of the expiry date and status of perishable foods. Upon expiring, the system alerts the user of the expired status of the food.
+
+Alongside foods are recipes, which specify which foods qualify as ingredients, and the measurements and quantities of these ingredients needed. The system keeps track of the user’s foods and suggests recipes based on the availability and expiry status of the ingredients. These recipes are ranked and return back to the user, who is free to select which one to use.
+
 ## Requirements: A reasonable CRC model that satisfies your specification should consist of:
 - at least three entity classes,
 - at least two use case classes,
