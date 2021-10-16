@@ -10,9 +10,7 @@ import java.util.TreeSet;
 
 public class RecipeHandler {
 
-    private ArrayList<ArrayList<String>> recipeList;
     private final ArrayList<Recipe> recipeHandlerRecipeList;
-    private ArrayList<Recipe> RecipeHandlerRecipeList;
 
     //HashMap<String, ArrayList<Object>> ingredient, String instructions
 
@@ -24,7 +22,6 @@ public class RecipeHandler {
 //     * @returns ArrayList of Recipe returned is the recommended recipe to the user.
 //     */
     public RecipeHandler() {
-        this.recipeList = new ArrayList<>();
         this.recipeHandlerRecipeList = new ArrayList<>();
     }
 
@@ -64,7 +61,7 @@ public class RecipeHandler {
 
             ArrayList<Recipe> RecommendedRecipe = new ArrayList<>();
 
-            for (Recipe currentRecipe : RecipeHandlerRecipeList) {
+            for (Recipe currentRecipe : recipeHandlerRecipeList) {
                 for (String currentIngredient : currentRecipe.getIngredients().keySet()) {
                     if (FoodHandler.getStoreFoodList().contains(currentIngredient)) {
                         currentRecipeScore += 1;
@@ -88,7 +85,7 @@ public class RecipeHandler {
         }
 
         public ArrayList<Recipe> getAllRecipes () {
-            return this.RecipeHandlerRecipeList;
+            return this.recipeHandlerRecipeList;
 
         }
         public Recipe findRecipe(String foodName){
