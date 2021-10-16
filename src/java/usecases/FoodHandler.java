@@ -51,7 +51,11 @@ public class FoodHandler {
     /**
      * Create a getter method so that RecipeHandler can access the array of foods storeFoodList.
      */
-    public static ArrayList<Food> getStoreFoodList(){
-        return storeFoodList;
+    public static ArrayList<String> getStoreFoodList(){
+        ArrayList<String> names = new ArrayList<>();
+        for(Food foodName : storeFoodList){
+            names.add(foodName.getName());
+        }
+        return names;
     }
 }
