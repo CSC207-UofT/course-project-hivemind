@@ -24,7 +24,6 @@ public class RecipeController {
 
         }
         handler.initializeRecipe(this.recipeRawArray);
-
     }
 
 }
