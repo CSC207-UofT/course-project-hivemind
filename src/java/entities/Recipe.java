@@ -72,5 +72,8 @@ public class Recipe {
         return this.instructions;
     }
 
-
+    @Override
+    public String toString() {
+        return "Name: " + this.name + " Ingredients: " + this.ingredients + " Instructions: " + this.instructions;
+    }
 }

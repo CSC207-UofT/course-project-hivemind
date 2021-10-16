@@ -1,6 +1,7 @@
 package controllers;
 import java.util.*;
 
+import entities.Recipe;
 import usecases.RecipeHandler;
 
 public class RecipeController {
@@ -16,7 +17,7 @@ public class RecipeController {
     public void initialLoad(ArrayList<String> csvLines){
         for (String i : csvLines){
             // Separating csv lines into an array
-            String[] separated = i.split(",");
+            String[] separated = i.split(",,");
             List<String> a1;
             a1 = Arrays.asList(separated);
             ArrayList<String> a2 = new ArrayList<>(a1);
@@ -26,4 +27,7 @@ public class RecipeController {
         handler.initializeRecipe(this.recipeRawArray);
     }
 
+    public ArrayList<Recipe> recommendRecipe () {
+        return handler.recommendRecipe();
+    }
 }

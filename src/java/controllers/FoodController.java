@@ -32,7 +32,7 @@ public class FoodController {
     public void initialLoad(ArrayList<String> foodStringList) {
 
             for (String s : foodStringList) {
-                String[] lst = s.split(",", 4);
+                String[] lst = s.split(",,");
                 ArrayList<String> lst2 = new ArrayList<>(Arrays.asList(lst));
                 this.foodList.add(lst2);
             }

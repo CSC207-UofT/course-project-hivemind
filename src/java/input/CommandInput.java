@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class CommandInput {
     private static final FoodController foodController = new FoodController();
     private static final RecipeController recipeController = new RecipeController();
-    private static boolean exitProgram = false;
+    private static boolean exitProgram = true;
 
     public static void main (String[] args) {
         Scanner myObj = new Scanner(System.in);
@@ -24,6 +24,7 @@ public class CommandInput {
         catch (Exception e) {
             System.out.println("Unfortunately, an error has occurred." +
                     "  Please verify that all data files are in their correct spots and relaunch the program");
+            System.out.println(e.getMessage());
         }
 
         while (exitProgram) {
@@ -39,7 +40,7 @@ public class CommandInput {
         String[] splitInput = parseInputHelper(input);
         switch(splitInput[0]) {
             case "exit":
-                exitProgram = true;
+                exitProgram = false;
             case "food":
                 if (splitInput[1].equals("add")) {
                     //handle food
@@ -50,11 +51,11 @@ public class CommandInput {
                 break;
             case "recipe":
                 if (splitInput[1].equals("search")) {
-                    //searches for recipe using controller
+                    System.out.println(recipeController.recommendRecipe());
                 }
-                else if (splitInput[1].equals("info")) {
-                    //gets recipe info using controller
-                }
+//                else if (splitInput[1].equals("info")) {
+//                    //gets recipe info using controller
+//                }
                 else {
                     System.out.println("Error, argument " + splitInput[1] + " not recognized");
                 }
