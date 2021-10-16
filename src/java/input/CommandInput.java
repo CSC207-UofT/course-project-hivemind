@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class CommandInput {
     private static final FoodController foodController = new FoodController();
     private static final RecipeController recipeController = new RecipeController();
+    private static boolean exitProgram = false;
 
     public static void main (String[] args) {
         Scanner myObj = new Scanner(System.in);
@@ -18,19 +19,19 @@ public class CommandInput {
             ArrayList<String> foodData = DataParser.readFile(true);
             foodController.initialLoad(foodData);
             ArrayList<String> recipeData = DataParser.readFile(false);
-            recipeController.initialLoad(foodData);
+            recipeController.initialLoad(recipeData);
         }
         catch (Exception e) {
             System.out.println("Unfortunately, an error has occurred." +
                     "  Please verify that all data files are in their correct spots and relaunch the program");
         }
 
-
-        while (true) {
+        while (exitProgram) {
             System.out.print("> ");
             lastCommand = myObj.nextLine();
             parseInput(lastCommand);
         }
+        System.exit(0);
 
     }
 
@@ -38,7 +39,7 @@ public class CommandInput {
         String[] splitInput = parseInputHelper(input);
         switch(splitInput[0]) {
             case "exit":
-                System.exit(0);
+                exitProgram = true;
             case "food":
                 if (splitInput[1].equals("add")) {
                     //handle food
