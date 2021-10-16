@@ -1,6 +1,6 @@
 Csc207 Phase 0: Scenario WalkThrough
 
-Walkthrough Scenario: A user adds a potato to the inventory. After potato is added, the user requests the program to search for recommended recipes.
+Walkthrough Scenario: A user adds a potato to the inventory (instructions on README file). After potato is added, the user requests the program to search for recommended recipes.
 
 When a user first runs the program, CommandInput calls DataParser to read two files, which are CSV files containing string representations of Recipes and Food. DataParser then returns the information to CommandInput, who calls RecipeController with the given Recipe information from DataParser. In RecipeController, RecipeController calls RecipeHandler with an array of the recipe data. Next, RecipeHandler creates a Recipe object for each Recipe in the array, by using constructor Recipe. Once these Recipe objects are constructed, RecipeHandler stores the Recipe Objects in an ArrayList. Meanwhile, CommandInput also calls FoodController with the given Food information. FoodController then sends an array of this information to FoodHandler, who then calls PerishableFood and NonPerishableFood, to create Food objects. FoodController then stores the Food objects in an ArrayList.
 
