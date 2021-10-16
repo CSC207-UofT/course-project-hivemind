@@ -24,7 +24,7 @@ Syntax:
 This is for commands relating to recipe
 
 Syntax:
-> recipe recommend
+> recipe search
 > ~~~~~
 > *NOTE* recommends recipes based on ingredients
 
