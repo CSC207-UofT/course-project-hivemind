@@ -5,7 +5,6 @@ import entities.Recipe;
 import usecases.RecipeHandler;
 
 public class RecipeController {
-    //TODO: implement this class
     protected ArrayList<ArrayList<String>> recipeRawArray;
     private final RecipeHandler handler;
 

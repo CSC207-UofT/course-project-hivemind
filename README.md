@@ -6,20 +6,31 @@ To get started, clone the repository from git and run the CommandInput.java file
 ## Command list:
 
 #### food:
+This is for commands relating to food
+
 Syntax:
-> food add NAME QUANTITY UNIT (DAY MONTH YEAR)
+> food add NAME QUANTITY UNIT (YEAR MONTH DAY)
 > ~~~~~
 > NAME: the name of the food
 > QUANTITY: a double representing the amount of the food
 > UNIT: a string containing the unit of the double
-> DAY: optional expiry day of food
-> MONTH: optional expiry month of food
-> YEAR: optional expiry year of food
-> 
+> YEAR: optional double expiry year of food
+> MONTH: optional double expiry month of food
+> DAY: optional double expiry day of food
+>
 > *NOTE* day, month and year must be either all not provided or provided
 
 #### recipe:
+This is for commands relating to recipe
+
 Syntax:
 > recipe recommend
 > ~~~~~
-> recommends recipes based on ingredients
+> *NOTE* recommends recipes based on ingredients
+
+#### program:
+This is for commands relating to the program in general
+
+Syntax:
+> program exit
+> ~~~~~

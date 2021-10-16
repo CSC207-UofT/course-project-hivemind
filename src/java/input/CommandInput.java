@@ -1,4 +1,5 @@
 package input;
+import java.util.Arrays;
 import java.util.Scanner;
 import controllers.FoodController;
 import controllers.RecipeController;
@@ -38,30 +39,37 @@ public class CommandInput {
 
     public static void parseInput(String input) {
         String[] splitInput = parseInputHelper(input);
-        switch(splitInput[0]) {
-            case "exit":
-                exitProgram = false;
-            case "food":
-                if (splitInput[1].equals("add")) {
-                    //handle food
-                }
-                else {
-                    System.out.println("Error, argument " + splitInput[1] + " not recognized");
-                }
-                break;
-            case "recipe":
-                if (splitInput[1].equals("search")) {
-                    System.out.println(recipeController.recommendRecipe());
-                }
-//                else if (splitInput[1].equals("info")) {
-//                    //gets recipe info using controller
-//                }
-                else {
-                    System.out.println("Error, argument " + splitInput[1] + " not recognized");
-                }
-                break;
-            default:
-                System.out.println("Error: command not recognized");
+        if (splitInput.length > 1) {
+            switch (splitInput[0]) {
+                case "program":
+                    if (splitInput[1].equals("exit")) {
+                        exitProgram = false;
+                    }
+                    break;
+                case "food":
+                    if (splitInput[1].equals("add")) {
+                        handleFood(splitInput);
+                    } else {
+                        System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                    }
+                    break;
+                case "recipe":
+                    if (splitInput[1].equals("search")) {
+                        System.out.println(recipeController.recommendRecipe());
+                    }
+                    //                else if (splitInput[1].equals("info")) {
+                    //                    //gets recipe info using controller
+                    //                }
+                    else {
+                        System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                    }
+                    break;
+                default:
+                    System.out.println("Error: command not recognized");
+            }
+        }
+        else {
+            System.out.println("Error: not enough arguments in command");
         }
     }
 
@@ -70,6 +78,35 @@ public class CommandInput {
     }
 
     public static void handleFood(String[] foodInfo) {
+        if (foodInfo.length > 5) {
+            try {
+                Double.parseDouble(foodInfo[3]);  // checks if all inputs are proper doubles for optional inputs
+                Double.parseDouble(foodInfo[5]);
+                Double.parseDouble(foodInfo[6]);
+                Double.parseDouble(foodInfo[7]);
 
+                ArrayList<String> foodInfoList = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(foodInfo, 2, 8)));
+                foodController.runFoodCreation(foodInfoList);
+
+                DataParser.writeToFile(foodInfo[2] + ",," + foodInfo[3]+ ",," + foodInfo[4]+ ",,"+ foodInfo[5]+
+                        ",,"+ foodInfo[6]+ ",,"+ foodInfo[7], true);
+            } catch (Exception e) {
+                System.out.println("Error: command arguments are incorrect, please verify that all" +
+                        " arguments are of the proper data type");
+            }
+        }
+        else {
+            try {
+                Double.parseDouble(foodInfo[3]);  // checks if all inputs are proper doubles
+
+                ArrayList<String> foodInfoList = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(foodInfo, 2, 5)));
+                foodController.runFoodCreation(foodInfoList);
+
+                DataParser.writeToFile(foodInfo[2] + ",," + foodInfo[3]+ ",," + foodInfo[4], true);
+            } catch (Exception e) {
+                System.out.println("Error: command arguments are incorrect, please verify that all" +
+                        " arguments are of the proper data type");
+            }
+        }
     }
 }
