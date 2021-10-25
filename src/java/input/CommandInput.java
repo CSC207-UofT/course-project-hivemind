@@ -91,8 +91,10 @@ public class CommandInput {
         System.out.print("> ");
         String instructions = scan.nextLine();
 
+
         try {
-            DataParser.writeToFile(recipeName + ",," + ingredientString + ",," + instructions, false);
+            String s = ingredientString.replace(" ", ",,");
+            DataParser.writeToFile(recipeName + ",," + s + ",," + instructions, false);
             System.out.println("Saved to file successfully.");
         } catch (Exception e){
             System.out.println("error in saving");
