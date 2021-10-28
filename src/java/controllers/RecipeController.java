@@ -13,6 +13,13 @@ public class RecipeController {
         this.handler = new RecipeHandler();
     }
 
+    public boolean addRecipe(String recipeName, String ingrString, String instruction){
+        String[] ingrSplit = ingrString.split(" ");
+        List<String> a1 = Arrays.asList(ingrSplit);
+        ArrayList<String> a2 = new ArrayList<>(a1);
+        return handler.addOneRecipe(recipeName, a2, instruction);
+    }
+
     public void initialLoad(ArrayList<String> csvLines){
         for (String i : csvLines){
             // Separating csv lines into an array

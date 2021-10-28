@@ -1,4 +1,5 @@
 package input;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import controllers.FoodController;
@@ -65,6 +66,9 @@ public class CommandInput {
                     //                else if (splitInput[1].equals("info")) {
                     //                    //gets recipe info using controller
                     //                }
+                    else if (splitInput[1].equals("add")){
+                        addRecipeHelper();
+                    }
                     else {
                         System.out.println("Error, argument " + splitInput[1] + " not recognized");
                     }
@@ -75,6 +79,37 @@ public class CommandInput {
         }
         else {
             System.out.println("Error: not enough arguments in command");
+        }
+    }
+
+    public static void addRecipeHelper() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter Recipe Name:");
+        System.out.print("> ");
+        String recipeName = scan.nextLine();
+
+        System.out.println("Enter List of Ingredients: (Ingredient1 Quantity1 Unit1 Ingredient2 Quantity2 Unit2....)");
+        System.out.print("> ");
+        String ingredientString = scan.nextLine();
+
+        System.out.println("Enter instructions:");
+        System.out.print("> ");
+        String instructions = scan.nextLine();
+
+
+        try {
+            String s = ingredientString.replace(" ", ",,");
+            DataParser.writeToFile(recipeName + ",," + s + ",," + instructions, false);
+            System.out.println("Saved to file successfully.");
+        } catch (Exception e){
+            System.out.println("error in saving");
+        }
+
+        if (recipeController.addRecipe(recipeName, ingredientString, instructions)){
+            System.out.println("Successfully added recipe: " + recipeName);
+        }
+        else{
+            System.out.println("An error has occurred, did not successfully add recipe");
         }
     }
 
