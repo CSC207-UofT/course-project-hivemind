@@ -37,6 +37,11 @@ public class CommandInput {
 
     }
 
+    /**
+     * The method to parse user input and calls according methods for the given input
+     *
+     * @param input user's input string to be parsed
+     */
     public static void parseInput(String input) {
         String[] splitInput = parseInputHelper(input);
         if (splitInput.length > 1) {
