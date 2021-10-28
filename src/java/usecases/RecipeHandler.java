@@ -15,16 +15,10 @@ public class RecipeHandler {
 
     //HashMap<String, ArrayList<Object>> ingredient, String instructions
 
-    //    /**
-//     * Creates a Recipe object from the given data:
-//     *
-//     * @param ListOfRecipes is a list of recipes given in the csv file in the form of an ArrayList
-//     * @throws Exception when no recipe is available
-//     * @returns ArrayList of Recipe returned is the recommended recipe to the user.
-//     */
     public RecipeHandler() {
         this.recipeHandlerRecipeList = new ArrayList<>();
     }
+
 
     public int getRecipes(){
         return recipeHandlerRecipeList.size();
@@ -94,16 +88,20 @@ public class RecipeHandler {
         return RecommendedRecipe;
     }
 
+
+
     public ArrayList<Recipe> getAllRecipes() {
         return this.recipeHandlerRecipeList;
 
     }
 
     public Recipe findRecipe(String foodName) {
+
         for (Recipe currentRecipe : getAllRecipes()) {
             if (currentRecipe.getRecipeName().equals(foodName)) {
                 return currentRecipe;
             }
+
         }
         return null;
     }
@@ -118,5 +116,8 @@ public class RecipeHandler {
         } catch(Exception IndexOutOfBoundsException) {
             return false;
         }
+        return null;
+    }
+
     }
 }
