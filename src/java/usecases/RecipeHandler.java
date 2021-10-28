@@ -18,11 +18,7 @@ public class RecipeHandler {
         this.recipeHandlerRecipeList = new ArrayList<>();
     }
 
-    /**
-     * Initialize recipe objects for each ArrayList in the overall ArrayList
-     *
-     * @param ListOfRecipes An arraylist of all arraylist of strings that can be used to create recipe objects
-     */
+
     public void initializeRecipe(ArrayList<ArrayList<String>> ListOfRecipes) {
         // Looping through every Recipe on the list.
         for (ArrayList<String> currentRecipe : ListOfRecipes) {
@@ -44,18 +40,6 @@ public class RecipeHandler {
         }
     }
 
-        /**
-         * Find appropriate recipes according to the inventory using an algorithm considering:
-         * 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
-         * 2. Give a score to each of these Recipes
-         * 3. Return the number of recipes that the user wants, returning from best score to worst score recipe.
-         * Percentage of food
-         * 4. Food scores are tracked by:
-             *  1. Find all recipes using the specific ingredient.
-             *  2. Find the score of each recipe by taking the total number of ingredients that overlap/total number of ingredient
-             *  3. Return the Recipe with the highest score.
-         * @return An arraylist of sorted recipes
-         */
         public ArrayList<Recipe> recommendRecipe (){
             //TODO: Create a method that recommends recipe considering
             // 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
@@ -94,23 +78,13 @@ public class RecipeHandler {
             return RecommendedRecipe;
         }
 
-    /**
-     * A helper to get all recipes stored in this handler.
-     *
-     * @return An arraylist of all recipes to be returned
-     */
+
     public ArrayList<Recipe> getAllRecipes () {
             return this.recipeHandlerRecipeList;
 
     }
 
 
-    /**
-     * Find a particular recipe stored in this handler
-     *
-     * @param foodName the name of the food that is needed
-     * @return the recipe needed, if not found, returns null
-     */
     public Recipe findRecipe(String foodName){
         for (Recipe currentRecipe : getAllRecipes()) {
             if (currentRecipe.getRecipeName().equals(foodName)) {

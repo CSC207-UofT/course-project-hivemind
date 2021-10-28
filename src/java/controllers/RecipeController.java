@@ -13,11 +13,6 @@ public class RecipeController {
         this.handler = new RecipeHandler();
     }
 
-    /**
-     * Separates every string in the given ArrayList into separated strings, then puts all separated strings into
-     * another array and calls the handler
-     * @param csvLines an arraylist of strings which are words separated by ",,"
-     */
     public void initialLoad(ArrayList<String> csvLines){
         for (String i : csvLines){
             // Separating csv lines into an array
@@ -31,11 +26,6 @@ public class RecipeController {
         handler.initializeRecipe(this.recipeRawArray);
     }
 
-    /**
-     * calls the handler's recommendRecipe function and returns with an ArrayList of recipes that are recommended
-     *
-     * @return an ArrayList of sorted recommended recipes.
-     */
     public ArrayList<Recipe> recommendRecipe () {
         return handler.recommendRecipe();
     }
