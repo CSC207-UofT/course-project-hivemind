@@ -1,9 +1,8 @@
 package usecases;
 import entities.Recipe;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
+
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * With a list of recipe creates recipe objects using the entities.Recipe class recipe constructors
@@ -73,7 +72,7 @@ public class RecipeHandler {
      *  3. Return the Recipe with the highest score.
      * @return An arraylist of sorted recipes
      */
-    public ArrayList<Recipe> recommendRecipe() {
+    public ArrayList<Recipe> recommendRecipe(int rank) {
         //TODO: Create a method that recommends recipe considering
         // 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
         // 2. Give a score to each of these Recipes
@@ -89,28 +88,52 @@ public class RecipeHandler {
         ArrayList<Recipe> RecommendedRecipe = new ArrayList<>();
 
         for (Recipe currentRecipe : recipeHandlerRecipeList) {
-            for (String currentIngredient : currentRecipe.getIngredients().keySet()) {
-                if (FoodHandler.getStoreFoodList().contains(currentIngredient)) {
+            for (String currentIngredient : getIngredients(currentRecipe)) {
+                if (doesContains(currentIngredient)) {
                     currentRecipeScore += 1;
                 }
-
-
-                int currentRecipeWeightedScore = currentRecipeScore / (currentRecipe.getIngredients().keySet().size());
+                int currentRecipeWeightedScore = (recipeWeightCalculator(currentRecipeScore, currentRecipe)) * 100;
                 if (RankTracker.containsKey(currentRecipeWeightedScore)) {
                     RankTracker.get(currentRecipeWeightedScore).add(currentRecipe.getRecipeName());
                 }
-                ArrayList<String> value = new ArrayList<>();
-                value.add(currentRecipe.getRecipeName());
-                RankTracker.put(currentRecipeWeightedScore, value);
+                addToMap(RankTracker, currentRecipe, currentRecipeWeightedScore);
             }
-            TreeSet<Integer> sortedRanks = new TreeSet<>(RankTracker.keySet());
-            ArrayList<String> BestRecipeNames = RankTracker.get(sortedRanks.first());
-            Recipe BestRecipe = findRecipe(BestRecipeNames.get(0));
-            RecommendedRecipe.add(BestRecipe);
+            SortRanks(RankTracker, RecommendedRecipe);
         }
-        return RecommendedRecipe;
+        ArrayList<Recipe> FinalRecommendation = new ArrayList<>();
+        RecommendedRecipe.subList(0, rank - 1).addAll(FinalRecommendation);
+        return FinalRecommendation;
     }
 
+    private void SortRanks(HashMap<Integer, ArrayList<String>> RankTracker, ArrayList<Recipe> RecommendedRecipe) {
+        TreeSet<Integer> sortedRanks = new TreeSet<>(RankTracker.keySet());
+        ArrayList<String> BestRecipes = RankTracker.get(sortedRanks.first());
+        for (double score: sortedRanks) {
+             ArrayList<String> currentRecipes = RankTracker.get(score);
+                for (String currRecipeName:currentRecipes) {
+                    Recipe currentRecipe = findRecipe(currRecipeName);
+                    RecommendedRecipe.add(currentRecipe);
+                }
+        }
+    }
+
+    private void addToMap(HashMap<Integer, ArrayList<String>> RankTracker, Recipe currentRecipe, int currentRecipeWeightedScore) {
+        ArrayList<String> recipeWithThisScore = new ArrayList<>();
+        recipeWithThisScore.add(currentRecipe.getRecipeName());
+        RankTracker.put(currentRecipeWeightedScore, recipeWithThisScore);
+    }
+
+    private int recipeWeightCalculator(int currentRecipeScore, Recipe currentRecipe) {
+        return currentRecipeScore / (currentRecipe.getIngredients().keySet().size());
+    }
+
+    private Set<String> getIngredients(Recipe currentRecipe) {
+        return currentRecipe.getIngredients().keySet();
+    }
+
+    private boolean doesContains(String currentIngredient) {
+        return FoodHandler.getStoreFoodList().contains(currentIngredient);
+    }
 
 
     /**
