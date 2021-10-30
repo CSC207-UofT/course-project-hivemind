@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.Food;
 import usecases.FoodHandler;
 
 import java.util.ArrayList;
@@ -40,6 +41,16 @@ public class FoodController {
 
 
 
+    }
+
+    public ArrayList<Food> checkPerishables(){
+        ArrayList<Food> expired_foods = this.handler.getPerishedFoods();
+        if(expired_foods.size() > 0){
+            return expired_foods;
+        }
+        else{
+            return null;
+        }
     }
 
 
