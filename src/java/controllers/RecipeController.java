@@ -51,7 +51,7 @@ public class RecipeController {
      *
      * @return an ArrayList of sorted recommended recipes.
      */
-    public ArrayList<Recipe> recommendRecipe () {
-        return handler.recommendRecipe();
+    public ArrayList<Recipe> recommendRecipe (int amount) {
+        return handler.recommendRecipe(amount);
     }
 }
