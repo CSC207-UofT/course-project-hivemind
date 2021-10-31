@@ -16,6 +16,7 @@ public class FoodController {
 
     /**
      * Run the FoodHandler use case where the user is attempting to create a food
+     *
      * @param food the food object represented as an array list e.g ["Potato", "2.000", "grams"]
      */
 
@@ -27,6 +28,7 @@ public class FoodController {
 
     /**
      * Run the FoodHandler use case where the user is attempting to load multiple foods
+     *
      * @param foodStringList an ArrayList of String representations of food
      */
     public void initialLoad(ArrayList<String> foodStringList) {
