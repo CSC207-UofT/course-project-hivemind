@@ -25,6 +25,9 @@ public class FoodHandler {
         Double quantity = Double.parseDouble(single_array.get(1));
         String measurement = single_array.get(2);
 
+//         If the length of single_array is less than 4, then there is no expiry date for the food. Then we know that
+//         it is a NonPerishableFood. Otherwise, we know that the length is greater than four and that it has an expiry
+//         date thus it is a PerishableFood.
         if (single_array.size() < 4){
             // Make a NonPerishable food item
             storeFoodList.add(new NonPerishableFood(food, quantity, measurement));
@@ -49,6 +52,24 @@ public class FoodHandler {
         for(ArrayList<String> i:multi_array){
             createFood(i);
         }
+    }
+
+    /**
+     * Compare the expiry date of the Food object to today's date to return an ArrayList of expired foods called
+     * expired_foods.
+     * @return expired_foods the ArrayList that lists all the expired foods.
+     */
+    public ArrayList<Food> getPerishedFoods(){
+        ArrayList<Food> expired_foods = new ArrayList<>();
+        for (Food food:storeFoodList){
+            if (food instanceof PerishableFood){
+                PerishableFood new_food = (PerishableFood)food;
+                if (new_food.getExpiryStatus()){
+                    expired_foods.add(new_food);
+                }
+            }
+        }
+        return expired_foods;
     }
 
 
