@@ -108,7 +108,7 @@ public class RecipeHandler {
     private void SortRanks(HashMap<Integer, ArrayList<String>> RankTracker, ArrayList<Recipe> RecommendedRecipe) {
         TreeSet<Integer> sortedRanks = new TreeSet<>(RankTracker.keySet());
         ArrayList<String> BestRecipes = RankTracker.get(sortedRanks.first());
-        for (double score: sortedRanks) {
+        for (int score: sortedRanks) {
              ArrayList<String> currentRecipes = RankTracker.get(score);
                 for (String currRecipeName:currentRecipes) {
                     Recipe currentRecipe = findRecipe(currRecipeName);
