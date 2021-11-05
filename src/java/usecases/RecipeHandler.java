@@ -1,7 +1,6 @@
 package usecases;
 import entities.Recipe;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -73,15 +72,7 @@ public class RecipeHandler {
      * @return An arraylist of sorted recipes
      */
     public ArrayList<Recipe> recommendRecipe(int rank) {
-        //TODO: Create a method that recommends recipe considering
-        // 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
-        // 2. Give a score to each of these Recipes
-        // 3. Return the number of recipes that the user wants, returning from best score to worst score recipe.
-        // Percentage of food
-        // 4. Food scores are tracked by:
-        //      1. Find all recipes using the specific ingredient.
-        //      2. Find the score of each recipe by taking the total number of ingredients that overlap/total number of ingredient
-        //      3. Return the Recipe with the highest score.
+
         int currentRecipeScore = 0;
         HashMap<Integer, ArrayList<String>> RankTracker = new HashMap<>();
 
@@ -100,9 +91,7 @@ public class RecipeHandler {
             }
             SortRanks(RankTracker, RecommendedRecipe);
         }
-        ArrayList<Recipe> FinalRecommendation = new ArrayList<>();
-        RecommendedRecipe.subList(0, rank - 1).addAll(FinalRecommendation);
-        return FinalRecommendation;
+        return new ArrayList<>(RecommendedRecipe.subList(0, rank));
     }
 
     private void SortRanks(HashMap<Integer, ArrayList<String>> RankTracker, ArrayList<Recipe> RecommendedRecipe) {
