@@ -6,7 +6,7 @@ import usecases.RecipeHandler;
 
 public class RecipeController {
     protected ArrayList<ArrayList<String>> recipeRawArray;
-    private final RecipeHandler handler;
+    public final RecipeHandler handler;
 
     public RecipeController() {
         this.recipeRawArray = new ArrayList<>();
