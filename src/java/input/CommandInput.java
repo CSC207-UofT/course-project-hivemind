@@ -120,8 +120,8 @@ public class CommandInput {
     }
 
     /**
-     * prints the foods in the given ArrayList of Object Arrays. Each object array contains a food object matching the
-     * name specified by parameter foodName at index 0, and the food's index in fooddata at index 1
+     * prints the foods in the given ArrayList of Object Arrays. Each object array contains a food object at index 0,
+     * and the food's index in fooddata at index 1
      * @param foodList an ArrayList of Object Arrays. Each object array contains a food object at index 0,
      * and the food's index in fooddata at index 1
      */
