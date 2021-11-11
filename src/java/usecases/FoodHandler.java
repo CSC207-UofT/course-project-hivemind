@@ -4,12 +4,9 @@ import entities.Food;
 import entities.PerishableFood;
 import entities.NonPerishableFood;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.RandomAccess;
 
 public class FoodHandler {
     private static ArrayList<Food> storeFoodList;

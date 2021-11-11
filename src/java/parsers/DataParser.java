@@ -1,5 +1,4 @@
 package parsers;
-import entities.Food;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

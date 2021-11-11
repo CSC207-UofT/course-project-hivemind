@@ -5,7 +5,6 @@ import usecases.FoodHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class FoodController {
     private final ArrayList<ArrayList<String>> foodList;
