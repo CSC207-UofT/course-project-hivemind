@@ -74,7 +74,7 @@ public class RecipeHandler {
      * @return An arraylist of sorted recipes
      */
     public ArrayList<Recipe> recommendRecipe() {
-        //TODO: Create a method that recommends recipe considering
+        //: Create a method that recommends recipe considering
         // 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
         // 2. Give a score to each of these Recipes
         // 3. Return the number of recipes that the user wants, returning from best score to worst score recipe.
