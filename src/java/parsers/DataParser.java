@@ -50,16 +50,25 @@ public class DataParser {
         return lines;
     }
 
-    public static void deleteFoodFromFile(Object[] deletedFood) throws IOException {
+    /**
+     * Deletes a specified row from fooddata
+     * @param deletedFoodIndex an integer specifying the row to be deleted in fooddata
+     * @throws IOException exception for writing file errors
+     */
+    public static void deleteRowFromFoodFile(int deletedFoodIndex) throws IOException {
         ArrayList<String> foodFile = readFile(true);
-        int indexToDelete = (int) deletedFood[1];
-        foodFile.remove(indexToDelete);
+        foodFile.remove(deletedFoodIndex);
         clearFile(true);
         for (String item: foodFile){
             writeToFile(item, true);
         }
     }
 
+    /**
+     * Clears the content of the specified csv file
+     * @param useFood true if clearing fooddata, false if clearing recipedata
+     * @throws IOException exception for writing file errors
+     */
     private static void clearFile(boolean useFood) throws IOException {
         FileWriter fw;
         if (useFood){

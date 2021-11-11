@@ -92,10 +92,10 @@ public class FoodHandler {
 
     /**
      * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
-     * parameter foodName at index 0, and the food's index in foodData.csv at index 1
+     * parameter foodName at index 0, and the food's index in fooddata at index 1
      * @param foodName the name of the food
      * @return an array list of object arrays. Each object array contains a food object matching the name specified by
-     *parameter foodName at index 0, and the food's index in foodData.csv at index 1
+     *parameter foodName at index 0, and the food's index in fooddata at index 1
      */
     public ArrayList<Object[]> getSpecifiedFoodList(String foodName) {
         ArrayList<Object[]> foodList = new ArrayList<>();
@@ -109,11 +109,20 @@ public class FoodHandler {
         }
         return foodList;
     }
+
+    /**
+     *
+     * @return an ArrayList containing all the Food Objects in our system
+     */
     public static ArrayList<Food> getFoodList(){
         return storeFoodList;
     }
 
-
+    /**
+     * Deletes a Food object from storeFoodList
+     * @param food The Food Object which is to be deleted
+     * @return The Food Object deleted from the system
+     */
     public Food deleteFood(Food food) {
         storeFoodList.remove(food);
         return food;

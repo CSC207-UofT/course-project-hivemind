@@ -1,6 +1,5 @@
 package input;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 import controllers.FoodController;
 import controllers.RecipeController;
@@ -88,31 +87,28 @@ public class CommandInput {
         }
     }
 
+    /**
+     * A method to delete a specified Food Object from the inventor and fooddata
+     */
     private static void deleteFoodHelper() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Food Name:");
         System.out.print("> ");
         String foodName = scanner.nextLine();
+        ArrayList<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
 
         try {
-            ArrayList<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
             if (foodList.size() == 0){
-                System.out.println("This food item is not currently stored in the system. " +
-                        "Please verify the spelling and existence of this food item");
+                printFoodNotInSystem();
             }
             else {
                 System.out.println("Please input the number corresponding to which food item you wish to delete:");
-                int index = 1;
-                for (Object[] foods : foodList) {
-                    Food food = (Food) foods[0];
-                    printFood(index, food);
-                    index++;
-                }
+                printFoodInList(foodList);
                 System.out.print("> ");
                 String foodDelete = scanner.nextLine();
                 int foodIndexToDelete = Integer.parseInt(foodDelete) - 1;
                 Food deletedFood = foodController.deleteFood((Food) foodList.get(foodIndexToDelete)[0]);
-                DataParser.deleteFoodFromFile(foodList.get(foodIndexToDelete));
+                DataParser.deleteRowFromFoodFile((int)foodList.get(foodIndexToDelete)[1]);
                 System.out.println("The following food item was successfully deleted from the system:");
                 printFood(foodIndexToDelete + 1, deletedFood);
             }
@@ -123,15 +119,46 @@ public class CommandInput {
         }
     }
 
-    private static void printFood(int index, Food food) {
+    /**
+     * prints the foods in the given ArrayList of Object Arrays. Each object array contains a food object matching the
+     * name specified by parameter foodName at index 0, and the food's index in fooddata at index 1
+     * @param foodList an ArrayList of Object Arrays. Each object array contains a food object at index 0,
+     * and the food's index in fooddata at index 1
+     */
+    private static void printFoodInList(ArrayList<Object[]> foodList) {
+        int index = 1;
+        for (Object[] foods : foodList) {
+            Food food = (Food) foods[0];
+            printFood(index, food);
+            index++;
+        }
+    }
+
+    /**
+     * prints a message when a food object is not present in the system
+     */
+    private static void printFoodNotInSystem() {
+        System.out.println("This food item is not currently stored in the system. " +
+                "Please verify the spelling and existence of this food item");
+    }
+
+    /**
+     * Prints food objects
+     * @param number the number corresponding to given food object
+     * @param food a food object
+     */
+    private static void printFood(int number, Food food) {
         if (food instanceof PerishableFood) {
-            System.out.println(index + ". Food Name: " + food.getName() + ", Quantity: " +
+            String isExpired = "Not Expired";
+            if (((PerishableFood) food).getExpiryStatus()){
+                isExpired = "Expired";
+            }
+            System.out.println(number + ". Food Name: " + food.getName() + ", Quantity: " +
                     food.getQuantity() + ", Unit: " + food.getUnit() + ", Expiry Date: " +
-                    ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " +
-                    ((PerishableFood) food).getExpiryStatus());
+                    ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired);
         }
         else {
-            System.out.println(index + ". Food Name: " + food.getName() + ", Quantity: " +
+            System.out.println(number + ". Food Name: " + food.getName() + ", Quantity: " +
                     food.getQuantity() + ", Unit: " + food.getUnit());
         }
     }
