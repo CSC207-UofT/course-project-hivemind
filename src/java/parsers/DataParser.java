@@ -1,4 +1,6 @@
 package parsers;
+import entities.Food;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -46,5 +48,26 @@ public class DataParser {
         br.close();
         fr.close();
         return lines;
+    }
+
+    public static void deleteFoodFromFile(Object[] deletedFood) throws IOException {
+        ArrayList<String> foodFile = readFile(true);
+        int indexToDelete = (int) deletedFood[0];
+        foodFile.remove(indexToDelete);
+        clearFile(true);
+        for (String item: foodFile){
+            writeToFile(item, true);
+        }
+    }
+
+    private static void clearFile(boolean useFood) throws IOException {
+        FileWriter fw;
+        if (useFood){
+            fw = new FileWriter(FOOD_FILE, false);
+        }
+        else {
+            fw = new FileWriter(RECIPE_FILE, false);
+        }
+        fw.close();
     }
 }

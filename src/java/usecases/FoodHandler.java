@@ -4,8 +4,12 @@ import entities.Food;
 import entities.PerishableFood;
 import entities.NonPerishableFood;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.RandomAccess;
 
 public class FoodHandler {
     private static ArrayList<Food> storeFoodList;
@@ -84,5 +88,28 @@ public class FoodHandler {
             names.add(foodName.getName());
         }
         return names;
+    }
+
+    /**
+     * Creates an array list of food objects containing the name specified by parameter foodName
+     * @param foodName the name of the food
+     * @return an array list of foods wit the name specified by foodName
+     */
+    public ArrayList<Object[]> getSpecifiedFoodList(String foodName) {
+        ArrayList<Object[]> foodList = new ArrayList<>();
+        int index = 0;
+        for (Food foods : storeFoodList) {
+            if (Objects.equals(foods.getName(), foodName)) {
+                Object[] food = {foods, index};
+                foodList.add(food);
+                index++;
+            }
+        }
+        return foodList;
+    }
+
+    public Food deleteFood(Food food) {
+        storeFoodList.remove(food);
+        return food;
     }
 }

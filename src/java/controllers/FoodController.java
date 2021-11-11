@@ -5,6 +5,7 @@ import usecases.FoodHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class FoodController {
     private final ArrayList<ArrayList<String>> foodList;
@@ -54,6 +55,12 @@ public class FoodController {
             return null;
         }
     }
+    public ArrayList<Object[]> getSpecifiedFoodList(String foodName){
+        return this.handler.getSpecifiedFoodList(foodName);
+    }
 
 
+    public Food deleteFood(Food food) {
+        return this.handler.deleteFood(food);
+    }
 }

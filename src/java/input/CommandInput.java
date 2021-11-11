@@ -1,9 +1,11 @@
 package input;
-import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 import controllers.FoodController;
 import controllers.RecipeController;
+import entities.Food;
+import entities.PerishableFood;
 import parsers.DataParser;
 import java.util.ArrayList;
 
@@ -55,7 +57,11 @@ public class CommandInput {
                 case "food":
                     if (splitInput[1].equals("add")) {
                         handleFood(splitInput);
-                    } else {
+                    }
+                    else if (splitInput[1].equals("delete")){
+                        deleteFoodHelper();
+                    }
+                    else {
                         System.out.println("Error, argument " + splitInput[1] + " not recognized");
                     }
                     break;
@@ -81,6 +87,56 @@ public class CommandInput {
             System.out.println("Error: not enough arguments in command");
         }
     }
+
+    private static void deleteFoodHelper() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Food Name:");
+        System.out.print("> ");
+        String foodName = scanner.nextLine();
+
+        try {
+            ArrayList<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
+            if (foodList.size() == 0){
+                System.out.println("This food item is not currently stored in the system. " +
+                        "Please verify the spelling and existence of this food item");
+            }
+            else {
+                System.out.println("Please input the number corresponding to which Food item you wish to delete:");
+                int index = 1;
+                for (Object[] foods : foodList) {
+                    Food food = (Food) foods[0];
+                    printFood(index, food);
+                    index++;
+                }
+                System.out.print("> ");
+                String foodDelete = scanner.nextLine();
+                int foodIndexToDelete = Integer.parseInt(foodDelete) - 1; //Include exceptions in case the user inputs the wrong value
+                Food deletedFood = foodController.deleteFood((Food) foodList.get(foodIndexToDelete)[0]);
+                DataParser.deleteFoodFromFile(foodList.get(foodIndexToDelete));
+                ArrayList<String> foodData = DataParser.readFile(true);
+                foodController.initialLoad(foodData);
+                System.out.println("The following food item was successfully deleted from the system:");
+                printFood(foodIndexToDelete + 1, deletedFood);
+            }
+        } catch (Exception e){
+            System.out.println("An error occurred, did not successfully delete food. " +
+                    "Please verify that all arguments are of the proper data type");
+        }
+    }
+
+    private static void printFood(int index, Food food) {
+        if (food instanceof PerishableFood) {
+            System.out.println(index + ". Food Name: " + food.getName() + " Quantity: " +
+                    food.getQuantity() + " Unit: " + food.getUnit() + " Expiry Date: " +
+                    ((PerishableFood) food).getExpiryDate() + " Expiry Status: " +
+                    ((PerishableFood) food).getExpiryStatus());
+        }
+        else {
+            System.out.println(index + ". Food Name: " + food.getName() + " Quantity: " +
+                    food.getQuantity() + " Unit: " + food.getUnit());
+        }
+    }
+
 
     public static void addRecipeHelper() {
         Scanner scan = new Scanner(System.in);
