@@ -95,7 +95,7 @@ public class RecipeHandler {
             }
             // weigh the score by finding the percentage of the item it has. Convert it to integer by multiplying a 100.
             int currentRecipeWeightedScore =
-                    (recipeScore / (currentRecipe.getIngredients().keySet().size())) * 100;
+                    (int) (((double)recipeScore / (currentRecipe.getIngredients().keySet().size())) * 100);
 
             // create an int representation of the score and make it the key of a hashmap
             if (RankTracker.containsKey(currentRecipeWeightedScore)) {
