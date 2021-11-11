@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_food"
+          android:title="@string/menu_food"
+          android:icon="@drawable/ic_food" />
+    <item android:id="@+id/action_recipe"
+          android:title="@string/menu_recipe"
+          android:icon="@drawable/ic_recipe" />
+    <item android:id="@+id/action_settings"
+          android:title="@string/menu_settings"
+          android:icon="@drawable/ic_settings" />
+</menu>
