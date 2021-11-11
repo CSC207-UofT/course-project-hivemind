@@ -52,7 +52,7 @@ public class DataParser {
 
     public static void deleteFoodFromFile(Object[] deletedFood) throws IOException {
         ArrayList<String> foodFile = readFile(true);
-        int indexToDelete = (int) deletedFood[0];
+        int indexToDelete = (int) deletedFood[1];
         foodFile.remove(indexToDelete);
         clearFile(true);
         for (String item: foodFile){

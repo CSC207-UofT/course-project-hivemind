@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class FoodController {
     private final ArrayList<ArrayList<String>> foodList;
-    private final FoodHandler handler;
+    public final FoodHandler handler;
 
     public FoodController() {
         this.foodList = new ArrayList<>();

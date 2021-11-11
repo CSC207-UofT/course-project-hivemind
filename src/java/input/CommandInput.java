@@ -101,7 +101,7 @@ public class CommandInput {
                         "Please verify the spelling and existence of this food item");
             }
             else {
-                System.out.println("Please input the number corresponding to which Food item you wish to delete:");
+                System.out.println("Please input the number corresponding to which food item you wish to delete:");
                 int index = 1;
                 for (Object[] foods : foodList) {
                     Food food = (Food) foods[0];
@@ -110,7 +110,7 @@ public class CommandInput {
                 }
                 System.out.print("> ");
                 String foodDelete = scanner.nextLine();
-                int foodIndexToDelete = Integer.parseInt(foodDelete) - 1; //Include exceptions in case the user inputs the wrong value
+                int foodIndexToDelete = Integer.parseInt(foodDelete) - 1;
                 Food deletedFood = foodController.deleteFood((Food) foodList.get(foodIndexToDelete)[0]);
                 DataParser.deleteFoodFromFile(foodList.get(foodIndexToDelete));
                 ArrayList<String> foodData = DataParser.readFile(true);
@@ -118,22 +118,23 @@ public class CommandInput {
                 System.out.println("The following food item was successfully deleted from the system:");
                 printFood(foodIndexToDelete + 1, deletedFood);
             }
-        } catch (Exception e){
+        }
+        catch (Exception e){
             System.out.println("An error occurred, did not successfully delete food. " +
-                    "Please verify that all arguments are of the proper data type");
+                    "Please verify that all arguments are of the proper data type and format");
         }
     }
 
     private static void printFood(int index, Food food) {
         if (food instanceof PerishableFood) {
-            System.out.println(index + ". Food Name: " + food.getName() + " Quantity: " +
-                    food.getQuantity() + " Unit: " + food.getUnit() + " Expiry Date: " +
-                    ((PerishableFood) food).getExpiryDate() + " Expiry Status: " +
+            System.out.println(index + ". Food Name: " + food.getName() + ", Quantity: " +
+                    food.getQuantity() + ", Unit: " + food.getUnit() + ", Expiry Date: " +
+                    ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " +
                     ((PerishableFood) food).getExpiryStatus());
         }
         else {
-            System.out.println(index + ". Food Name: " + food.getName() + " Quantity: " +
-                    food.getQuantity() + " Unit: " + food.getUnit());
+            System.out.println(index + ". Food Name: " + food.getName() + ", Quantity: " +
+                    food.getQuantity() + ", Unit: " + food.getUnit());
         }
     }
 

@@ -91,9 +91,11 @@ public class FoodHandler {
     }
 
     /**
-     * Creates an array list of food objects containing the name specified by parameter foodName
+     * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
+     * parameter foodName at index 0, and the food's index in foodData.csv at index 1
      * @param foodName the name of the food
-     * @return an array list of foods wit the name specified by foodName
+     * @return an array list of object arrays. Each object array contains a food object matching the name specified by
+     *parameter foodName at index 0, and the food's index in foodData.csv at index 1
      */
     public ArrayList<Object[]> getSpecifiedFoodList(String foodName) {
         ArrayList<Object[]> foodList = new ArrayList<>();
