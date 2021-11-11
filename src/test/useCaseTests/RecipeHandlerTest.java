@@ -32,26 +32,4 @@ public class RecipeHandlerTest {
 
         assertEquals(handler.getRecipes(), 1);
     }
-    
-    @Test(timeout = 1000)
-    public void test_recommendRecipe() throws IOException {
-        FoodController foodController = new FoodController();
-        RecipeController recipeController = new RecipeController();
-        ArrayList<String> foodData = DataParser.readFile(true);
-        foodController.initialLoad(foodData);
-        ArrayList<String> recipeData = DataParser.readFile(false);
-        recipeController.initialLoad(recipeData);
-        Recipe test_recipe = recipeController.handler.findRecipe("Test Recipe");
-        Recipe test_recipe2 = recipeController.handler.findRecipe("Test Recipe 2");
-        Recipe test_recipe3 = recipeController.handler.findRecipe("Test Recipe 3");
-        ArrayList<Recipe> recipes_array = new ArrayList<>();
-        recipes_array.add(test_recipe);
-        recipes_array.add(test_recipe2);
-        recipes_array.add(test_recipe3);
-        System.out.println(recipeController.recommendRecipe(5));
-        assertEquals(recipes_array, recipeController.recommendRecipe(3));
-    }
-
-
-
 }
