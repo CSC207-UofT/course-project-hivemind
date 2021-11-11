@@ -144,7 +144,7 @@ public class CommandInput {
 
     /**
      * Prints food objects
-     * @param number the number corresponding to given food object
+     * @param number corresponding to given food object
      * @param food a food object
      */
     private static void printFood(int number, Food food) {
