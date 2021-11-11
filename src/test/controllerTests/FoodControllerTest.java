@@ -12,11 +12,10 @@ import usecases.FoodHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class FoodControllerTest {
-    public FoodControllerTest() throws IOException {
+    public FoodControllerTest(){
     }
 
     @Before
@@ -33,10 +32,12 @@ public class FoodControllerTest {
         FoodController foodController = new FoodController();
         ArrayList<String> foodData = DataParser.readFile(true);
         foodController.initialLoad(foodData);
-        Food food = getFoodHelper("Butter", 0, foodController);
+        Food food = getFoodHelper("Salt", 0, foodController);
         int initialFoodListSize = FoodHandler.getStoreFoodList().size();
+        foodController.deleteFood(food);
         assertEquals(food, foodController.deleteFood(food));
-        assertEquals(initialFoodListSize - 1, FoodHandler.getStoreFoodList().size());
+        assertEquals(initialFoodListSize - 1, FoodHandler.getFoodList().size());
+        assertFalse(FoodHandler.getFoodList().contains(food));
     }
 
     private Food getFoodHelper(String foodName, Integer index, FoodController controller) {

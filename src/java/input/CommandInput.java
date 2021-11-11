@@ -113,8 +113,6 @@ public class CommandInput {
                 int foodIndexToDelete = Integer.parseInt(foodDelete) - 1;
                 Food deletedFood = foodController.deleteFood((Food) foodList.get(foodIndexToDelete)[0]);
                 DataParser.deleteFoodFromFile(foodList.get(foodIndexToDelete));
-                ArrayList<String> foodData = DataParser.readFile(true);
-                foodController.initialLoad(foodData);
                 System.out.println("The following food item was successfully deleted from the system:");
                 printFood(foodIndexToDelete + 1, deletedFood);
             }

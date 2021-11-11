@@ -104,11 +104,15 @@ public class FoodHandler {
             if (Objects.equals(foods.getName(), foodName)) {
                 Object[] food = {foods, index};
                 foodList.add(food);
-                index++;
             }
+            index++;
         }
         return foodList;
     }
+    public static ArrayList<Food> getFoodList(){
+        return storeFoodList;
+    }
+
 
     public Food deleteFood(Food food) {
         storeFoodList.remove(food);
