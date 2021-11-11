@@ -1,18 +1,16 @@
 package input;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import controllers.FoodController;
 import controllers.RecipeController;
 import entities.Food;
 import entities.PerishableFood;
 import parsers.DataParser;
-import java.util.ArrayList;
 
 public class CommandInput {
     private static final FoodController foodController = new FoodController();
     private static final RecipeController recipeController = new RecipeController();
     private static boolean exitProgram = true;
+    private static Calendar dateNow = Calendar.getInstance();
 
     public static void main (String[] args) {
         Scanner myObj = new Scanner(System.in);
@@ -25,6 +23,7 @@ public class CommandInput {
             ArrayList<String> recipeData = DataParser.readFile(false);
             recipeController.initialLoad(recipeData);
             alertExpiredFoods();
+
         }
         catch (Exception e) {
             System.out.println("Unfortunately, an error has occurred." +
@@ -33,6 +32,11 @@ public class CommandInput {
         }
 
         while (exitProgram) {
+            Calendar newDate = Calendar.getInstance();
+            if(newDate.get(Calendar.YEAR) > dateNow.get(Calendar.YEAR) || newDate.get(Calendar.MONTH) > dateNow.get(Calendar.MONTH) || newDate.get(Calendar.DAY_OF_MONTH) > dateNow.get(Calendar.DAY_OF_MONTH)){
+                alertExpiredFoods();
+                dateNow = Calendar.getInstance();
+            }
             System.out.print("> ");
             lastCommand = myObj.nextLine();
             parseInput(lastCommand);
@@ -105,7 +109,10 @@ public class CommandInput {
                 case "food":
                     if (splitInput[1].equals("add")) {
                         handleFood(splitInput);
-                    } else {
+                    } else if (splitInput[1].equals("check")){
+                        alertExpiredFoods();
+                    }
+                    else {
                         System.out.println("Error, argument " + splitInput[1] + " not recognized");
                     }
                     break;
