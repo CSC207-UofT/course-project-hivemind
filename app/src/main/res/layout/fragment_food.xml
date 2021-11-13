@@ -6,11 +6,17 @@
              tools:context=".FoodFragment">
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical"
                       android:id="@+id/food_list">
+            <TextView
+                    android:text="foodie appe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView2"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

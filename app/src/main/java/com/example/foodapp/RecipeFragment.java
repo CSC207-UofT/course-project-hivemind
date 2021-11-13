@@ -1,12 +1,18 @@
 package com.example.foodapp;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import input.CommandInput;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import android.view.ViewGroup.LayoutParams;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,13 +32,37 @@ public class RecipeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CommandInput.getRecipeRecommendation();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+
+//        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
+        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c"));
+
+        LinearLayout recipeList = view.findViewById(R.id.recipe_list);
+        System.out.println(recipeList);
+        for (String recipe : given_recipes) {
+            System.out.println(recipe);
+
+            TextView textView = new TextView(getContext());
+            textView.setText(recipe);
+            textView.setTextSize(24);
+            textView.setGravity(Gravity.TOP|Gravity.START);
+            textView.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT));
+
+            recipeList.addView(textView);
+        }
+
+//        TextView testText = new TextView(getContext());
+//        testText.setText("test text lol");
+//        recipeList.addView(testText);
+
+        return view;
+
     }
 }
