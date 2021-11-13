@@ -1,9 +1,9 @@
 package input;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import controllers.FoodController;
 import controllers.RecipeController;
+import entities.Recipe;
 import parsers.DataParser;
 import java.util.ArrayList;
 
@@ -61,7 +61,7 @@ public class CommandInput {
                     break;
                 case "recipe":
                     if (splitInput[1].equals("search")) {
-                        System.out.println(recipeController.recommendRecipe());
+                        System.out.println(getRecipeRecommendation());
                     }
                     //                else if (splitInput[1].equals("info")) {
                     //                    //gets recipe info using controller
@@ -148,5 +148,14 @@ public class CommandInput {
                         " arguments are of the proper data type");
             }
         }
+    }
+
+    public static ArrayList<String> getRecipeRecommendation() {
+        ArrayList<Recipe> recipeList = recipeController.recommendRecipe();
+        ArrayList<String> stringRecipeList = new ArrayList<>();
+        for (Recipe recipe : recipeList) {
+            stringRecipeList.add(recipe.toString());
+        }
+        return stringRecipeList;
     }
 }
