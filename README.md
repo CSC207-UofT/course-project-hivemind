@@ -19,10 +19,15 @@ Syntax:
 > DAY: optional double expiry day of food
 >
 > *NOTE* day, month and year must be either all not provided or provided
+>food delete
+> ~~~~~
+> *NOTE* deletes food from the system
+
 > ~~~~~
 > food check 
 > ~~~~
 > Checks for expired foods in inventory. 
+
 #### recipe:
 This is for commands relating to recipe
 
