@@ -1,17 +1,18 @@
 package input;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.*;
 import controllers.FoodController;
 import controllers.RecipeController;
 import entities.Food;
 import entities.PerishableFood;
 import parsers.DataParser;
-import java.util.ArrayList;
 
 public class CommandInput {
     private static final FoodController foodController = new FoodController();
     private static final RecipeController recipeController = new RecipeController();
     private static boolean exitProgram = true;
+    private static Calendar dateNow = Calendar.getInstance();
 
     public static void main (String[] args) {
         Scanner myObj = new Scanner(System.in);
@@ -23,6 +24,8 @@ public class CommandInput {
             foodController.initialLoad(foodData);
             ArrayList<String> recipeData = DataParser.readFile(false);
             recipeController.initialLoad(recipeData);
+            alertExpiredFoods();
+
         }
         catch (Exception e) {
             System.out.println("Unfortunately, an error has occurred." +
@@ -31,12 +34,64 @@ public class CommandInput {
         }
 
         while (exitProgram) {
+            Calendar newDate = Calendar.getInstance();
+            if(newDate.get(Calendar.YEAR) > dateNow.get(Calendar.YEAR) || newDate.get(Calendar.MONTH) > dateNow.get(Calendar.MONTH) || newDate.get(Calendar.DAY_OF_MONTH) > dateNow.get(Calendar.DAY_OF_MONTH)){
+                alertExpiredFoods();
+                dateNow = Calendar.getInstance();
+            }
             System.out.print("> ");
             lastCommand = myObj.nextLine();
             parseInput(lastCommand);
         }
         System.exit(0);
 
+    }
+
+    private static void alertExpiredFoods() {
+        ArrayList<Food> expiredFoodsList = foodController.checkPerishables();
+        if(expiredFoodsList.size() > 0){
+            System.out.println("The following foods have expired: ");
+            ArrayList<Object[]> parsedExpiredFoodsList = new ArrayList<>();
+            for (Food food : expiredFoodsList){
+                Object[] parsedFood = new Object[1];
+                parsedFood[0] = food;
+                parsedExpiredFoodsList.add(parsedFood);
+            }
+            printFoodInList(parsedExpiredFoodsList);
+        }
+        else{
+            System.out.println("Your food is fresh and safe to consume.");
+        }
+
+
+    }
+    private static void printFoodInList(ArrayList<Object[]> foodList) {
+        int index = 1;
+        for (Object[] foods : foodList) {
+            Food food = (Food) foods[0];
+            printFood(index, food);
+            index++;
+        }
+    }
+    /**
+     * Prints food objects
+     * @param number corresponding to given food object
+     * @param food a food object
+     */
+    private static void printFood(int number, Food food) {
+        if (food instanceof PerishableFood) {
+            String isExpired = "Not Expired";
+            if (((PerishableFood) food).getExpiryStatus()){
+                isExpired = "Expired";
+            }
+            System.out.println(number + ". Food Name: " + food.getName() + ", Quantity: " +
+                    food.getQuantity() + ", Unit: " + food.getUnit() + ", Expiry Date: " +
+                    ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired);
+        }
+        else {
+            System.out.println(number + ". Food Name: " + food.getName() + ", Quantity: " +
+                    food.getQuantity() + ", Unit: " + food.getUnit());
+        }
     }
 
     /**
@@ -59,6 +114,8 @@ public class CommandInput {
                     }
                     else if (splitInput[1].equals("delete")){
                         deleteFoodHelper();
+                    } else if (splitInput[1].equals("check")){
+                        alertExpiredFoods();
                     }
                     else {
                         System.out.println("Error, argument " + splitInput[1] + " not recognized");
