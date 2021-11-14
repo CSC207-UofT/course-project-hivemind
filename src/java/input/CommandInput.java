@@ -65,34 +65,6 @@ public class CommandInput {
 
 
     }
-    private static void printFoodInList(ArrayList<Object[]> foodList) {
-        int index = 1;
-        for (Object[] foods : foodList) {
-            Food food = (Food) foods[0];
-            printFood(index, food);
-            index++;
-        }
-    }
-    /**
-     * Prints food objects
-     * @param number corresponding to given food object
-     * @param food a food object
-     */
-    private static void printFood(int number, Food food) {
-        if (food instanceof PerishableFood) {
-            String isExpired = "Not Expired";
-            if (((PerishableFood) food).getExpiryStatus()){
-                isExpired = "Expired";
-            }
-            System.out.println(number + ". Food Name: " + food.getName() + ", Quantity: " +
-                    food.getQuantity() + ", Unit: " + food.getUnit() + ", Expiry Date: " +
-                    ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired);
-        }
-        else {
-            System.out.println(number + ". Food Name: " + food.getName() + ", Quantity: " +
-                    food.getQuantity() + ", Unit: " + food.getUnit());
-        }
-    }
 
     /**
      * The method to parse user input and calls according methods for the given input
