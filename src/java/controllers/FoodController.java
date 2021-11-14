@@ -51,7 +51,7 @@ public class FoodController {
             return expired_foods;
         }
         else{
-            return null;
+            return new ArrayList<>();
         }
     }
 
