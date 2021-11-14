@@ -88,6 +88,15 @@ public class FoodHandler {
     }
 
     /**
+     * Create a getter method so that RecipeHandler can access the array of foods storeFoodList.
+     *
+     * @return an ArrayList of foods of all foods that is loaded in this handler
+     */
+    public ArrayList<Food> getStoreFoodListFoods(){
+        return new ArrayList<>(storeFoodList);
+    }
+
+    /**
      * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
      * parameter foodName at index 0, and the food's index in fooddata at index 1
      * @param foodName the name of the food

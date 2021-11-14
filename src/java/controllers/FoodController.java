@@ -40,9 +40,6 @@ public class FoodController {
                 this.foodList.add(lst2);
             }
              this.handler.initialLoad(this.foodList);
-
-
-
     }
 
     public ArrayList<Food> checkPerishables(){
@@ -74,4 +71,18 @@ public class FoodController {
     public Food deleteFood(Food food) {
         return this.handler.deleteFood(food);
     }
+
+    /**
+     * Convert all foods to string form from FoodHandler
+     * @return an arraylist of all foods in string form
+     */
+    public ArrayList<String> allFoodToString(){
+        ArrayList<String> foodStrLst = new ArrayList<>();
+        for (Food foodObjects: this.handler.getStoreFoodListFoods()){
+            foodStrLst.add(foodObjects.toString());
+        }
+        return foodStrLst;
+    }
+
 }
+
