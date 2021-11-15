@@ -1,9 +1,7 @@
 package usecases;
 import entities.Recipe;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
+
+import java.util.*;
 
 /**
  * With a list of recipe creates recipe objects using the entities.Recipe class recipe constructors
@@ -61,6 +59,7 @@ public class RecipeHandler {
         return ingredientsDict;
     }
 
+
     /**
      * Find appropriate recipes according to the inventory using an algorithm considering:
      * 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
@@ -73,44 +72,81 @@ public class RecipeHandler {
      *  3. Return the Recipe with the highest score.
      * @return An arraylist of sorted recipes
      */
-    public ArrayList<Recipe> recommendRecipe() {
-        //TODO: Create a method that recommends recipe considering
-        // 1. Availability of ingredients (This considers Expiry dates and how many ingredients we use from the fridge)
-        // 2. Give a score to each of these Recipes
-        // 3. Return the number of recipes that the user wants, returning from best score to worst score recipe.
-        // Percentage of food
-        // 4. Food scores are tracked by:
-        //      1. Find all recipes using the specific ingredient.
-        //      2. Find the score of each recipe by taking the total number of ingredients that overlap/total number of ingredient
-        //      3. Return the Recipe with the highest score.
-        int currentRecipeScore = 0;
-        HashMap<Integer, ArrayList<String>> RankTracker = new HashMap<>();
+    public ArrayList<Recipe> recommendRecipe(int rank) {
 
+        // create a hashmap called rankTracker that keeps track of all the recipes and their score
+        HashMap<Integer, ArrayList<Recipe>> RankTracker = new HashMap<>();
+
+        // create a list that you will later return. This list will be needed to store all the recommended recipe, then
+        // later sliced.
         ArrayList<Recipe> RecommendedRecipe = new ArrayList<>();
 
+        // Iterate through each of the recipe items in recipeHandler Recipe List, which is a list of every single recipe
+        // in the database.
         for (Recipe currentRecipe : recipeHandlerRecipeList) {
-            for (String currentIngredient : currentRecipe.getIngredients().keySet()) {
-                if (FoodHandler.getStoreFoodList().contains(currentIngredient)) {
-                    currentRecipeScore += 1;
+            // sets the current recipe score to 0 which will be used to score the availability of each food recipe
+            int recipeScore = 0;
+            // for each of the ingredient, we iterate and check if it's in the fridge
+            for (String currentIngredient : getIngredients(currentRecipe)) {
+                if (recipeDoesContain(currentIngredient)) {
+                    // add 1 to the score if the ingredient is in the inventory.
+                    recipeScore += 1;
                 }
-
-
-                int currentRecipeWeightedScore = currentRecipeScore / (currentRecipe.getIngredients().keySet().size());
-                if (RankTracker.containsKey(currentRecipeWeightedScore)) {
-                    RankTracker.get(currentRecipeWeightedScore).add(currentRecipe.getRecipeName());
-                }
-                ArrayList<String> value = new ArrayList<>();
-                value.add(currentRecipe.getRecipeName());
-                RankTracker.put(currentRecipeWeightedScore, value);
             }
-            TreeSet<Integer> sortedRanks = new TreeSet<>(RankTracker.keySet());
-            ArrayList<String> BestRecipeNames = RankTracker.get(sortedRanks.first());
-            Recipe BestRecipe = findRecipe(BestRecipeNames.get(0));
-            RecommendedRecipe.add(BestRecipe);
+            // weigh the score by finding the percentage of the item it has. Convert it to integer by multiplying a 100.
+            int currentRecipeWeightedScore =
+                    (int) (((double)recipeScore / (currentRecipe.getIngredients().keySet().size())) * 100);
+
+            // create an int representation of the score and make it the key of a hashmap
+            if (RankTracker.containsKey(currentRecipeWeightedScore)) {
+                RankTracker.get(currentRecipeWeightedScore).add(currentRecipe);
+            }
+
+            // add an arraylist of the recipe as a value for the specific key
+            else {
+                ArrayList<Recipe> currentRecipeArrayList = new ArrayList<>();
+                currentRecipeArrayList.add(currentRecipe);
+                RankTracker.put(currentRecipeWeightedScore, currentRecipeArrayList);
+            }
+        }
+        // make a stack our of the rank tracker, such that we get the best rated recipe on the top
+        Stack<Recipe> rankTrackerStack = makeStack(RankTracker);
+        for (int i = 0; i < rank; i++) {
+            // pop rank number of times to get rank number of items.
+            RecommendedRecipe.add(rankTrackerStack.pop());
         }
         return RecommendedRecipe;
     }
 
+    private Stack<Recipe> makeStack(HashMap<Integer, ArrayList<Recipe>> RankTracker) {
+        TreeSet<Integer> sortedRanks = new TreeSet<>(RankTracker.keySet());
+        Stack<Recipe> recipeStack = new Stack<>();
+        for (int score: sortedRanks) {
+            ArrayList<Recipe> currentRecipes = RankTracker.get(score);
+            for (Recipe currentRecipe:currentRecipes){
+                recipeStack.push(currentRecipe);
+            }
+        }
+        return recipeStack;
+    }
+
+//    private void addToMap(HashMap<Integer, ArrayList<Recipe>> RankTracker, Recipe currentRecipe, int currentRecipeWeightedScore) {
+//        ArrayList<String> recipeWithThisScore = new ArrayList<>();
+//        recipeWithThisScore.add(currentRecipe);
+//        RankTracker.put(currentRecipeWeightedScore, recipeWithThisScore);
+//    }
+
+    private int recipeWeightCalculator(int currentRecipeScore, Recipe currentRecipe) {
+        return currentRecipeScore / (currentRecipe.getIngredients().size());
+    }
+
+    private Set<String> getIngredients(Recipe currentRecipe) {
+        return currentRecipe.getIngredients().keySet();
+    }
+
+    private boolean recipeDoesContain(String currentIngredient) {
+        return FoodHandler.getStoreFoodList().contains(currentIngredient);
+    }
 
 
     /**

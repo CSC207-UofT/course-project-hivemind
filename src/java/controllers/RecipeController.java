@@ -6,7 +6,7 @@ import usecases.RecipeHandler;
 
 public class RecipeController {
     protected ArrayList<ArrayList<String>> recipeRawArray;
-    private final RecipeHandler handler;
+    public final RecipeHandler handler;
 
     public RecipeController() {
         this.recipeRawArray = new ArrayList<>();
@@ -51,7 +51,7 @@ public class RecipeController {
      *
      * @return an ArrayList of sorted recommended recipes.
      */
-    public ArrayList<Recipe> recommendRecipe () {
-        return handler.recommendRecipe();
+    public ArrayList<Recipe> recommendRecipe (int amount) {
+        return handler.recommendRecipe(amount);
     }
 }

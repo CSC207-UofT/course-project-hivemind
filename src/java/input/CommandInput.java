@@ -95,7 +95,8 @@ public class CommandInput {
                     break;
                 case "recipe":
                     if (splitInput[1].equals("search")) {
-                        System.out.println(recipeController.recommendRecipe());
+                        int amount = Integer.parseInt(splitInput[2]);
+                        System.out.println(recipeController.recommendRecipe(amount));
                     }
                     //                else if (splitInput[1].equals("info")) {
                     //                    //gets recipe info using controller
