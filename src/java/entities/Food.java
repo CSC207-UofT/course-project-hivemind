@@ -18,6 +18,15 @@ public abstract class Food {
     }
 
     /**
+     * Return the string representation of food object
+     * @return String of desired food item to string
+     */
+    @Override
+    public String toString(){
+        return this.name + ": " + this.quantity.toString() + " " + this.unit;
+    }
+
+    /**
      * Return the name of the Food item
      * @return The name of the Food
      */

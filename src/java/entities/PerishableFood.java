@@ -21,6 +21,16 @@ public class PerishableFood extends Food {
     }
 
     /**
+     * Return the string representation of this perishable food object
+     * @return String of desired perishable food item to string
+     */
+    @Override
+    public String toString(){
+        return this.name + ": " + this.quantity.toString() + " " + this.unit + ", Expires on: " +
+                this.expiryDate.toString();
+    }
+
+    /**
      * Update the expiry status of the PerishableFood
      *
      * @return True if the PerishableFood is expired.

@@ -81,16 +81,25 @@ public class CommandInput {
                     }
                     break;
                 case "food":
-                    if (splitInput[1].equals("add")) {
-                        handleFood(splitInput);
-                    }
-                    else if (splitInput[1].equals("delete")){
-                        deleteFoodHelper();
-                    } else if (splitInput[1].equals("check")){
-                        alertExpiredFoods();
-                    }
-                    else {
-                        System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                    switch (splitInput[1]) {
+                        case "add":
+                            handleFood(splitInput);
+                            break;
+                        case "delete":
+                            deleteFoodHelper();
+                            break;
+                        case "check":
+                            alertExpiredFoods();
+                            break;
+                        case "get":
+                            for (String str : foodController.allFoodToString()) {
+                                System.out.println(str);
+                            }
+                            System.out.println("-----------------------");
+                            break;
+                        default:
+                            System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                            break;
                     }
                     break;
                 case "recipe":
