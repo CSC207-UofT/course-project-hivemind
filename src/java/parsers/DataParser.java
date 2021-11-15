@@ -1,4 +1,5 @@
 package parsers;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -46,5 +47,35 @@ public class DataParser {
         br.close();
         fr.close();
         return lines;
+    }
+
+    /**
+     * Deletes a specified row from fooddata
+     * @param deletedFoodIndex an integer specifying the row to be deleted in fooddata
+     * @throws IOException exception for writing file errors
+     */
+    public static void deleteRowFromFoodFile(int deletedFoodIndex) throws IOException {
+        ArrayList<String> foodFile = readFile(true);
+        foodFile.remove(deletedFoodIndex);
+        clearFile(true);
+        for (String item: foodFile){
+            writeToFile(item, true);
+        }
+    }
+
+    /**
+     * Clears the content of the specified csv file
+     * @param useFood true if clearing fooddata, false if clearing recipedata
+     * @throws IOException exception for writing file errors
+     */
+    private static void clearFile(boolean useFood) throws IOException {
+        FileWriter fw;
+        if (useFood){
+            fw = new FileWriter(FOOD_FILE, false);
+        }
+        else {
+            fw = new FileWriter(RECIPE_FILE, false);
+        }
+        fw.close();
     }
 }

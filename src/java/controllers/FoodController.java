@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.Food;
 import usecases.FoodHandler;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Arrays;
 
 public class FoodController {
     private final ArrayList<ArrayList<String>> foodList;
-    private final FoodHandler handler;
+    public final FoodHandler handler;
 
     public FoodController() {
         this.foodList = new ArrayList<>();
@@ -44,5 +45,33 @@ public class FoodController {
 
     }
 
+    public ArrayList<Food> checkPerishables(){
+        ArrayList<Food> expired_foods = this.handler.getPerishedFoods();
+        if(expired_foods.size() > 0){
+            return expired_foods;
+        }
+        else{
+            return new ArrayList<>();
+        }
+    }
 
+    /**
+     * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
+     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     * @param foodName the name of the food
+     * @return an array list of object arrays. Each object array contains a food object matching the name specified by
+     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     */
+    public ArrayList<Object[]> getSpecifiedFoodList(String foodName){
+        return this.handler.getSpecifiedFoodList(foodName);
+    }
+
+    /**
+     * Deletes a food object from the system
+     * @param food the food object which is to be deleted
+     * @return the deleted food object
+     */
+    public Food deleteFood(Food food) {
+        return this.handler.deleteFood(food);
+    }
 }
