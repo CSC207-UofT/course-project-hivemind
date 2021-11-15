@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FoodController {
-    private final ArrayList<ArrayList<String>> foodList;
+    public final ArrayList<ArrayList<String>> foodList;
     public final FoodHandler handler;
 
     public FoodController() {
