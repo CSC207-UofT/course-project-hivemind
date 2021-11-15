@@ -130,15 +130,6 @@ public class RecipeHandler {
         return recipeStack;
     }
 
-//    private void addToMap(HashMap<Integer, ArrayList<Recipe>> RankTracker, Recipe currentRecipe, int currentRecipeWeightedScore) {
-//        ArrayList<String> recipeWithThisScore = new ArrayList<>();
-//        recipeWithThisScore.add(currentRecipe);
-//        RankTracker.put(currentRecipeWeightedScore, recipeWithThisScore);
-//    }
-
-    private int recipeWeightCalculator(int currentRecipeScore, Recipe currentRecipe) {
-        return currentRecipeScore / (currentRecipe.getIngredients().size());
-    }
 
     private Set<String> getIngredients(Recipe currentRecipe) {
         return currentRecipe.getIngredients().keySet();
