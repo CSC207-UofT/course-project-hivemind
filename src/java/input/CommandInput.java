@@ -6,6 +6,7 @@ import controllers.FoodController;
 import controllers.RecipeController;
 import entities.Food;
 import entities.PerishableFood;
+import entities.Recipe;
 import parsers.DataParser;
 
 public class CommandInput {
@@ -24,6 +25,7 @@ public class CommandInput {
             foodController.initialLoad(foodData);
             ArrayList<String> recipeData = DataParser.readFile(false);
             recipeController.initialLoad(recipeData);
+            userHelper();
             alertExpiredFoods();
 
         }
@@ -104,12 +106,22 @@ public class CommandInput {
                     break;
                 case "recipe":
                     if (splitInput[1].equals("search")) {
-                        int amount = Integer.parseInt(splitInput[2]);
-                        System.out.println(recipeController.recommendRecipe(amount));
+                        try{
+                            int amount = Integer.parseInt(splitInput[2]);
+                            for(Recipe r: recipeController.recommendRecipe(amount)){
+                                System.out.println(r);
+                                System.out.println(" ");
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println("error in input: no number inputted!");
+                        }
+                        catch (NumberFormatException e){
+                            System.out.println("error in type, try using a number!");
+                        }
+
+
                     }
-                    //                else if (splitInput[1].equals("info")) {
-                    //                    //gets recipe info using controller
-                    //                }
+
                     else if (splitInput[1].equals("add")){
                         addRecipeHelper();
                     }
@@ -127,11 +139,36 @@ public class CommandInput {
     }
 
     /**
+     *Helper to tell user how to use the commands
+     */
+    private static void userHelper(){
+        System.out.println("Welcome to Sous-chef! Your Intelligent Kitchen Assistant!");
+        System.out.println("----------------------------------------------------------");
+        System.out.println("Here are all the current functionalities via commandline:");
+        System.out.println("food add [foodName, quantity, unit (, year, month, day)] : adds a food into inventory");
+        System.out.println("     delete: deletes a food from inventory");
+        System.out.println("     check: check all expired foods");
+        System.out.println("     get: get a list of all foods in inventory");
+        System.out.println("----------------------------------------------------------");
+        System.out.println("recipe search [quantity]: get a recommendation of recipes");
+        System.out.println("       add: adds a recipe into the recipe book");
+        System.out.println("----------------------------------------------------------");
+        System.out.println("program exit: exits the program");
+        System.out.println("----------------------------------------------------------");
+    }
+
+    /**
      * A method to delete a specified Food Object from the inventor and fooddata
      */
     private static void deleteFoodHelper() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Food Name:");
+        System.out.println("Here are all your foods in your inventory:");
+        System.out.println("-----------------------");
+        for (String str : foodController.allFoodToString()) {
+            System.out.println(str);
+        }
+        System.out.println("-----------------------");
+        System.out.println("Enter Food Name To Delete:");
         System.out.print("> ");
         String foodName = scanner.nextLine();
         ArrayList<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
