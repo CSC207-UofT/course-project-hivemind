@@ -6,6 +6,7 @@ import entities.NonPerishableFood;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class FoodHandler {
@@ -107,7 +108,9 @@ public class FoodHandler {
         ArrayList<Object[]> foodList = new ArrayList<>();
         int index = 0;
         for (Food foods : storeFoodList) {
-            if (Objects.equals(foods.getName(), foodName)) {
+            String lowerFoodgetName = foods.getName().toLowerCase(Locale.ROOT);
+            String lowerFoodName = foodName.toLowerCase(Locale.ROOT);
+            if (Objects.equals(lowerFoodgetName, lowerFoodName)) {
                 Object[] food = {foods, index};
                 foodList.add(food);
             }
