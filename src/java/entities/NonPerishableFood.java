@@ -3,7 +3,6 @@ package entities;
 import java.util.Objects;
 
 public class NonPerishableFood extends Food {
-
     /**
      * Override the equals method to check content equality, rather than identity equality.
      * @return Boolean
