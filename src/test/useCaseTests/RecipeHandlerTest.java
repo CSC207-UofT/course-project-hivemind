@@ -54,10 +54,10 @@ public class RecipeHandlerTest {
         recipeData.add("Test Recipe 3,,item1,,1,,cup,,item2,,1,,cup,,item3,,1,,cup,,item4,,1,,cup,,1. Cook it somehow. 2. Try to eat it");
         recipeController.initialLoad(recipeData);
 
-        Recipe test_recipe1 = recipeController.handler.findRecipe("Test Recipe 1");
-        Recipe test_recipe2 = recipeController.handler.findRecipe("Test Recipe 2");
-        Recipe test_recipe3 = recipeController.handler.findRecipe("Test Recipe 3");
-        ArrayList<Recipe> recipes_array = new ArrayList<>();
+        String test_recipe1 = recipeController.handler.findRecipe("Test Recipe 1").toString();
+        String test_recipe2 = recipeController.handler.findRecipe("Test Recipe 2").toString();
+        String test_recipe3 = recipeController.handler.findRecipe("Test Recipe 3").toString();
+        ArrayList<String> recipes_array = new ArrayList<>();
         recipes_array.add(test_recipe1);
         recipes_array.add(test_recipe2);
         recipes_array.add(test_recipe3);
@@ -88,10 +88,10 @@ public class RecipeHandlerTest {
         recipeController.initialLoad(recipeData);
         ArrayList<Recipe> recipes = recipeController.handler.getAllRecipes();
         String name = "Best Big Chewy Chocolate Chip Cookies";
-        Recipe recipe = getRecipeFromList(recipes, name);
-        ArrayList<Recipe> cookie = new ArrayList<>();
+        String recipe = getRecipeFromList(recipes, name).toString();
+        ArrayList<String> cookie = new ArrayList<>();
         cookie.add(recipe);
-        assertEquals(cookie, recipeController.recommendRecipe(1));
+        assertEquals(cookie, recipeController.handler.recommendRecipe(1));
     }
     public Recipe getRecipeFromList(ArrayList<Recipe> recipes, String name){
         int i;
