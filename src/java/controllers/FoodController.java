@@ -68,8 +68,8 @@ public class FoodController {
      * @param food the food object which is to be deleted
      * @return the deleted food object
      */
-    public Food deleteFood(Food food) {
-        return this.handler.deleteFood(food);
+    public void deleteFood(Object food) {
+        this.handler.deleteFood(food);
     }
 
     /**
@@ -84,7 +84,7 @@ public class FoodController {
         return foodStrLst;
     }
 
-    public String printFood(int index, Food food) {
+    public String printFood(int index, Object food) {
         return handler.printFood(index, food);
     }
 }

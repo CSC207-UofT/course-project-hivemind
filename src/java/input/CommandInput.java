@@ -182,10 +182,10 @@ public class CommandInput {
                 System.out.print("> ");
                 String foodDelete = scanner.nextLine();
                 int foodIndexToDelete = Integer.parseInt(foodDelete) - 1;
-                Food deletedFood = foodController.deleteFood((Food) foodList.get(foodIndexToDelete)[0]);
+                foodController.deleteFood(foodList.get(foodIndexToDelete)[0]);
                 DataParser.deleteRowFromFoodFile((int)foodList.get(foodIndexToDelete)[1]);
                 System.out.println("The following food item was successfully deleted from the system:");
-                System.out.println(foodController.printFood(foodIndexToDelete + 1, deletedFood));
+                System.out.println(foodController.printFood(foodIndexToDelete + 1, foodList.get(foodIndexToDelete)[0]));
             }
         }
         catch (Exception e){
@@ -203,7 +203,7 @@ public class CommandInput {
     private static void printFoodInList(ArrayList<Object[]> foodList) {
         int index = 1;
         for (Object[] foods : foodList) {
-            Food food = (Food) foods[0];
+            Object food = foods[0];
             System.out.println(foodController.printFood(index, food));
             index++;
         }

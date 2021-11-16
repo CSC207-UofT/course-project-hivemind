@@ -38,7 +38,6 @@ public class FoodControllerTest {
         Food food = getFoodHelper("Shrimp", 0, foodController);
         int initialFoodListSize = FoodHandler.getStoreFoodList().size();
         foodController.deleteFood(food);
-        assertEquals(food, foodController.deleteFood(food));
         assertEquals(initialFoodListSize - 1, FoodHandler.getFoodList().size());
         assertFalse(FoodHandler.getFoodList().contains(food));
     }

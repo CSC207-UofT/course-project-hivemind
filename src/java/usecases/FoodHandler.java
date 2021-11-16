@@ -132,12 +132,13 @@ public class FoodHandler {
      * @param food The Food Object which is to be deleted
      * @return The Food Object deleted from the system
      */
-    public Food deleteFood(Food food) {
-        storeFoodList.remove(food);
-        return food;
+    public void deleteFood(Object food) {
+        Food item = (Food) food;
+        storeFoodList.remove(item);
     }
 
-    public String printFood(int number, Food food) {
+    public String printFood(int number, Object foods) {
+        Food food = (Food) foods;
         if (food instanceof PerishableFood) {
             String isExpired = "Not Expired";
             if (((PerishableFood) food).getExpiryStatus()){
