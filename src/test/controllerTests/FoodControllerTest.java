@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import controllers.FoodController;
 import org.junit.Test;
-import parsers.DataParser;
 import usecases.FoodHandler;
 
 
@@ -36,11 +35,11 @@ public class FoodControllerTest {
         foodData.add("Bread,,6,,slices,,2020,,10,,19");
         foodController.initialLoad(foodData);
         Food food = getFoodHelper("Shrimp", 0, foodController);
-        int initialFoodListSize = FoodHandler.getStoreFoodList().size();
+        int initialFoodListSize = FoodHandler.getStoreFoodListNameOnly().size();
         foodController.deleteFood(food);
         assertEquals(food, foodController.deleteFood(food));
-        assertEquals(initialFoodListSize - 1, FoodHandler.getFoodList().size());
-        assertFalse(FoodHandler.getFoodList().contains(food));
+        assertEquals(initialFoodListSize - 1, FoodHandler.getStoreFoodList().size());
+        assertFalse(FoodHandler.getStoreFoodList().contains(food));
     }
 
     @Test(timeout=1000)
