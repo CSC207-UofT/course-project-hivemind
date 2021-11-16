@@ -13,6 +13,53 @@ import java.time.LocalDate;
 
 
 public class FoodHandlerTest {
+
+    private ArrayList<ArrayList<String>> getFoodTestCases(){
+        ArrayList<ArrayList<String>> foods = new ArrayList<>();
+        //expired milk
+        ArrayList<String> milkArray = new ArrayList<>();
+        milkArray.add("Milk");
+        milkArray.add("3");
+        milkArray.add("cups");
+        milkArray.add("2020");
+        milkArray.add("10");
+        milkArray.add("10");
+        //expired bread
+        ArrayList<String> breadArray = new ArrayList<>();
+        breadArray.add("Bread");
+        breadArray.add("1");
+        breadArray.add("loaf");
+        breadArray.add("2020");
+        breadArray.add("10");
+        breadArray.add("11");
+        //nonperishable dried mango
+        ArrayList<String> driedMangoArray = new ArrayList<>();
+        driedMangoArray.add("Dried Mango");
+        driedMangoArray.add("1");
+        driedMangoArray.add("pound");
+        //fresh eggs
+        ArrayList<String> eggsArray = new ArrayList<>();
+        eggsArray.add("Eggs");
+        eggsArray.add("4");
+        eggsArray.add("dozen");
+        eggsArray.add("2022");
+        eggsArray.add("10");
+        eggsArray.add("11");
+        //nonperishable chocolate
+        ArrayList<String> chocolateArray = new ArrayList<>();
+        chocolateArray.add("Chocolate");
+        chocolateArray.add("2");
+        chocolateArray.add("cups");
+
+        foods.add(milkArray);
+        foods.add(breadArray);
+        foods.add(driedMangoArray);
+        foods.add(eggsArray);
+        foods.add(chocolateArray);
+
+        return foods;
+    }
+
     @Before
     public void setUp() {
     }
@@ -66,46 +113,19 @@ public class FoodHandlerTest {
     public void test_getPerishedFoods(){
         // Create expected value
         ArrayList<Food> expectedValue = new ArrayList<>();
-        ArrayList<String> milkArray = new ArrayList<>();
-        milkArray.add("Milk");
-        milkArray.add("3");
-        milkArray.add("cups");
-        milkArray.add("2020");
-        milkArray.add("10");
-        milkArray.add("10");
-        ArrayList<String> breadArray = new ArrayList<>();
-        breadArray.add("Bread");
-        breadArray.add("1");
-        breadArray.add("loaf");
-        breadArray.add("2020");
-        breadArray.add("10");
-        breadArray.add("11");
 
-
-        FoodHandler expectedFoodhandler = new FoodHandler();
-        expectedFoodhandler.createFood(milkArray);
-        expectedFoodhandler.createFood(breadArray);
+        FoodHandler expectedFoodHandler = new FoodHandler();
+        expectedFoodHandler.createFood(getFoodTestCases().get(0));
+        expectedFoodHandler.createFood(getFoodTestCases().get(1));
         expectedValue.add(getFoodHelper(0));
         expectedValue.add(getFoodHelper(1));
 
         // Create actual value
-        ArrayList<String> driedMangoArray = new ArrayList<>();
-        driedMangoArray.add("Dried Mango");
-        driedMangoArray.add("1");
-        driedMangoArray.add("pound");
-        ArrayList<String> eggsArray = new ArrayList<>();
-        eggsArray.add("Eggs");
-        eggsArray.add("4");
-        eggsArray.add("dozen");
-        eggsArray.add("2022");
-        eggsArray.add("10");
-        eggsArray.add("11");
-
         FoodHandler actualFoodhandler = new FoodHandler();
-        actualFoodhandler.createFood(milkArray);
-        actualFoodhandler.createFood(breadArray);
-        actualFoodhandler.createFood(driedMangoArray);
-        actualFoodhandler.createFood(eggsArray);
+        actualFoodhandler.createFood(getFoodTestCases().get(0));
+        actualFoodhandler.createFood(getFoodTestCases().get(1));
+        actualFoodhandler.createFood(getFoodTestCases().get(2));
+        actualFoodhandler.createFood(getFoodTestCases().get(3));
         ArrayList<Food> actualValue = actualFoodhandler.getPerishedFoods();
 
         assertEquals(expectedValue, actualValue);
@@ -138,38 +158,17 @@ public class FoodHandlerTest {
 
     @Test(timeout = 1000)
     public void test_getFoodList(){
-        // create sample data
         ArrayList<Food> expectedValue = new ArrayList<>();
-        ArrayList<String> milkArray = new ArrayList<>();
-        milkArray.add("Milk");
-        milkArray.add("3");
-        milkArray.add("cups");
-        milkArray.add("2020");
-        milkArray.add("10");
-        milkArray.add("10");
 
-        ArrayList<String> breadArray = new ArrayList<>();
-        breadArray.add("Bread");
-        breadArray.add("1");
-        breadArray.add("loaf");
-        breadArray.add("2020");
-        breadArray.add("10");
-        breadArray.add("11");
-
-        ArrayList<String> chocolateArray = new ArrayList<>();
-        chocolateArray.add("Chocolate");
-        chocolateArray.add("2");
-        chocolateArray.add("cups");
-
-        FoodHandler expectedFoodhandler = new FoodHandler();
-        expectedFoodhandler.createFood(milkArray);
-        expectedFoodhandler.createFood(breadArray);
-        expectedFoodhandler.createFood(chocolateArray);
+        FoodHandler expectedFoodHandler = new FoodHandler();
+        expectedFoodHandler.createFood(getFoodTestCases().get(0));
+        expectedFoodHandler.createFood(getFoodTestCases().get(1));
+        expectedFoodHandler.createFood(getFoodTestCases().get(4));
         expectedValue.add(getFoodHelper(0));
         expectedValue.add(getFoodHelper(1));
         expectedValue.add(getFoodHelper(2));
 
-        assertEquals(expectedValue, FoodHandler.getFoodList());
+        assertEquals(expectedValue, FoodHandler.getStoreFoodList());
     }
 
     private FoodController initialLoadFood(ArrayList<String> food){
@@ -179,7 +178,7 @@ public class FoodHandlerTest {
     }
 
     private Food getFoodHelper(Integer index) {
-        ArrayList<Food> food = FoodHandler.getFoodList();
+        ArrayList<Food> food = FoodHandler.getStoreFoodList();
         return (food.get(index));
     }
 

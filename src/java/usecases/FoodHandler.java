@@ -76,11 +76,11 @@ public class FoodHandler {
 
 
     /**
-     * Create a getter method so that RecipeHandler can access the array of foods storeFoodList.
+     * Create a getter method so that RecipeHandler can access the names of the array of foods, storeFoodList.
      *
      * @return an ArrayList of strings of all foods that is loaded in this handler
      */
-    public static ArrayList<String> getStoreFoodList(){
+    public static ArrayList<String> getStoreFoodListNameOnly(){
         ArrayList<String> names = new ArrayList<>();
         for(Food foodName : storeFoodList){
             names.add(foodName.getName());
@@ -93,9 +93,20 @@ public class FoodHandler {
      *
      * @return an ArrayList of foods of all foods that is loaded in this handler
      */
+    //TODO: (for Phase 2) figure out the difference between this method and getStoreFoodList and refactor appropriately
     public ArrayList<Food> getStoreFoodListFoods(){
         return new ArrayList<>(storeFoodList);
     }
+
+
+    /**
+     *
+     * @return an ArrayList containing all the Food Objects in our system
+     */
+    public static ArrayList<Food> getStoreFoodList(){
+        return storeFoodList;
+    }
+
 
     /**
      * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
@@ -117,14 +128,6 @@ public class FoodHandler {
             index++;
         }
         return foodList;
-    }
-
-    /**
-     *
-     * @return an ArrayList containing all the Food Objects in our system
-     */
-    public static ArrayList<Food> getFoodList(){
-        return storeFoodList;
     }
 
     /**
