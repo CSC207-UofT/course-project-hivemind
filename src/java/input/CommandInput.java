@@ -1,4 +1,5 @@
 package input;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.*;
@@ -16,7 +17,7 @@ public class CommandInput {
     private static Calendar dateNow = Calendar.getInstance();
 
     public static void main (String[] args) {
-        Scanner myObj = new Scanner(System.in);
+        Scanner inputScanner = new Scanner(System.in);
         String lastCommand;
 
         //enter preload here
@@ -42,9 +43,10 @@ public class CommandInput {
                 dateNow = Calendar.getInstance();
             }
             System.out.print("> ");
-            lastCommand = myObj.nextLine();
+            lastCommand = inputScanner.nextLine();
             parseInput(lastCommand);
         }
+        inputScanner.close();
         System.exit(0);
 
     }
@@ -85,7 +87,7 @@ public class CommandInput {
                 case "food":
                     switch (splitInput[1]) {
                         case "add":
-                            handleFood(splitInput);
+                            foodHelper();
                             break;
                         case "delete":
                             deleteFoodHelper();
@@ -275,19 +277,63 @@ public class CommandInput {
         return input.split(" ");
     }
 
-    public static void handleFood(String[] foodInfo) {
-        if (foodInfo.length > 5) {
+    public static void foodHelper() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter Food Name:");
+        System.out.print("> ");
+        String foodName = scan.nextLine();
+
+        System.out.println("Enter Quantity of Food (number)");
+        System.out.print("> ");
+        String foodQuant = scan.nextLine();
+
+        System.out.println("Enter Unit of Measurement:");
+        System.out.print("> ");
+        String foodUnit = scan.nextLine();
+
+        System.out.println("Enter the Expiry Date using format" +
+                " YYYY/MM/DD (leave this blank if this food is non-perishable");
+        System.out.print("> ");
+        String foodExpiry = scan.nextLine();
+
+        String[] foodInfo;
+
+        if (!foodExpiry.equals("")) {
+            try{
+                String[] expiryInfo = foodExpiry.split("/");
+                foodInfo = new String[]{foodName, foodQuant, foodUnit, expiryInfo[0], expiryInfo[1], expiryInfo[2]};
+            }
+            catch (Exception e){
+                System.out.println("Error in loading food, please make sure that the expiry date is either" +
+                        "blank, or follows the format \"YYYY/MM/DD\"");
+                return;
+            }
+        }
+        else {
+            foodInfo = new String[]{foodName, foodQuant, foodUnit};
+        }
+
+        try {
+            handleFoodHelper(foodInfo);
+            System.out.println("Food successfully added!");
+        } catch (Exception e){
+            System.out.println("Error in loading food");
+        }
+    }
+
+    public static void handleFoodHelper(String[] foodInfo) {
+        // helper function for foodHelper
+        if (foodInfo.length > 3) {
             try {
-                Double.parseDouble(foodInfo[3]);  // checks if all inputs are proper doubles for optional inputs
+                Double.parseDouble(foodInfo[1]);  // checks if all inputs are proper doubles for optional inputs
+                Double.parseDouble(foodInfo[3]);
+                Double.parseDouble(foodInfo[4]);
                 Double.parseDouble(foodInfo[5]);
-                Double.parseDouble(foodInfo[6]);
-                Double.parseDouble(foodInfo[7]);
 
-                ArrayList<String> foodInfoList = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(foodInfo, 2, 8)));
-                foodController.runFoodCreation(foodInfoList);
+                foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
 
-                DataParser.writeToFile(foodInfo[2] + ",," + foodInfo[3]+ ",," + foodInfo[4]+ ",,"+ foodInfo[5]+
-                        ",,"+ foodInfo[6]+ ",,"+ foodInfo[7], true);
+                DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+ ",," + foodInfo[2]+ ",,"+ foodInfo[3]+
+                        ",,"+ foodInfo[4]+ ",,"+ foodInfo[5], true);
             } catch (Exception e) {
                 System.out.println("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");
@@ -295,12 +341,11 @@ public class CommandInput {
         }
         else {
             try {
-                Double.parseDouble(foodInfo[3]);  // checks if all inputs are proper doubles
+                Double.parseDouble(foodInfo[1]);  // checks if all inputs are proper doubles
 
-                ArrayList<String> foodInfoList = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(foodInfo, 2, 5)));
-                foodController.runFoodCreation(foodInfoList);
+                foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
 
-                DataParser.writeToFile(foodInfo[2] + ",," + foodInfo[3]+ ",," + foodInfo[4], true);
+                DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+ ",," + foodInfo[2], true);
             } catch (Exception e) {
                 System.out.println("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");
