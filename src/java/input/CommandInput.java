@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.*;
 import controllers.FoodController;
 import controllers.RecipeController;
-import entities.Food;
 import parsers.DataParser;
 
 public class CommandInput {
@@ -49,16 +48,16 @@ public class CommandInput {
     }
 
     private static void alertExpiredFoods() {
-        ArrayList<Food> expiredFoodsList = foodController.checkPerishables();
+        ArrayList<String> expiredFoodsList = foodController.checkPerishables();
         if(expiredFoodsList.size() > 0){
             System.out.println("The following foods have expired: ");
             ArrayList<Object[]> parsedExpiredFoodsList = new ArrayList<>();
-            for (Food food : expiredFoodsList){
+            for (String food : expiredFoodsList){
                 Object[] parsedFood = new Object[1];
                 parsedFood[0] = food;
                 parsedExpiredFoodsList.add(parsedFood);
             }
-            printFoodInList(parsedExpiredFoodsList);
+            printFoodInList2(parsedExpiredFoodsList);
         }
         else{
             System.out.println("Your food is fresh and safe to consume.");
@@ -205,6 +204,21 @@ public class CommandInput {
         for (Object[] foods : foodList) {
             Object food = foods[0];
             System.out.println(foodController.printFood(index, food));
+            index++;
+        }
+    }
+
+    /**
+     * prints the foods in the given ArrayList of Object Arrays. Each object array contains a String Representation of
+     * food
+     * @param foodList an ArrayList of Object Arrays. Each object array contains a String representation of food
+     *                 at index 0
+     */
+    private static void printFoodInList2(ArrayList<Object[]> foodList) {
+        int index = 1;
+        for (Object[] foods : foodList) {
+            Object food = foods[0];
+            System.out.println(index + ": " + food);
             index++;
         }
     }

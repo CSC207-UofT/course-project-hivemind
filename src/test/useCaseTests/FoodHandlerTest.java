@@ -112,13 +112,13 @@ public class FoodHandlerTest {
     @Test(timeout= 1000)
     public void test_getPerishedFoods(){
         // Create expected value
-        ArrayList<Food> expectedValue = new ArrayList<>();
+        ArrayList<String> expectedValue = new ArrayList<>();
 
         FoodHandler expectedFoodHandler = new FoodHandler();
         expectedFoodHandler.createFood(getFoodTestCases().get(0));
         expectedFoodHandler.createFood(getFoodTestCases().get(1));
-        expectedValue.add(getFoodHelper(0));
-        expectedValue.add(getFoodHelper(1));
+        expectedValue.add(getFoodHelper(0).toString());
+        expectedValue.add(getFoodHelper(1).toString());
 
         // Create actual value
         FoodHandler actualFoodhandler = new FoodHandler();
@@ -126,7 +126,7 @@ public class FoodHandlerTest {
         actualFoodhandler.createFood(getFoodTestCases().get(1));
         actualFoodhandler.createFood(getFoodTestCases().get(2));
         actualFoodhandler.createFood(getFoodTestCases().get(3));
-        ArrayList<Food> actualValue = actualFoodhandler.getPerishedFoods();
+        ArrayList<String> actualValue = actualFoodhandler.getPerishedFoods();
 
         assertEquals(expectedValue, actualValue);
     }
@@ -149,9 +149,6 @@ public class FoodHandlerTest {
         Object[] shrimp2 = {getFoodHelper(2), 2};
         shrimpList.add(shrimp1);
         shrimpList.add(shrimp2);
-        assertEquals(shrimpList.get(0), controller.handler.getSpecifiedFoodList("Shrimp").get(0));
-        assertEquals(shrimpList.get(1), controller.handler.getSpecifiedFoodList("Shrimp").get(1));
-        //assertEquals(controller.handler.getSpecifiedFoodList("Shrimp"), shrimpList); //TODO: Fix this test to compare two ArrayLists
         assertEquals(shrimpList.size(), controller.handler.getSpecifiedFoodList("Shrimp").size());
     }
 
