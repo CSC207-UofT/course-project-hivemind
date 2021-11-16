@@ -72,7 +72,7 @@ public class RecipeHandler {
      *  3. Return the Recipe with the highest score.
      * @return An arraylist of sorted recipes
      */
-    public ArrayList<Recipe> recommendRecipe(int rank) {
+    public ArrayList<String> recommendRecipe(int rank) {
 
         // create a hashmap called rankTracker that keeps track of all the recipes and their score
         HashMap<Integer, ArrayList<Recipe>> RankTracker = new HashMap<>();
@@ -115,7 +115,12 @@ public class RecipeHandler {
             // pop rank number of times to get rank number of items.
             RecommendedRecipe.add(rankTrackerStack.pop());
         }
-        return RecommendedRecipe;
+        ArrayList<String> out = new ArrayList<>();
+        for (Recipe recipe : RecommendedRecipe) {
+            out.add(recipe.toString());
+        }
+
+        return out;
     }
 
     private Stack<Recipe> makeStack(HashMap<Integer, ArrayList<Recipe>> RankTracker) {

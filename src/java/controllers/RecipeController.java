@@ -1,7 +1,6 @@
 package controllers;
 import java.util.*;
 
-import entities.Recipe;
 import usecases.RecipeHandler;
 
 public class RecipeController {
@@ -51,7 +50,7 @@ public class RecipeController {
      *
      * @return an ArrayList of sorted recommended recipes.
      */
-    public ArrayList<Recipe> recommendRecipe (int amount) {
+    public ArrayList<String> recommendRecipe (int amount) {
         return handler.recommendRecipe(amount);
     }
 }
