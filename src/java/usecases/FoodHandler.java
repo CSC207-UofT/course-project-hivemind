@@ -61,13 +61,13 @@ public class FoodHandler {
      * expired_foods.
      * @return expired_foods the ArrayList that lists all the expired foods.
      */
-    public ArrayList<Food> getPerishedFoods(){
-        ArrayList<Food> expired_foods = new ArrayList<>();
+    public ArrayList<String> getPerishedFoods(){
+        ArrayList<String> expired_foods = new ArrayList<>();
         for (Food food:storeFoodList){
             if (food instanceof PerishableFood){
                 PerishableFood new_food = (PerishableFood)food;
                 if (new_food.getExpiryStatus()){
-                    expired_foods.add(new_food);
+                    expired_foods.add(new_food.toString());
                 }
             }
         }
@@ -133,7 +133,6 @@ public class FoodHandler {
     /**
      * Deletes a Food object from storeFoodList
      * @param food The Food Object which is to be deleted
-     * @return The Food Object deleted from the system
      */
     public void deleteFood(Object food) {
         Food item = (Food) food;

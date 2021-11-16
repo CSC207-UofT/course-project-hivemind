@@ -42,8 +42,8 @@ public class FoodController {
              this.handler.initialLoad(this.foodList);
     }
 
-    public ArrayList<Food> checkPerishables(){
-        ArrayList<Food> expired_foods = this.handler.getPerishedFoods();
+    public ArrayList<String> checkPerishables(){
+        ArrayList<String> expired_foods = this.handler.getPerishedFoods();
         if(expired_foods.size() > 0){
             return expired_foods;
         }
@@ -66,7 +66,6 @@ public class FoodController {
     /**
      * Deletes a food object from the system
      * @param food the food object which is to be deleted
-     * @return the deleted food object
      */
     public void deleteFood(Object food) {
         this.handler.deleteFood(food);
