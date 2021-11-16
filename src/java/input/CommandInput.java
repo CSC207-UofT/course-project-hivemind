@@ -46,6 +46,7 @@ public class CommandInput {
             lastCommand = inputScanner.nextLine();
             parseInput(lastCommand);
         }
+        inputScanner.close();
         System.exit(0);
 
     }
@@ -194,7 +195,6 @@ public class CommandInput {
             System.out.println("An error occurred, did not successfully delete food. " +
                     "Please verify that all arguments are of the proper data type and format");
         }
-        scanner.close();
     }
 
     /**
@@ -271,7 +271,6 @@ public class CommandInput {
         else{
             System.out.println("An error has occurred, did not successfully add recipe");
         }
-        scan.close();
     }
 
     public static String[] parseInputHelper(String input) {
@@ -297,16 +296,29 @@ public class CommandInput {
         System.out.print("> ");
         String foodExpiry = scan.nextLine();
 
-        String[] expiryInfo = foodExpiry.split("/");
+        String[] foodInfo;
 
-        String[] foodInfo = {foodName, foodQuant, foodUnit, expiryInfo[0], expiryInfo[1], expiryInfo[2]};
+        if (!foodExpiry.equals("")) {
+            try{
+                String[] expiryInfo = foodExpiry.split("/");
+                foodInfo = new String[]{foodName, foodQuant, foodUnit, expiryInfo[0], expiryInfo[1], expiryInfo[2]};
+            }
+            catch (Exception e){
+                System.out.println("Error in loading food, please make sure that the expiry date is either" +
+                        "blank, or follows the format \"YYYY/MM/DD\"");
+                return;
+            }
+        }
+        else {
+            foodInfo = new String[]{foodName, foodQuant, foodUnit};
+        }
 
         try {
             handleFoodHelper(foodInfo);
+            System.out.println("Food successfully added!");
         } catch (Exception e){
             System.out.println("Error in loading food");
         }
-        scan.close();
     }
 
     public static void handleFoodHelper(String[] foodInfo) {
