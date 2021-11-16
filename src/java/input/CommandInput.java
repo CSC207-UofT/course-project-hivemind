@@ -6,7 +6,6 @@ import controllers.FoodController;
 import controllers.RecipeController;
 import entities.Food;
 import entities.PerishableFood;
-import entities.Recipe;
 import parsers.DataParser;
 
 public class CommandInput {
@@ -108,8 +107,8 @@ public class CommandInput {
                     if (splitInput[1].equals("search")) {
                         try{
                             int amount = Integer.parseInt(splitInput[2]);
-                            for(Recipe r: recipeController.recommendRecipe(amount)){
-                                System.out.println(r);
+                            for(int i = 0; i < recipeController.recommendRecipe(amount).size(); i++){
+                                System.out.println(recipeController.recommendRecipe(amount).get(i));
                                 System.out.println(" ");
                             }
                         } catch (ArrayIndexOutOfBoundsException e) {
