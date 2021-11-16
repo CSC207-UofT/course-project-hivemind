@@ -136,4 +136,24 @@ public class FoodHandler {
         storeFoodList.remove(food);
         return food;
     }
+
+    public String printFood(int number, Food food) {
+        if (food instanceof PerishableFood) {
+            String isExpired = "Not Expired";
+            if (((PerishableFood) food).getExpiryStatus()){
+                isExpired = "Expired";
+            }
+            String perishableFood = "";
+            perishableFood = perishableFood + number + ". Food Name: " + food.getName() + ", Quantity: " +
+                    food.getQuantity() + ", Unit: " + food.getUnit() + ", Expiry Date: " +
+                    ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired;
+            return perishableFood;
+        }
+        else {
+            String nonPerishableFood = "";
+            nonPerishableFood = nonPerishableFood + number + ". Food Name: " + food.getName() + ", Quantity: " +
+                    food.getQuantity() + ", Unit: " + food.getUnit();
+            return nonPerishableFood;
+        }
+    }
 }

@@ -84,5 +84,8 @@ public class FoodController {
         return foodStrLst;
     }
 
+    public String printFood(int index, Food food) {
+        return handler.printFood(index, food);
+    }
 }
 
