@@ -19,7 +19,7 @@ public class CommandInput {
         //enter preload here
         try {
             ArrayList<String> foodData = DataParser.readFile(true);
-            foodController.initialLoad(foodData);
+            foodController.loadFoodFromList(foodData);
             ArrayList<String> recipeData = DataParser.readFile(false);
             recipeController.initialLoad(recipeData);
             userHelper();
@@ -48,7 +48,7 @@ public class CommandInput {
     }
 
     private static void alertExpiredFoods() {
-        ArrayList<String> expiredFoodsList = foodController.checkPerishables();
+        List<String> expiredFoodsList = foodController.checkPerishables();
         if(expiredFoodsList.size() > 0){
             System.out.println("The following foods have expired: ");
             ArrayList<Object[]> parsedExpiredFoodsList = new ArrayList<>();
@@ -169,7 +169,7 @@ public class CommandInput {
         System.out.println("Enter Food Name To Delete:");
         System.out.print("> ");
         String foodName = scanner.nextLine();
-        ArrayList<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
+        List<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
 
         try {
             if (foodList.size() == 0){
@@ -199,7 +199,7 @@ public class CommandInput {
      * @param foodList an ArrayList of Object Arrays. Each object array contains a food object at index 0,
      * and the food's index in fooddata at index 1
      */
-    private static void printFoodInList(ArrayList<Object[]> foodList) {
+    private static void printFoodInList(List<Object[]> foodList) {
         int index = 1;
         for (Object[] foods : foodList) {
             Object food = foods[0];

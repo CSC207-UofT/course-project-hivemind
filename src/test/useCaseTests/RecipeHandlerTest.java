@@ -46,7 +46,7 @@ public class RecipeHandlerTest {
         foodData.add("food2,,1,,cup");
         foodData.add("food3,,1,,cup");
         foodData.add("item1,,1,,cup");
-        foodController.initialLoad(foodData);
+        foodController.loadFoodFromList(foodData);
 
         ArrayList<String> recipeData = new ArrayList<>();
         recipeData.add("Test Recipe 1,,ingredient1,,1,,cup,,ingredient2,,1,,cup,,ingredient3,,1,,cup,,ingredient4,,1,,cup,,1. Cook it somehow. 2. Try to eat it");
@@ -82,7 +82,7 @@ public class RecipeHandlerTest {
         foodData.add("egg yolk,,1,,unit");
         foodData.add("chocolate chips,,2,,cups");
 
-        foodController.initialLoad(foodData);
+        foodController.loadFoodFromList(foodData);
 
         ArrayList<String> recipeData = DataParser.readFile(false);
         recipeController.initialLoad(recipeData);
