@@ -17,7 +17,10 @@ public class RecipeHandler {
         this.recipeHandlerRecipeList = new ArrayList<>();
     }
 
-
+    /**
+     * TODO: Add documentation
+     * @return
+     */
     public int getRecipes(){
         return recipeHandlerRecipeList.size();
     }
@@ -72,6 +75,7 @@ public class RecipeHandler {
      *  3. Return the Recipe with the highest score.
      * @return An arraylist of sorted recipes
      */
+    // TODO: split this up maybe, might be good to write a new class for this
     public ArrayList<String> recommendRecipe(int rank) {
 
         // create a hashmap called rankTracker that keeps track of all the recipes and their score
@@ -123,6 +127,11 @@ public class RecipeHandler {
         return out;
     }
 
+    /**
+     * TODO: Add documentation
+     * @param RankTracker
+     * @return
+     */
     private Stack<Recipe> makeStack(HashMap<Integer, ArrayList<Recipe>> RankTracker) {
         TreeSet<Integer> sortedRanks = new TreeSet<>(RankTracker.keySet());
         Stack<Recipe> recipeStack = new Stack<>();
@@ -135,11 +144,20 @@ public class RecipeHandler {
         return recipeStack;
     }
 
-
+    /**
+     * TODO: Add documentation
+     * @param currentRecipe
+     * @return
+     */
     private Set<String> getIngredients(Recipe currentRecipe) {
         return currentRecipe.getIngredients().keySet();
     }
 
+    /**
+     * TODO: add documentation
+     * @param currentIngredient
+     * @return
+     */
     private boolean recipeDoesContain(String currentIngredient) {
         ArrayList<String> out = new ArrayList<>();
 

@@ -1,6 +1,6 @@
 package controllers;
 
-import entities.Food;
+
 import usecases.FoodHandler;
 
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ public class FoodController {
      *
      * @param food the food object represented as an array list e.g ["Potato", "2.000", "grams"]
      */
-
     public void runFoodCreation(ArrayList<String> food) {
         // Note: hands off the work to the use case class.
         this.handler.createFood(food);
@@ -42,6 +41,10 @@ public class FoodController {
              this.handler.initialLoad(this.foodList);
     }
 
+    /**
+     * TODO: add documentation
+     * @return
+     */
     public ArrayList<String> checkPerishables(){
         ArrayList<String> expired_foods = this.handler.getPerishedFoods();
         if(expired_foods.size() > 0){
@@ -72,17 +75,19 @@ public class FoodController {
     }
 
     /**
-     * Convert all foods to string form from FoodHandler
+     * Return full string form of all foods stored in the handler by calling getAllFoodString from the FoodHandler class
      * @return an arraylist of all foods in string form
      */
     public ArrayList<String> allFoodToString(){
-        ArrayList<String> foodStrLst = new ArrayList<>();
-        for (Food foodObjects: this.handler.getStoreFoodListFoods()){
-            foodStrLst.add(foodObjects.toString());
-        }
-        return foodStrLst;
+        return this.handler.getAllFoodFullString();
     }
 
+    /**
+     * TODO: add documentation
+     * @param index
+     * @param food
+     * @return
+     */
     public String printFood(int index, Object food) {
         return handler.printFood(index, food);
     }
