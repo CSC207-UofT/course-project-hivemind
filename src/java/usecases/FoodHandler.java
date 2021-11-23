@@ -19,7 +19,7 @@ public class FoodHandler {
 
     /**
      * Create a Food object (Perishable or NonPerishable) based on single_array.
-     *
+     * TODO: Extend on this?
      * @param single_array An ArrayList that is in the format of [food name, quantity, measurement(, day, month, year)]
      */
     public void createFood(ArrayList<String> single_array){
@@ -47,7 +47,6 @@ public class FoodHandler {
 
     /**
      * Creates PerishableFood and NonPerishableFood items from an Array of Array of Strings.
-     *
      * @param multi_array an arraylist of arraylist of strings for creating food
      */
     public void initialLoad(ArrayList<ArrayList<String>> multi_array){
@@ -77,7 +76,6 @@ public class FoodHandler {
 
     /**
      * Create a getter method so that RecipeHandler can access the names of the array of foods, storeFoodList.
-     *
      * @return an ArrayList of strings of all foods that is loaded in this handler
      */
     public static ArrayList<String> getStoreFoodListNameOnly(){
@@ -89,18 +87,20 @@ public class FoodHandler {
     }
 
     /**
-     * Create a getter method so that RecipeHandler can access the array of foods storeFoodList.
-     *
+     * Getter method for returning list of all foods in string form
      * @return an ArrayList of foods of all foods that is loaded in this handler
      */
-    //TODO: (for Phase 2) figure out the difference between this method and getStoreFoodList and refactor appropriately
-    public ArrayList<Food> getStoreFoodListFoods(){
-        return new ArrayList<>(storeFoodList);
+    public ArrayList<String> getAllFoodFullString(){
+        ArrayList<String> foodStrLst = new ArrayList<>();
+        for (Food foodObjects: getStoreFoodList()){
+            foodStrLst.add(foodObjects.toString());
+        }
+        return foodStrLst;
     }
 
 
     /**
-     *
+     * Getter method for returning Arraylist of all food objects stored
      * @return an ArrayList containing all the Food Objects in our system
      */
     public static ArrayList<Food> getStoreFoodList(){
@@ -139,6 +139,12 @@ public class FoodHandler {
         storeFoodList.remove(item);
     }
 
+    /**
+     * TODO : Write documentation for this
+     * @param number
+     * @param foods
+     * @return
+     */
     public String printFood(int number, Object foods) {
         Food food = (Food) foods;
         if (food instanceof PerishableFood) {

@@ -59,7 +59,7 @@ public class FoodControllerTest {
         food.add("2.000");
         food.add("grams");
         foodController.runFoodCreation(food);
-        assertEquals(1, foodController.handler.getStoreFoodListFoods().size());
+        assertEquals(1, foodController.handler.getAllFoodFullString().size());
         assertFalse(foodController.foodList.contains(food));
     }
 
