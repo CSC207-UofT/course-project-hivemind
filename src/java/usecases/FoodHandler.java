@@ -82,7 +82,7 @@ public class FoodHandler {
     public static ArrayList<String> getStoreFoodListNameOnly(){
         ArrayList<String> names = new ArrayList<>();
         for(Food foodName : storeFoodList){
-            names.add(foodName.getName());
+            names.add(foodName.getFoodName());
         }
         return names;
     }
@@ -120,7 +120,7 @@ public class FoodHandler {
         ArrayList<Object[]> foodList = new ArrayList<>();
         int index = 0;
         for (Food foods : storeFoodList) {
-            String lowerFoodgetName = foods.getName().toLowerCase(Locale.ROOT);
+            String lowerFoodgetName = foods.getFoodName().toLowerCase(Locale.ROOT);
             String lowerFoodName = foodName.toLowerCase(Locale.ROOT);
             if (Objects.equals(lowerFoodgetName, lowerFoodName)) {
                 Object[] food = {foods, index};
@@ -154,15 +154,15 @@ public class FoodHandler {
                 isExpired = "Expired";
             }
             String perishableFood = "";
-            perishableFood = perishableFood + number + ". Food Name: " + food.getName() + ", Quantity: " +
-                    food.getQuantity() + ", Unit: " + food.getUnit() + ", Expiry Date: " +
+            perishableFood = perishableFood + number + ". Food Name: " + food.getFoodName() + ", Quantity: " +
+                    food.getFoodQuantity() + ", Unit: " + food.getFoodUnit() + ", Expiry Date: " +
                     ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired;
             return perishableFood;
         }
         else {
             String nonPerishableFood = "";
-            nonPerishableFood = nonPerishableFood + number + ". Food Name: " + food.getName() + ", Quantity: " +
-                    food.getQuantity() + ", Unit: " + food.getUnit();
+            nonPerishableFood = nonPerishableFood + number + ". Food Name: " + food.getFoodName() + ", Quantity: " +
+                    food.getFoodQuantity() + ", Unit: " + food.getFoodUnit();
             return nonPerishableFood;
         }
     }
