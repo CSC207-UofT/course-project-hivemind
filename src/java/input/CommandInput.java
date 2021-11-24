@@ -1,4 +1,5 @@
 package input;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.*;
@@ -18,9 +19,9 @@ public class CommandInput {
 
         //enter preload here
         try {
-            ArrayList<String> foodData = DataParser.readFile(true);
+            ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
             foodController.loadFoodFromList(foodData);
-            ArrayList<String> recipeData = DataParser.readFile(false);
+            ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
             recipeController.initialLoad(recipeData);
             userHelper();
             alertExpiredFoods();
@@ -249,7 +250,7 @@ public class CommandInput {
 
         try {
             String s = ingredientString.replace(" ", ",,");
-            DataParser.writeToFile(recipeName + ",," + s + ",," + instructions, false);
+            DataParser.writeToFile(recipeName + ",," + s + ",," + instructions, DataParser.RECIPE_FILE);
             System.out.println("Saved to file successfully.");
         } catch (Exception e){
             System.out.println("error in saving");
@@ -276,6 +277,10 @@ public class CommandInput {
         System.out.println("Enter Quantity of Food (number)");
         System.out.print("> ");
         String foodQuant = scan.nextLine();
+        if (!testIsDouble(foodQuant)) {
+            System.out.println("Please make sure that the input is a number, and try again.");
+            return;
+        }
 
         System.out.println("Enter Unit of Measurement:");
         System.out.print("> ");
@@ -303,43 +308,69 @@ public class CommandInput {
             foodInfo = new String[]{foodName, foodQuant, foodUnit};
         }
 
-        try {
-            handleFoodHelper(foodInfo);
-            System.out.println("Food successfully added!");
-        } catch (Exception e){
-            System.out.println("Error in loading food");
+        if (handleFoodHelper(foodInfo)) {
+            System.out.println("Food added successfully!");
         }
     }
 
-    public static void handleFoodHelper(String[] foodInfo) {
+    public static boolean handleFoodHelper(String[] foodInfo) {
         // helper function for foodHelper
         if (foodInfo.length > 3) {
-            try {
-                Double.parseDouble(foodInfo[1]);  // checks if all inputs are proper doubles for optional inputs
-                Double.parseDouble(foodInfo[3]);
-                Double.parseDouble(foodInfo[4]);
-                Double.parseDouble(foodInfo[5]);
+            if (testIsDouble(foodInfo[1]) && testIsDouble(foodInfo[3]) && testIsDouble(foodInfo[5])
+                    && testIsDouble(foodInfo[5])) {
 
-                foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
-
-                DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+ ",," + foodInfo[2]+ ",,"+ foodInfo[3]+
-                        ",,"+ foodInfo[4]+ ",,"+ foodInfo[5], true);
-            } catch (Exception e) {
+                try {
+                    foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
+                    DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1] + ",," + foodInfo[2] + ",," + foodInfo[3] +
+                            ",," + foodInfo[4] + ",," + foodInfo[5], DataParser.FOOD_FILE);
+                }
+                catch (IOException e) {
+                    System.out.println("An error has occurred and the food could not be saved at this time." +
+                            "  Please try again later");
+                }
+            }
+            else {
                 System.out.println("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");
+                return false;
             }
+            return true;
         }
         else {
-            try {
-                Double.parseDouble(foodInfo[1]);  // checks if all inputs are proper doubles
+            if (testIsDouble(foodInfo[1])) {
 
-                foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
+                try {
+                    foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
+                    DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+
+                            ",," + foodInfo[2], DataParser.FOOD_FILE);
+                }
+                catch (IOException e) {
+                    System.out.println("An error has occurred and the food could not be saved at this time." +
+                            "  Please try again later");
+                }
 
-                DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+ ",," + foodInfo[2], true);
-            } catch (Exception e) {
+            }
+            else {
                 System.out.println("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");
+                return false;
             }
+            return true;
+        }
+    }
+
+    /**
+     *
+     * @param testString the string to be tested
+     * @return whether the string can be parsed to a double
+     */
+    public static boolean testIsDouble(String testString) {
+        try {
+            Double.parseDouble(testString);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
         }
     }
 }
