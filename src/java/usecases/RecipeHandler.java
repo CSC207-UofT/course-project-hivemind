@@ -18,16 +18,15 @@ public class RecipeHandler {
     }
 
     /**
-     * TODO: Add documentation
-     * @return
+     * A method that gets the number of recipes in the recipeHandlerList
+     * @return The size of the recipeHandlerList: the list of all recipes in the csv
      */
-    public int getRecipes(){
+    public int getRecipeSize(){
         return recipeHandlerRecipeList.size();
     }
 
     /**
      * Initialize recipe objects for each ArrayList in the overall ArrayList
-     *
      * @param ListOfRecipes An arraylist of all arraylist of strings that can be used to create recipe objects
      */
     public void initializeRecipe(ArrayList<ArrayList<String>> ListOfRecipes) {
@@ -128,9 +127,9 @@ public class RecipeHandler {
     }
 
     /**
-     * TODO: Add documentation
-     * @param RankTracker
-     * @return
+     * A helper method for recommend recipe that creates a stack out of the given arrayList of recipes
+     * @param RankTracker a Hashmap of int ratings as its key, and an arrayList of recipe for that score as its value.
+     * @return A stack of recipes with the most desired recipe at the top of the stack
      */
     private Stack<Recipe> makeStack(HashMap<Integer, ArrayList<Recipe>> RankTracker) {
         TreeSet<Integer> sortedRanks = new TreeSet<>(RankTracker.keySet());
@@ -145,18 +144,18 @@ public class RecipeHandler {
     }
 
     /**
-     * TODO: Add documentation
-     * @param currentRecipe
-     * @return
+     * A helper method that gets the set of ingredients from a given recipe
+     * @param currentRecipe A recipe from the csv
+     * @return A set of strings containing all the recipes the food needs.
      */
     private Set<String> getIngredients(Recipe currentRecipe) {
         return currentRecipe.getIngredients().keySet();
     }
 
     /**
-     * TODO: add documentation
-     * @param currentIngredient
-     * @return
+     * A helper method that checks whether a recipe contains a specific ingredient
+     * @param currentIngredient takes in the current ingredient checked to see if it is contained by any recipes
+     * @return boolean to indicate the presence of the particular recipe.
      */
     private boolean recipeDoesContain(String currentIngredient) {
         ArrayList<String> out = new ArrayList<>();

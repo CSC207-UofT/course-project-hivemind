@@ -30,7 +30,7 @@ public class RecipeHandlerTest {
         ArrayList<String> lst = new ArrayList<>(Arrays.asList("sugar", "1", "unit", "butter", "1", "unit"));
         handler.addOneRecipe("pie", lst, "cook");
 
-        assertEquals(handler.getRecipes(), 1);
+        assertEquals(handler.getRecipeSize(), 1);
     }
     @Test(timeout = 1000)
     public void test_recommendRecipe() {
