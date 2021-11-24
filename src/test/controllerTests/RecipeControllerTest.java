@@ -20,8 +20,12 @@ public class RecipeControllerTest {
     RecipeController c = new RecipeController();
 
     @Test
-    public void test_addRecipe_simple(){
+    public void testAddRecipeSimple(){
         assertTrue(c.addRecipe("test", "sugar 1 unit", "cook"));
     }
 
+    @Test(timeout=1000)
+    public void testAddRecipe(){
+
+    }
 }
