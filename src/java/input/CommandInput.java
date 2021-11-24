@@ -18,9 +18,9 @@ public class CommandInput {
 
         //enter preload here
         try {
-            ArrayList<String> foodData = DataParser.readFile(true);
+            ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
             foodController.loadFoodFromList(foodData);
-            ArrayList<String> recipeData = DataParser.readFile(false);
+            ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
             recipeController.initialLoad(recipeData);
             userHelper();
             alertExpiredFoods();
@@ -249,7 +249,7 @@ public class CommandInput {
 
         try {
             String s = ingredientString.replace(" ", ",,");
-            DataParser.writeToFile(recipeName + ",," + s + ",," + instructions, false);
+            DataParser.writeToFile(recipeName + ",," + s + ",," + instructions, DataParser.RECIPE_FILE);
             System.out.println("Saved to file successfully.");
         } catch (Exception e){
             System.out.println("error in saving");
@@ -323,7 +323,7 @@ public class CommandInput {
                 foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
 
                 DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+ ",," + foodInfo[2]+ ",,"+ foodInfo[3]+
-                        ",,"+ foodInfo[4]+ ",,"+ foodInfo[5], true);
+                        ",,"+ foodInfo[4]+ ",,"+ foodInfo[5], DataParser.FOOD_FILE);
             } catch (Exception e) {
                 System.out.println("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");
@@ -335,7 +335,7 @@ public class CommandInput {
 
                 foodController.runFoodCreation(new ArrayList<>(Arrays.asList(foodInfo)));
 
-                DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+ ",," + foodInfo[2], true);
+                DataParser.writeToFile(foodInfo[0] + ",," + foodInfo[1]+ ",," + foodInfo[2], DataParser.FOOD_FILE);
             } catch (Exception e) {
                 System.out.println("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");

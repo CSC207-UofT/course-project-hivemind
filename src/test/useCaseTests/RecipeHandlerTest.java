@@ -33,7 +33,7 @@ public class RecipeHandlerTest {
         assertEquals(handler.getRecipes(), 1);
     }
     @Test(timeout = 1000)
-    public void test_recommendRecipe() throws IOException {
+    public void test_recommendRecipe() {
         FoodController foodController = new FoodController();
         RecipeController recipeController = new RecipeController();
         ArrayList<String> foodData = new ArrayList<>();
@@ -84,7 +84,7 @@ public class RecipeHandlerTest {
 
         foodController.loadFoodFromList(foodData);
 
-        ArrayList<String> recipeData = DataParser.readFile(false);
+        ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
         recipeController.initialLoad(recipeData);
         ArrayList<Recipe> recipes = recipeController.handler.getAllRecipes();
         String name = "Best Big Chewy Chocolate Chip Cookies";
