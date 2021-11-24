@@ -27,8 +27,14 @@ public class PerishableFood extends Food {
      */
     @Override
     public String toString(){
-        return this.name + ": " + this.quantity.toString() + " " + this.unit + ", Expires on: " +
-                this.expiryDate.toString();
+        if (isExpired == Boolean.TRUE){
+            return this.name + ": " + this.quantity.toString() + " " + this.unit + ", Expired on: " +
+                    this.expiryDate.toString();
+        }
+        else{
+            return this.name + ": " + this.quantity.toString() + " " + this.unit + ", Expires on: " +
+                    this.expiryDate.toString();
+        }
     }
 
     /**
