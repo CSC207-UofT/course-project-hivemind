@@ -3,6 +3,9 @@ package entities;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Represents a single Perishable Food
+ */
 public class PerishableFood extends Food {
     private boolean isExpired;
     private final LocalDate expiryDate;
@@ -23,7 +26,7 @@ public class PerishableFood extends Food {
 
     /**
      * Return the string representation of this perishable food object
-     * @return String of desired perishable food item to string
+     * @return String of desired perishable food item
      */
     @Override
     public String toString(){
@@ -33,7 +36,8 @@ public class PerishableFood extends Food {
 
     /**
      * Override the equals method to check content equality, rather than identity equality.
-     * @return Boolean
+     * @param obj The object which is to be compared to NonPerishableFood.
+     * @return True if the content in obj is equivalent to NonPerishableFood. False otherwise.
      */
     @Override
     public boolean equals(Object obj){
@@ -62,18 +66,8 @@ public class PerishableFood extends Food {
     }
 
     /**
-     * Update the expiry status of the PerishableFood
-     *
-     * @return True if the PerishableFood is expired.
-     */
-    private boolean updateExpired() {
-        LocalDate today = LocalDate.now();
-        return today.isAfter(expiryDate);
-    }
-
-    /**
      * Return the expiry status of the PerishableFood
-     * @return True if the PerishableFood is expired
+     * @return True if the PerishableFood is expired. False otherwise.
      */
     public boolean getExpiryStatus() {
         return this.isExpired;
@@ -85,5 +79,14 @@ public class PerishableFood extends Food {
      */
     public LocalDate getExpiryDate() {
         return this.expiryDate;
+    }
+
+    /**
+     * Update the expiry status of the PerishableFood
+     * @return True if the PerishableFood is expired.False otherwise.
+     */
+    private boolean updateExpired() {
+        LocalDate today = LocalDate.now();
+        return today.isAfter(expiryDate);
     }
 }
