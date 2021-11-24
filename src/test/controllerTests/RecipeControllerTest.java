@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import controllers.RecipeController;
 import org.junit.Test;
+import usecases.RecipeHandler;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +26,9 @@ public class RecipeControllerTest {
     }
 
     @Test(timeout=1000)
-    public void testAddRecipe(){
+    public void testAddRecipeInHandler(){
+        assertTrue(c.addRecipe("test", "sugar 1 unit", "cook"));
+        RecipeHandler h = c.handler;
 
     }
 }
