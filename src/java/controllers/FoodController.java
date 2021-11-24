@@ -5,9 +5,10 @@ import usecases.FoodHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FoodController {
-    public final ArrayList<ArrayList<String>> foodList;
+    public final ArrayList<List<String>> foodList;
     public final FoodHandler handler;
 
     public FoodController() {
@@ -20,7 +21,7 @@ public class FoodController {
      *
      * @param food the food object represented as an array list e.g ["Potato", "2.000", "grams"]
      */
-    public void runFoodCreation(ArrayList<String> food) {
+    public void runFoodCreation(List<String> food) {
         // Note: hands off the work to the use case class.
         this.handler.createFood(food);
         // createFood will return true or false depending on whether the food has been made
@@ -31,22 +32,26 @@ public class FoodController {
      *
      * @param foodStringList an ArrayList of String representations of food
      */
-    public void initialLoad(ArrayList<String> foodStringList) {
+    public void loadFoodFromList(List<String> foodStringList) {
 
             for (String s : foodStringList) {
                 String[] lst = s.split(",,");
-                ArrayList<String> lst2 = new ArrayList<>(Arrays.asList(lst));
+                List<String> lst2 = new ArrayList<>(Arrays.asList(lst));
+                // add each string representation of food to the controller's food list
                 this.foodList.add(lst2);
             }
+            // let the food handler load the controller food list
              this.handler.initialLoad(this.foodList);
     }
 
     /**
-     * TODO: add documentation
-     * @return
+     * Check and let command input know if stored food objects have expired
+     * @return an array list of string representations of the expired foods, or an empty array list if
+     * there are no expired foods
      */
-    public ArrayList<String> checkPerishables(){
-        ArrayList<String> expired_foods = this.handler.getPerishedFoods();
+    public List<String> checkPerishables(){
+        /* handler will return an array list of the perished foods */
+        List<String> expired_foods = this.handler.getPerishedFoods();
         if(expired_foods.size() > 0){
             return expired_foods;
         }
@@ -62,7 +67,7 @@ public class FoodController {
      * @return an array list of object arrays. Each object array contains a food object matching the name specified by
      * parameter foodName at index 0, and the food's index in fooddata at index 1
      */
-    public ArrayList<Object[]> getSpecifiedFoodList(String foodName){
+    public List<Object[]> getSpecifiedFoodList(String foodName){
         return this.handler.getSpecifiedFoodList(foodName);
     }
 
@@ -78,7 +83,7 @@ public class FoodController {
      * Return full string form of all foods stored in the handler by calling getAllFoodString from the FoodHandler class
      * @return an arraylist of all foods in string form
      */
-    public ArrayList<String> allFoodToString(){
+    public List<String> allFoodToString(){
         return this.handler.getAllFoodFullString();
     }
 

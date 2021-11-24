@@ -23,4 +23,5 @@ public class RecipeControllerTest {
     public void test_addRecipe_simple(){
         assertTrue(c.addRecipe("test", "sugar 1 unit", "cook"));
     }
+
 }

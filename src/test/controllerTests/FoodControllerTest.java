@@ -7,6 +7,7 @@ import org.junit.Test;
 import usecases.FoodHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -25,12 +26,12 @@ public class FoodControllerTest {
 
 
     @Test(timeout=1000)
-    public void test_deleteFood() {
+    public void testDeleteFood() {
         FoodController foodController = new FoodController();
         ArrayList<String> foodData = new ArrayList<>();
         foodData.add("Shrimp,,2,,cups");
         foodData.add("Bread,,6,,slices,,2020,,10,,19");
-        foodController.initialLoad(foodData);
+        foodController.loadFoodFromList(foodData);
         Object food = getFoodHelper(foodController);
         int initialFoodListSize = FoodHandler.getStoreFoodListNameOnly().size();
         foodController.deleteFood(food);
@@ -38,21 +39,21 @@ public class FoodControllerTest {
     }
 
     @Test(timeout=1000)
-    public void test_checkPerishables() {
+    public void testCheckPerishables() {
         FoodController foodController = new FoodController();
         ArrayList<String> foodData = new ArrayList<>();
         foodData.add("Shrimp,,2,,cups,,2020,,10,,19");
         foodData.add("Bread,,6,,slices,,2020,,10,,19");
-        foodController.initialLoad(foodData);
+        foodController.loadFoodFromList(foodData);
         Object food = getFoodHelper(foodController);
-        ArrayList<String> foodList = foodController.checkPerishables();
+        List<String> foodList = foodController.checkPerishables();
         int perishedFoodNumber = foodList.size();
         assertEquals(perishedFoodNumber, foodController.checkPerishables().size());
         assertTrue(foodList.contains(food.toString()));
     }
 
     @Test(timeout=1000)
-    public void test_runFoodCreation() {
+    public void testRunFoodCreation() {
         FoodController foodController = new FoodController();
         ArrayList<String> food = new ArrayList<>();
         food.add("Potato");
@@ -64,37 +65,37 @@ public class FoodControllerTest {
     }
 
     @Test(timeout=1000)
-    public void test_initialLoad() {
+    public void testLoadFoodFromList() {
         FoodController foodController = new FoodController();
         ArrayList<String> foodData = new ArrayList<>();
         foodData.add("Shrimp,,2,,cups,,2020,,10,,19");
         foodData.add("Bread,,6,,slices,,2020,,10,,19");
-        foodController.initialLoad(foodData);
+        foodController.loadFoodFromList(foodData);
         assertEquals(2, foodController.checkPerishables().size());
     }
     @Test(timeout=1000)
-    public void test_getSpecifiedFoodList() {
+    public void testGetSpecifiedFoodList() {
         FoodController foodController = new FoodController();
         ArrayList<String> foodData = new ArrayList<>();
         foodData.add("Shrimp,,2,,cups,,2020,,10,,19");
         foodData.add("Shrimp,,6,,slices,,2020,,10,,19");
-        foodController.initialLoad(foodData);
-        ArrayList<Object[]> foodList = foodController.getSpecifiedFoodList("Shrimp");
+        foodController.loadFoodFromList(foodData);
+        List<Object[]> foodList = foodController.getSpecifiedFoodList("Shrimp");
         assertEquals(2, foodList.size());
     }
     @Test(timeout=1000)
-    public void test_allFoodToString() {
+    public void testAllFoodToString() {
         FoodController foodController = new FoodController();
         ArrayList<String> foodData = new ArrayList<>();
         foodData.add("Shrimp,,2,,cups,,2020,,10,,19");
         foodData.add("Shrimp,,6,,slices,,2020,,10,,19");
-        foodController.initialLoad(foodData);
-        ArrayList<String> foodList = foodController.allFoodToString();
+        foodController.loadFoodFromList(foodData);
+        List<String> foodList = foodController.allFoodToString();
         assertEquals(2, foodList.size());
     }
 
     private Object getFoodHelper(FoodController controller) {
-        ArrayList<Object[]> food = controller.getSpecifiedFoodList("Shrimp");
+        List<Object[]> food = controller.getSpecifiedFoodList("Shrimp");
         Object[] item = food.get(0);
         return item[0];
     }

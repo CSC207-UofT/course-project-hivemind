@@ -6,6 +6,7 @@ import entities.NonPerishableFood;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public class FoodHandler {
      * TODO: Extend on this?
      * @param single_array An ArrayList that is in the format of [food name, quantity, measurement(, day, month, year)]
      */
-    public void createFood(ArrayList<String> single_array){
+    public void createFood(List<String> single_array){
         String food = single_array.get(0);
         Double quantity = Double.parseDouble(single_array.get(1));
         String measurement = single_array.get(2);
@@ -49,8 +50,8 @@ public class FoodHandler {
      * Creates PerishableFood and NonPerishableFood items from an Array of Array of Strings.
      * @param multi_array an arraylist of arraylist of strings for creating food
      */
-    public void initialLoad(ArrayList<ArrayList<String>> multi_array){
-        for(ArrayList<String> i:multi_array){
+    public void initialLoad(ArrayList<List<String>> multi_array){
+        for(List<String> i:multi_array){
             createFood(i);
         }
     }

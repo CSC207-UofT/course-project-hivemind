@@ -170,7 +170,7 @@ public class FoodHandlerTest {
 
     private FoodController initialLoadFood(ArrayList<String> food){
         FoodController foodController = new FoodController();
-        foodController.initialLoad(food);
+        foodController.loadFoodFromList(food);
         return foodController;
     }
 
