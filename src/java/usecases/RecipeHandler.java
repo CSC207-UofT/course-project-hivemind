@@ -1,6 +1,7 @@
 package usecases;
 import entities.Recipe;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -33,9 +34,11 @@ public class RecipeHandler {
     public void initializeRecipe(ArrayList<ArrayList<String>> ListOfRecipes) {
         // Looping through every Recipe on the list.
         for (ArrayList<String> currentRecipe : ListOfRecipes) {
-
+            String recipeName = currentRecipe.get(0);
+            List<String> recipeIngredients = currentRecipe.subList(1,currentRecipe.size()-2);
             // Creating a new Recipe object using the constructor in Recipe entity class
-            HashMap<String, ArrayList<String>> ingredientsDict = arrayListToDictHelper(currentRecipe);
+            ArrayList<String> recipeIngredientsParam = new ArrayList<>(recipeIngredients);
+            HashMap<String, ArrayList<String>> ingredientsDict = arrayListToDictHelper(recipeIngredientsParam);
 
             Recipe newFood = new Recipe(currentRecipe.get(0), ingredientsDict,
                     currentRecipe.get(currentRecipe.size() - 1));
