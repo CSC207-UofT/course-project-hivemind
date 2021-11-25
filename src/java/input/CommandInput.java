@@ -4,14 +4,15 @@ import java.util.Scanner;
 import java.util.*;
 
 
+import alerts.AlertExpiryStatus;
 import controllers.FoodController;
 import controllers.RecipeController;
 import parsers.DataParser;
 
 public class CommandInput {
-    protected static final FoodController foodController = new FoodController();
+    public static final FoodController foodController = new FoodController();
     private static final RecipeController recipeController = new RecipeController();
-    protected static boolean exitProgram = true;
+    public static boolean exitProgram = true;
 
     public static void main (String[] args) {
         Scanner inputScanner = new Scanner(System.in);

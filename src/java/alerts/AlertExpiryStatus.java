@@ -1,6 +1,7 @@
-package input;
+package alerts;
 import java.util.*;
 import controllers.FoodController;
+import input.CommandInput;
 
 public class AlertExpiryStatus implements Runnable{
     private static final FoodController foodController = CommandInput.foodController;
