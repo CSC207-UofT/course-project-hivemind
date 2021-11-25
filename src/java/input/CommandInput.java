@@ -173,7 +173,7 @@ public class CommandInput {
     }
 
     /**
-     * Prints a message promoting the user to input the number corresponding to which food they wish to delete
+     * Prints a message prompting the user to input the number corresponding to which food they wish to delete
      */
     private static void printSpecifiedDeleteFoodPrompt() {
         System.out.println("Please input the number corresponding to which food item you wish to delete:");
@@ -182,7 +182,7 @@ public class CommandInput {
     }
 
     /**
-     * Prints a message promoting the user to input the name of the Food which they wish to delete
+     * Prints a message prompting the user to input the name of the Food which they wish to delete
      */
     private static void printDeleteFoodPrompt() {
         System.out.println("Enter Food Name To Delete:");
