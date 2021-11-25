@@ -33,7 +33,6 @@ public class RecipeHandler {
     public void initializeRecipe(ArrayList<ArrayList<String>> ListOfRecipes) {
         // Looping through every Recipe on the list.
         for (ArrayList<String> currentRecipe : ListOfRecipes) {
-            String recipeName = currentRecipe.get(0);
             List<String> recipeIngredients = currentRecipe.subList(1,currentRecipe.size()-1);
             // Creating a new Recipe object using the constructor in Recipe entity class
             ArrayList<String> recipeIngredientsParam = new ArrayList<>(recipeIngredients);
