@@ -3,15 +3,17 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.*;
+
+
+import alerts.AlertExpiryStatus;
 import controllers.FoodController;
 import controllers.RecipeController;
 import parsers.DataParser;
 
 public class CommandInput {
-    private static final FoodController foodController = new FoodController();
+    public static final FoodController foodController = new FoodController();
     private static final RecipeController recipeController = new RecipeController();
-    private static boolean exitProgram = true;
-    private static Calendar dateNow = Calendar.getInstance();
+    public static boolean exitProgram = true;
 
     public static void main (String[] args) {
         Scanner inputScanner = new Scanner(System.in);
@@ -24,7 +26,11 @@ public class CommandInput {
             ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
             recipeController.initialLoad(recipeData);
             userHelper();
-            alertExpiredFoods();
+            AlertExpiryStatus.alertExpiredFoods();
+            // create a thread to be run in parallel
+            Thread thread1 = new Thread(new AlertExpiryStatus());
+            thread1.start();
+
 
         }
         catch (Exception e) {
@@ -34,36 +40,12 @@ public class CommandInput {
         }
 
         while (exitProgram) {
-            Calendar newDate = Calendar.getInstance();
-            if(newDate.get(Calendar.YEAR) > dateNow.get(Calendar.YEAR) || newDate.get(Calendar.MONTH) > dateNow.get(Calendar.MONTH) || newDate.get(Calendar.DAY_OF_MONTH) > dateNow.get(Calendar.DAY_OF_MONTH)){
-                alertExpiredFoods();
-                dateNow = Calendar.getInstance();
-            }
             System.out.print("> ");
             lastCommand = inputScanner.nextLine();
             parseInput(lastCommand);
         }
         inputScanner.close();
         System.exit(0);
-
-    }
-
-    private static void alertExpiredFoods() {
-        List<String> expiredFoodsList = foodController.checkPerishables();
-        if(expiredFoodsList.size() > 0){
-            System.out.println("The following foods have expired: ");
-            ArrayList<Object[]> parsedExpiredFoodsList = new ArrayList<>();
-            for (String food : expiredFoodsList){
-                Object[] parsedFood = new Object[1];
-                parsedFood[0] = food;
-                parsedExpiredFoodsList.add(parsedFood);
-            }
-            printFoodInList2(parsedExpiredFoodsList);
-        }
-        else{
-            System.out.println("Your food is fresh and safe to consume.");
-        }
-
 
     }
 
@@ -77,8 +59,13 @@ public class CommandInput {
         if (splitInput.length > 1) {
             switch (splitInput[0]) {
                 case "program":
-                    if (splitInput[1].equals("exit")) {
-                        exitProgram = false;
+                    switch (splitInput[1]){
+                        case "exit":
+                            exitProgram = false;
+                            break;
+                        case "help":
+                            userHelper();
+                            break;
                     }
                     break;
                 case "food":
@@ -90,7 +77,7 @@ public class CommandInput {
                             deleteFoodHelper();
                             break;
                         case "check":
-                            alertExpiredFoods();
+                            AlertExpiryStatus.alertExpiredFoods();
                             break;
                         case "get":
                             for (String str : foodController.allFoodToString()) {
@@ -153,6 +140,7 @@ public class CommandInput {
         System.out.println("       add: adds a recipe into the recipe book");
         System.out.println("----------------------------------------------------------");
         System.out.println("program exit: exits the program");
+        System.out.println("program help: view this list of program commands");
         System.out.println("----------------------------------------------------------");
     }
 
@@ -205,21 +193,6 @@ public class CommandInput {
         for (Object[] foods : foodList) {
             Object food = foods[0];
             System.out.println(foodController.printFood(index, food));
-            index++;
-        }
-    }
-
-    /**
-     * prints the foods in the given ArrayList of Object Arrays. Each object array contains a String Representation of
-     * food
-     * @param foodList an ArrayList of Object Arrays. Each object array contains a String representation of food
-     *                 at index 0
-     */
-    private static void printFoodInList2(ArrayList<Object[]> foodList) {
-        int index = 1;
-        for (Object[] foods : foodList) {
-            Object food = foods[0];
-            System.out.println(index + ": " + food);
             index++;
         }
     }
