@@ -53,13 +53,33 @@ public class RecipeHandler {
      */
     public HashMap<String, ArrayList<String>> arrayListToDictHelper(ArrayList<String> listIngr) {
         HashMap<String, ArrayList<String>> ingredientsDict = new HashMap<>();
-        for (int j = 1; j < listIngr.size() - 2; j = j + 3) {
+        for (int j = 0; j < listIngr.size() -2; j = j+3) {
             ArrayList<String> lst = new ArrayList<>();
             lst.add(listIngr.get(j + 1));
             lst.add(listIngr.get(j + 2));
             ingredientsDict.put(listIngr.get(j), lst);
         }
         return ingredientsDict;
+    }
+
+    /**
+     * Adding one recipe to this handler
+     *
+     * @param recipeName String of the name of the recipe
+     * @param ingredientList List of the ingredients in format: ing1 quantity1 measurement1 ing2 quantity2 measurement2...
+     * @param instructions string of the instruction
+     * @return true if recipe was successfully added, false if it was not successfully added.
+     */
+    public boolean addOneRecipe(String recipeName, ArrayList<String> ingredientList, String instructions) {
+        try {
+            HashMap<String, ArrayList<String>> map = arrayListToDictHelper(ingredientList);
+            Recipe newFood = new Recipe(recipeName, map, instructions);
+            // Adding the new Recipe created into the RecipeHandlerRecipeList (The saved Recipe inside RecipeHandler)
+            recipeHandlerRecipeList.add(newFood);
+            return true;
+        } catch(Exception IndexOutOfBoundsException) {
+            return false;
+        }
     }
 
 
@@ -196,25 +216,6 @@ public class RecipeHandler {
         return null;
     }
 
-    /**
-     * Adding one recipe to this handler
-     *
-     * @param recipeName String of the name of the recipe
-     * @param ingredientList List of the ingredients in format: ing1 quantity1 measurement1 ing2 quantity2 measurement2...
-     * @param instructions string of the instruction
-     * @return true if recipe was successfully added, false if it was not successfully added.
-     */
-    public boolean addOneRecipe(String recipeName, ArrayList<String> ingredientList, String instructions) {
-        try {
-            HashMap<String, ArrayList<String>> map = arrayListToDictHelper(ingredientList);
-            Recipe newFood = new Recipe(recipeName, map, instructions);
-            // Adding the new Recipe created into the RecipeHandlerRecipeList (The saved Recipe inside RecipeHandler)
-            recipeHandlerRecipeList.add(newFood);
-            return true;
-        } catch(Exception IndexOutOfBoundsException) {
-            return false;
-        }
-    }
 
 }
 

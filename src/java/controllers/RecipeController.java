@@ -28,6 +28,15 @@ public class RecipeController {
     }
 
     /**
+     * Search specifically for a recipe
+     * @param name
+     * @return
+     */
+    public String recipeSpecificSearch(String name){
+        return handler.findRecipe(name).toString();
+    }
+
+    /**
      * Separates every string in the given ArrayList into separated strings, then puts all separated strings into
      * another array and calls the handler
      * @param csvLines an arraylist of strings which are words separated by ",,"
