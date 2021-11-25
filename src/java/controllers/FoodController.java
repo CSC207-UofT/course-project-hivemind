@@ -107,5 +107,11 @@ public class FoodController {
         int specifiedFoodIndex = foodPosition - 1;
         return handler.getStoreFoodListIndex(specifiedFoodIndex);
     }
+
+    /**
+     * Runs Food Handler to delete specifiedFoodList
+     */
+    public void foodDeletedFromSystem() {handler.deleteSpecifiedFoodList();
+    }
 }
 

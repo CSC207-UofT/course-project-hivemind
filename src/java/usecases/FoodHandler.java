@@ -84,7 +84,7 @@ public class FoodHandler {
     public static ArrayList<String> getStoreFoodListNameOnly(){
         ArrayList<String> names = new ArrayList<>();
         for(Food foodName : storeFoodList){
-            names.add(foodName.getName());
+            names.add(foodName.getFoodName());
         }
         return names;
     }
@@ -121,7 +121,7 @@ public class FoodHandler {
         ArrayList<Object[]> foodList = new ArrayList<>();
         int index = 0;
         for (Food foods : storeFoodList) {
-            String lowerFoodGetName = foods.getName().toLowerCase(Locale.ROOT);
+            String lowerFoodGetName = foods.getFoodName().toLowerCase(Locale.ROOT);
             String lowerFoodName = foodName.toLowerCase(Locale.ROOT);
             if (Objects.equals(lowerFoodGetName, lowerFoodName)) {
                 Object[] food = {foods, index};
@@ -134,12 +134,11 @@ public class FoodHandler {
     }
 
     /**
-     * Deletes a Food object from storeFoodList
+     * Deletes a Food object from storeFoodList given its index at specifiedFoodListIndex
      * @param specifiedFoodListIndex the index of the Food from specifiedFoodList which is to be deleted from the program
      */
     public void deleteFood(int specifiedFoodListIndex) {
         Food foodToDelete = (Food) getFoodFromArray(this.specifiedFoodList.get(specifiedFoodListIndex));
-//        this.specifiedFoodList = null;
         storeFoodList.remove(foodToDelete);
     }
 
@@ -153,8 +152,8 @@ public class FoodHandler {
     }
 
     /**
-     * Returns a list of strings representing a foods in specifiedFoodList with their given positions in the list
-     * @return a list of strings representing a foods in specifiedFoodList with their given positions in the list
+     * Returns a list of strings representing foods in specifiedFoodList with their given positions in the list
+     * @return a list of strings representing foods in specifiedFoodList with their given positions in the list
      */
     public List<String> getSpecifiedFoodListStrings() {
         List<String> foodList = new ArrayList<>();
@@ -166,8 +165,7 @@ public class FoodHandler {
                 if (((PerishableFood) food).getExpiryStatus()){
                     isExpired = "Expired";
                 }
-                foodList.add(getFoodStringHelper(index, food) + ", Expiry Date: " +
-                        ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired);
+                foodList.add(getFoodStringHelper(index, food) + ", Expiry Status: " + isExpired);
             }
             else {
                 foodList.add(getFoodStringHelper(index, food));
@@ -178,20 +176,19 @@ public class FoodHandler {
     }
 
     /**
-     * Helper method which returns a string representing a food item, listed with a specified position in storeFoodList
+     * Helper method which returns a string representing a food item, listed with a specified position
      * @param position the position corresponding with the given food in specifiedFoodList
      * @param food a food object
      * @return a string representation of the given food object with the given position
      */
     private String getFoodStringHelper(int position, Food food) {
         String foodString = "";
-        foodString = foodString + position + ". Food Name: " + food.getName() + ", Quantity: " +
-                food.getQuantity() + ", Unit: " + food.getUnit();
+        foodString = foodString + position + ". " + food.toString();
         return foodString;
     }
 
     /**
-     * Returns an Object representation of the Food
+     * Returns an Object representation of a Food item from an Array
      * @param foodArray an object array containing a food object at index 0, and the food's corresponding index in food
      * data at index 1
      * @return an Object representation of a Food
@@ -208,5 +205,12 @@ public class FoodHandler {
      */
     private static int getFoodIndexFromArray(Object[] foodArray){
         return (int) foodArray[1];
+    }
+
+    /**
+     * Sets specifiedFoodList to null
+     */
+    public void deleteSpecifiedFoodList(){
+        this.specifiedFoodList = null;
     }
 }

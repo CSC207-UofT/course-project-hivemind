@@ -194,6 +194,7 @@ public class CommandInput {
      * @param deletedFoodString A string representation of the deleted Food
      */
     private static void printFoodDeletedFromSystem(String deletedFoodString) {
+        foodController.foodDeletedFromSystem();
         System.out.println("The following food item was successfully deleted from the system:");
         System.out.println(deletedFoodString);
     }
