@@ -1,8 +1,10 @@
 package entities;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Represents a single Recipe
+ */
 public class Recipe {
     private String name;
     private final HashMap<String, ArrayList<String>> ingredients;
@@ -11,9 +13,9 @@ public class Recipe {
     /**
      * Construct a Recipe with the given name, ingredients, and instructions
      * @param name of the Recipe
-     * @param ingredients a hashmap with Keys to represent Strings of food items, and Values to represent an array
-     *                    containing the quantity and unit of each food item. The value at index[0] of the array represents the
-     *                    quantity needed. The value at index[1] represents the unit of measurement.
+     * @param ingredients a hashmap with Keys to represent the name of ingredients, and Values to represent an array
+     *                    containing the quantity and unit of each ingredient. The value at index[0] of the array
+     *                    represents the quantity needed. The value at index[1] represents the unit of measurement.
      * @param instructions on how to prepare the Recipe
      */
     public Recipe (String name, HashMap<String, ArrayList<String>> ingredients, String instructions) {
@@ -72,6 +74,10 @@ public class Recipe {
         return this.instructions;
     }
 
+    /**
+     * Return the string representation of this recipe object
+     * @return String of desired recipe item
+     */
     @Override
     public String toString() {
         return "Name: " + this.name + " Ingredients: " + this.ingredients + " Instructions: " + this.instructions;
