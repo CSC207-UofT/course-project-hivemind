@@ -1,4 +1,5 @@
 package input;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.*;
@@ -160,31 +161,23 @@ public class CommandInput {
      */
     private static void deleteFoodHelper() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Here are all your foods in your inventory:");
-        System.out.println("-----------------------");
-        for (String str : foodController.allFoodToString()) {
-            System.out.println(str);
-        }
-        System.out.println("-----------------------");
-        System.out.println("Enter Food Name To Delete:");
-        System.out.print("> ");
-        String foodName = scanner.nextLine();
-        List<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
+        printAvailableFood();
+        printDeleteFoodPrompt();
+        List<Object[]> foodList = foodController.getSpecifiedFoodList(scanner.nextLine());
+        // Get a List of object arrays, which contain Food objects with the same name as the food in which the user
+        // wishes to delete, along with their respective indexes
 
         try {
             if (foodList.size() == 0){
                 printFoodNotInSystem();
             }
             else {
-                System.out.println("Please input the number corresponding to which food item you wish to delete:");
-                printFoodInList(foodList);
-                System.out.print("> ");
-                String foodDelete = scanner.nextLine();
-                int foodIndexToDelete = Integer.parseInt(foodDelete) - 1;
-                foodController.deleteFood(foodList.get(foodIndexToDelete)[0]);
-                DataParser.deleteRowFromFoodFile((int)foodList.get(foodIndexToDelete)[1]);
-                System.out.println("The following food item was successfully deleted from the system:");
-                System.out.println(foodController.printFood(foodIndexToDelete + 1, foodList.get(foodIndexToDelete)[0]));
+                printSpecifiedDeleteFoodPrompt(foodList);
+                int foodIndexInList = Integer.parseInt(scanner.nextLine()) - 1;
+                Object foodToDelete = getFoodFromArray(foodList.get(foodIndexInList));
+                int foodIndexToDelete = getFoodIndex(foodList.get(foodIndexInList));
+                deleteFood(foodToDelete, foodIndexToDelete);
+                printFoodDeletedFromSystem(foodToDelete, foodIndexToDelete);
             }
         }
         catch (Exception e){
@@ -194,12 +187,83 @@ public class CommandInput {
     }
 
     /**
-     * prints the foods in the given ArrayList of Object Arrays. Each object array contains a food object at index 0,
-     * and the food's index in fooddata at index 1
+     * Prints a message promoting the user to input the number corresponding to which food they wish to delete
+     * @param foodList A list of object arrays. Each object array contains a food object matching the name specified by
+     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     */
+    private static void printSpecifiedDeleteFoodPrompt(List<Object[]> foodList) {
+        System.out.println("Please input the number corresponding to which food item you wish to delete:");
+        printFoodFromList(foodList);
+        System.out.print("> ");
+    }
+
+    /**
+     * Prints a message promoting the user to input the name of the Food which they wish to delete
+     */
+    private static void printDeleteFoodPrompt() {
+        System.out.println("Enter Food Name To Delete:");
+        System.out.print("> ");
+    }
+
+    /**
+     * Prints a message indicating the Food specified at the given index was deleted from the system
+     * @param food An object representing the deleted food
+     * @param foodIndexToDelete The index of the food in food data that is to be deleted from the food data
+     */
+    private static void printFoodDeletedFromSystem(Object food, int foodIndexToDelete) {
+        System.out.println("The following food item was successfully deleted from the system:");
+        System.out.println(foodController.printFood(foodIndexToDelete + 1, food));
+    }
+
+    /**
+     * Returns an Object representation of the Food at the specified index
+     * @param foodArray an object array containing a food object at index 0, and the
+     * food's corresponding index in food data at index 1
+     * @return an Object representation of a Food
+     */
+    private static Object getFoodFromArray(Object[] foodArray){
+        return foodArray[0];
+    }
+
+    /**
+     * Calls DataParser and Food Controller to delete Food at the given index from Food Handler and Food Data
+     * @param food An object representing the deleted food
+     * @param foodIndexToDelete The index of the food in food data that is to be deleted from the system
+     * @throws IOException exception for writing file errors
+     */
+    private static void deleteFood(Object food, int foodIndexToDelete) throws IOException {
+        foodController.deleteFood(food);
+        DataParser.deleteRowFromFoodFile(foodIndexToDelete);
+    }
+
+    /**
+     * Returns the index of the Food in
+     * @param foodArray an object array containing a food object at index 0, and the
+     * food's corresponding index in fooddata at index 1
+     * @return an Object representation of a Food
+     */
+    private static int getFoodIndex(Object[] foodArray){
+        return (int) foodArray[1];
+    }
+
+    /**
+     * Prints a message displaying all the Food objects present in the system
+     */
+    private static void printAvailableFood() {
+        System.out.println("Here are all your foods in your inventory:");
+        System.out.println("-----------------------");
+        for (String str : foodController.allFoodToString()) {
+            System.out.println(str);
+        }
+        System.out.println("-----------------------");
+    }
+
+    /**
+     * Prints Foods from the given ArrayList of Object Arrays.
      * @param foodList an ArrayList of Object Arrays. Each object array contains a food object at index 0,
      * and the food's index in fooddata at index 1
      */
-    private static void printFoodInList(List<Object[]> foodList) {
+    private static void printFoodFromList(List<Object[]> foodList) {
         int index = 1;
         for (Object[] foods : foodList) {
             Object food = foods[0];
