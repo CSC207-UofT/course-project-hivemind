@@ -62,8 +62,8 @@ public class FoodController {
     }
 
     /**
-     * Initializes specifiedFoodList, creating a list of object arrays. Each object array has a food object at index 0,
-     * which matches foodName.
+     * Initializes specifiedFoodList in Food Handler, creating a list of object arrays. Each object array has a food
+     * object at index 0, which matches foodName. Index 1 contains the respective food's index.
      * @param foodName the name of the food
      * @return the size of specifiedFoodList from Food Handler
      */
@@ -72,14 +72,14 @@ public class FoodController {
     }
 
     /**
-     * Deletes the food object at the specified position from the program and food files
-     * @param foodNumber the position of the food item in a list, when presented to the user in CommandInput
+     * Runs Food Handler to delete the food object at the specified position foodPositionToDelete
+     * @param foodPositionToDelete the position of the food item in specifiedFoodList, in which the user wants to delete
      * @return a string representation of the deleted food
      */
-    public String deleteFood(int foodNumber){
-        int foodIndexInList = foodNumber - 1;
-        this.handler.deleteFood(foodIndexInList);
-        return handler.getSpecifiedFoodListStrings().get(foodIndexInList);
+    public String deleteFood(int foodPositionToDelete){
+        int foodIndexInListToDelete = foodPositionToDelete - 1;
+        this.handler.deleteFood(foodIndexInListToDelete);
+        return handler.getSpecifiedFoodListStrings().get(foodIndexInListToDelete);
     }
 
     /**
@@ -91,7 +91,7 @@ public class FoodController {
     }
 
     /**
-     * Returns a string representation of specifiedFoodList from Food Handler
+     * Runs Food Handler and returns a string representation of specifiedFoodList
      * @return a string representation of specifiedFoodList from Food Handler
      */
     public List<String> printSpecifiedFoodList() {
@@ -99,8 +99,8 @@ public class FoodController {
     }
 
     /**
-     * Returns the corresponding index of a food item in food data, specified by foodPosition
-     * @param foodPosition the position of the food item in a list, when presented to the user in CommandInput
+     * Returns the corresponding index of a food item in food data, specified by its foodPosition in specifiedFoodList
+     * @param foodPosition the position of the food item in specifiedFoodList, in which the user wishes to delete
      * @return the corresponding index of a food item in storeFoodList, specified by foodPosition
      */
     public int getFoodIndexToDelete(int foodPosition) {

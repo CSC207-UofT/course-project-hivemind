@@ -159,9 +159,9 @@ public class CommandInput {
             }
             else {
                 printSpecifiedDeleteFoodPrompt();
-                int foodNumber = Integer.parseInt(scanner.nextLine());
-                int foodIndexToDelete = foodController.getFoodIndexToDelete(foodNumber);
-                String deletedFoodString = foodController.deleteFood(foodNumber);
+                int foodPositionToDelete = Integer.parseInt(scanner.nextLine());
+                int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
+                String deletedFoodString = foodController.deleteFood(foodPositionToDelete);
                 DataParser.deleteRowFromFoodFile(foodIndexToDelete);
                 printFoodDeletedFromSystem(deletedFoodString);
             }
