@@ -149,7 +149,8 @@ public class FoodHandlerTest {
         Object[] shrimp2 = {getFoodHelper(2), 2};
         shrimpList.add(shrimp1);
         shrimpList.add(shrimp2);
-        assertEquals(shrimpList.size(), controller.handler.getSpecifiedFoodList("Shrimp").size());
+        int listSize = controller.handler.makeSpecifiedFoodList("Shrimp");
+        assertEquals(shrimpList.size(), listSize);
     }
 
 

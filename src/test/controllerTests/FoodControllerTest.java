@@ -32,9 +32,9 @@ public class FoodControllerTest {
         foodData.add("Shrimp,,2,,cups");
         foodData.add("Bread,,6,,slices,,2020,,10,,19");
         foodController.loadFoodFromList(foodData);
-        Object food = getFoodHelper(foodController);
         int initialFoodListSize = FoodHandler.getStoreFoodListNameOnly().size();
-        foodController.deleteFood(food);
+        foodController.makeSpecifiedFoodList("Bread");
+        foodController.deleteFood(1);
         assertEquals(initialFoodListSize - 1, FoodHandler.getStoreFoodList().size());
     }
 
@@ -74,14 +74,14 @@ public class FoodControllerTest {
         assertEquals(2, foodController.checkPerishables().size());
     }
     @Test(timeout=1000)
-    public void testGetSpecifiedFoodList() {
+    public void testMakeSpecifiedFoodList() {
         FoodController foodController = new FoodController();
         ArrayList<String> foodData = new ArrayList<>();
         foodData.add("Shrimp,,2,,cups,,2020,,10,,19");
         foodData.add("Shrimp,,6,,slices,,2020,,10,,19");
         foodController.loadFoodFromList(foodData);
-        List<Object[]> foodList = foodController.getSpecifiedFoodList("Shrimp");
-        assertEquals(2, foodList.size());
+        int listSize = foodController.makeSpecifiedFoodList("Shrimp");
+        assertEquals(2, listSize);
     }
     @Test(timeout=1000)
     public void testAllFoodToString() {
@@ -95,8 +95,8 @@ public class FoodControllerTest {
     }
 
     private Object getFoodHelper(FoodController controller) {
-        List<Object[]> food = controller.getSpecifiedFoodList("Shrimp");
-        Object[] item = food.get(0);
+        controller.makeSpecifiedFoodList("Shrimp");
+        Object[] item = controller.handler.specifiedFoodList.get(0);
         return item[0];
     }
 }

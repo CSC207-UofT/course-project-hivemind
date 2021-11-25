@@ -12,9 +12,11 @@ import java.util.Objects;
 
 public class FoodHandler {
     private static ArrayList<Food> storeFoodList;
+    public List<Object[]> specifiedFoodList;
 
     public FoodHandler() {
         storeFoodList = new ArrayList<>();
+        this.specifiedFoodList = null;
     }
 
 
@@ -101,7 +103,7 @@ public class FoodHandler {
 
 
     /**
-     * Getter method for returning Arraylist of all food objects stored
+     * Getter method for returning Arraylist of all food objects stored in storeFoodList
      * @return an ArrayList containing all the Food Objects in our system
      */
     public static ArrayList<Food> getStoreFoodList(){
@@ -111,20 +113,64 @@ public class FoodHandler {
 
     /**
      * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
-     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     * parameter foodName at index 0, and the food's index in storeFoodList at index 1
      * @param foodName the name of the food
-     * @return an array list of object arrays. Each object array contains a food object matching the name specified by
-     *parameter foodName at index 0, and the food's index in fooddata at index 1
+     * @return the size of specifiedFoodList
      */
-    public ArrayList<Object[]> getSpecifiedFoodList(String foodName) {
+    public int makeSpecifiedFoodList(String foodName) {
         ArrayList<Object[]> foodList = new ArrayList<>();
         int index = 0;
         for (Food foods : storeFoodList) {
-            String lowerFoodgetName = foods.getName().toLowerCase(Locale.ROOT);
+            String lowerFoodGetName = foods.getName().toLowerCase(Locale.ROOT);
             String lowerFoodName = foodName.toLowerCase(Locale.ROOT);
-            if (Objects.equals(lowerFoodgetName, lowerFoodName)) {
+            if (Objects.equals(lowerFoodGetName, lowerFoodName)) {
                 Object[] food = {foods, index};
                 foodList.add(food);
+            }
+            index++;
+        }
+        this.specifiedFoodList = foodList;
+        return foodList.size();
+    }
+
+    /**
+     * Deletes a Food object from storeFoodList
+     * @param specifiedFoodListIndex the index of the Food from specifiedFoodList which is to be deleted from the program
+     */
+    public void deleteFood(int specifiedFoodListIndex) {
+        Food foodToDelete = (Food) getFoodFromArray(this.specifiedFoodList.get(specifiedFoodListIndex));
+//        this.specifiedFoodList = null;
+        storeFoodList.remove(foodToDelete);
+    }
+
+    /**
+     * Returns the index of the given food in storeFoodList, given its corresponding index in specifiedFoodList
+     * @param specifiedFoodListIndex the index of a food item in specifiedFoodList
+     * @return the index of a food item in storeFoodList
+     */
+    public int getStoreFoodListIndex(int specifiedFoodListIndex) {
+         return getFoodIndexFromArray(this.specifiedFoodList.get(specifiedFoodListIndex));
+    }
+
+    /**
+     * Returns a list of strings representing a foods in specifiedFoodList with their given positions in the list
+     * @return a list of strings representing a foods in specifiedFoodList with their given positions in the list
+     */
+    public List<String> getSpecifiedFoodListStrings() {
+        List<String> foodList = new ArrayList<>();
+        int index = 1;
+        for (Object[] item: this.specifiedFoodList){
+            Food food = (Food) getFoodFromArray(item);
+            if (food instanceof PerishableFood) {
+                String isExpired = "Not Expired";
+                if (((PerishableFood) food).getExpiryStatus()){
+                    isExpired = "Expired";
+                }
+                foodList.add(getFoodStringHelper(index, food) + ", Expiry Date: " +
+                        ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired);
+            }
+            else {
+                foodList.add(getFoodStringHelper(index, food));
             }
             index++;
         }
@@ -132,38 +178,35 @@ public class FoodHandler {
     }
 
     /**
-     * Deletes a Food object from storeFoodList
-     * @param food The Food Object which is to be deleted
+     * Helper method which returns a string representing a food item, listed with a specified position in storeFoodList
+     * @param position the position corresponding with the given food in specifiedFoodList
+     * @param food a food object
+     * @return a string representation of the given food object with the given position
      */
-    public void deleteFood(Object food) {
-        Food item = (Food) food;
-        storeFoodList.remove(item);
+    private String getFoodStringHelper(int position, Food food) {
+        String foodString = "";
+        foodString = foodString + position + ". Food Name: " + food.getName() + ", Quantity: " +
+                food.getQuantity() + ", Unit: " + food.getUnit();
+        return foodString;
     }
 
     /**
-     * TODO : Write documentation for this
-     * @param number
-     * @param foods
-     * @return
+     * Returns an Object representation of the Food
+     * @param foodArray an object array containing a food object at index 0, and the food's corresponding index in food
+     * data at index 1
+     * @return an Object representation of a Food
      */
-    public String printFood(int number, Object foods) {
-        Food food = (Food) foods;
-        if (food instanceof PerishableFood) {
-            String isExpired = "Not Expired";
-            if (((PerishableFood) food).getExpiryStatus()){
-                isExpired = "Expired";
-            }
-            String perishableFood = "";
-            perishableFood = perishableFood + number + ". Food Name: " + food.getName() + ", Quantity: " +
-                    food.getQuantity() + ", Unit: " + food.getUnit() + ", Expiry Date: " +
-                    ((PerishableFood) food).getExpiryDate() + ", Expiry Status: " + isExpired;
-            return perishableFood;
-        }
-        else {
-            String nonPerishableFood = "";
-            nonPerishableFood = nonPerishableFood + number + ". Food Name: " + food.getName() + ", Quantity: " +
-                    food.getQuantity() + ", Unit: " + food.getUnit();
-            return nonPerishableFood;
-        }
+    private static Object getFoodFromArray(Object[] foodArray){
+        return foodArray[0];
+    }
+
+    /**
+     * Returns the index of a Food item in storeFoodList
+     * @param foodArray an object array containing a food object at index 0, and the food's corresponding index in
+     * storeFoodList at index 1
+     * @return an int representing a Food's index in storeFoodList
+     */
+    private static int getFoodIndexFromArray(Object[] foodArray){
+        return (int) foodArray[1];
     }
 }

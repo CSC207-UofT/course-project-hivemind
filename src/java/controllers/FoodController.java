@@ -11,6 +11,7 @@ public class FoodController {
     public final ArrayList<List<String>> foodList;
     public final FoodHandler handler;
 
+
     public FoodController() {
         this.foodList = new ArrayList<>();
         this.handler = new FoodHandler();
@@ -61,22 +62,24 @@ public class FoodController {
     }
 
     /**
-     * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
-     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     * Initializes specifiedFoodList, creating a list of object arrays. Each object array has a food object at index 0,
+     * which matches foodName.
      * @param foodName the name of the food
-     * @return an array list of object arrays. Each object array contains a food object matching the name specified by
-     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     * @return the size of specifiedFoodList from Food Handler
      */
-    public List<Object[]> getSpecifiedFoodList(String foodName){
-        return this.handler.getSpecifiedFoodList(foodName);
+    public int makeSpecifiedFoodList(String foodName){
+        return this.handler.makeSpecifiedFoodList(foodName);
     }
 
     /**
-     * Deletes a food object from the system
-     * @param food the food object which is to be deleted
+     * Deletes the food object at the specified position from the program and food files
+     * @param foodNumber the position of the food item in a list, when presented to the user in CommandInput
+     * @return a string representation of the deleted food
      */
-    public void deleteFood(Object food) {
-        this.handler.deleteFood(food);
+    public String deleteFood(int foodNumber){
+        int foodIndexInList = foodNumber - 1;
+        this.handler.deleteFood(foodIndexInList);
+        return handler.getSpecifiedFoodListStrings().get(foodIndexInList);
     }
 
     /**
@@ -88,13 +91,21 @@ public class FoodController {
     }
 
     /**
-     * TODO: add documentation
-     * @param index
-     * @param food
-     * @return
+     * Returns a string representation of specifiedFoodList from Food Handler
+     * @return a string representation of specifiedFoodList from Food Handler
      */
-    public String printFood(int index, Object food) {
-        return handler.printFood(index, food);
+    public List<String> printSpecifiedFoodList() {
+        return handler.getSpecifiedFoodListStrings();
+    }
+
+    /**
+     * Returns the corresponding index of a food item in food data, specified by foodPosition
+     * @param foodPosition the position of the food item in a list, when presented to the user in CommandInput
+     * @return the corresponding index of a food item in storeFoodList, specified by foodPosition
+     */
+    public int getFoodIndexToDelete(int foodPosition) {
+        int specifiedFoodIndex = foodPosition - 1;
+        return handler.getStoreFoodListIndex(specifiedFoodIndex);
     }
 }
 
