@@ -145,35 +145,25 @@ public class CommandInput {
     }
 
     /**
-     * A method to delete a specified Food Object from the inventor and fooddata
+     * A method to delete a specified Food Object from the inventory and fooddata
      */
     private static void deleteFoodHelper() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Here are all your foods in your inventory:");
-        System.out.println("-----------------------");
-        for (String str : foodController.allFoodToString()) {
-            System.out.println(str);
-        }
-        System.out.println("-----------------------");
-        System.out.println("Enter Food Name To Delete:");
-        System.out.print("> ");
-        String foodName = scanner.nextLine();
-        List<Object[]> foodList = foodController.getSpecifiedFoodList(foodName);
+        printAvailableFood();
+        printDeleteFoodPrompt();
+        int foodAmount = foodController.makeSpecifiedFoodList(scanner.nextLine());
 
         try {
-            if (foodList.size() == 0){
+            if (foodAmount == 0){
                 printFoodNotInSystem();
             }
             else {
-                System.out.println("Please input the number corresponding to which food item you wish to delete:");
-                printFoodInList(foodList);
-                System.out.print("> ");
-                String foodDelete = scanner.nextLine();
-                int foodIndexToDelete = Integer.parseInt(foodDelete) - 1;
-                foodController.deleteFood(foodList.get(foodIndexToDelete)[0]);
-                DataParser.deleteRowFromFoodFile((int)foodList.get(foodIndexToDelete)[1]);
-                System.out.println("The following food item was successfully deleted from the system:");
-                System.out.println(foodController.printFood(foodIndexToDelete + 1, foodList.get(foodIndexToDelete)[0]));
+                printSpecifiedDeleteFoodPrompt();
+                int foodPositionToDelete = Integer.parseInt(scanner.nextLine());
+                int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
+                String deletedFoodString = foodController.deleteFood(foodPositionToDelete);
+                DataParser.deleteRowFromFoodFile(foodIndexToDelete);
+                printFoodDeletedFromSystem(deletedFoodString);
             }
         }
         catch (Exception e){
@@ -183,28 +173,60 @@ public class CommandInput {
     }
 
     /**
-     * prints the foods in the given ArrayList of Object Arrays. Each object array contains a food object at index 0,
-     * and the food's index in fooddata at index 1
-     * @param foodList an ArrayList of Object Arrays. Each object array contains a food object at index 0,
-     * and the food's index in fooddata at index 1
+     * Prints a message prompting the user to input the number corresponding to which food they wish to delete
      */
-    private static void printFoodInList(List<Object[]> foodList) {
-        int index = 1;
-        for (Object[] foods : foodList) {
-            Object food = foods[0];
-            System.out.println(foodController.printFood(index, food));
-            index++;
+    private static void printSpecifiedDeleteFoodPrompt() {
+        System.out.println("Please input the number corresponding to which food item you wish to delete:");
+        printSpecifiedFoodList();
+        System.out.print("> ");
+    }
+
+    /**
+     * Prints a message prompting the user to input the name of the Food which they wish to delete
+     */
+    private static void printDeleteFoodPrompt() {
+        System.out.println("Enter Food Name To Delete:");
+        System.out.print("> ");
+    }
+
+    /**
+     * Prints a message indicating the Food specified at the given index was deleted from the system
+     * @param deletedFoodString A string representation of the deleted Food
+     */
+    private static void printFoodDeletedFromSystem(String deletedFoodString) {
+        foodController.foodDeletedFromSystem();
+        System.out.println("The following food item was successfully deleted from the system:");
+        System.out.println(deletedFoodString);
+    }
+
+    /**
+     * Prints a message displaying all the Food objects present in the system
+     */
+    private static void printAvailableFood() {
+        System.out.println("Here are all your foods in your inventory:");
+        System.out.println("-----------------------");
+        for (String str : foodController.allFoodToString()) {
+            System.out.println(str);
+        }
+        System.out.println("-----------------------");
+    }
+
+    /**
+     * Prints all the foods in the program which match the name of the food that the user wishes to delete
+     */
+    private static void printSpecifiedFoodList() {
+        for (String food: foodController.printSpecifiedFoodList()) {
+            System.out.println(food);
         }
     }
 
     /**
-     * prints a message when a food object is not present in the system
+     * Prints a message when the user searches for a food object that is not present in the system
      */
     private static void printFoodNotInSystem() {
         System.out.println("This food item is not currently stored in the system. " +
                 "Please verify the spelling and existence of this food item");
     }
-
 
     public static void addRecipeHelper() {
         Scanner scan = new Scanner(System.in);

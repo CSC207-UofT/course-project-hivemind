@@ -11,6 +11,7 @@ public class FoodController {
     public final ArrayList<List<String>> foodList;
     public final FoodHandler handler;
 
+
     public FoodController() {
         this.foodList = new ArrayList<>();
         this.handler = new FoodHandler();
@@ -61,22 +62,24 @@ public class FoodController {
     }
 
     /**
-     * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
-     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     * Initializes specifiedFoodList in Food Handler, creating a list of object arrays. Each object array has a food
+     * object at index 0, which matches foodName. Index 1 contains the respective food's index.
      * @param foodName the name of the food
-     * @return an array list of object arrays. Each object array contains a food object matching the name specified by
-     * parameter foodName at index 0, and the food's index in fooddata at index 1
+     * @return the size of specifiedFoodList from Food Handler
      */
-    public List<Object[]> getSpecifiedFoodList(String foodName){
-        return this.handler.getSpecifiedFoodList(foodName);
+    public int makeSpecifiedFoodList(String foodName){
+        return this.handler.makeSpecifiedFoodList(foodName);
     }
 
     /**
-     * Deletes a food object from the system
-     * @param food the food object which is to be deleted
+     * Runs Food Handler to delete the food object at the specified position foodPositionToDelete
+     * @param foodPositionToDelete the position of the food item in specifiedFoodList, in which the user wants to delete
+     * @return a string representation of the deleted food
      */
-    public void deleteFood(Object food) {
-        this.handler.deleteFood(food);
+    public String deleteFood(int foodPositionToDelete){
+        int foodIndexInListToDelete = foodPositionToDelete - 1;
+        this.handler.deleteFood(foodIndexInListToDelete);
+        return handler.getSpecifiedFoodListStrings().get(foodIndexInListToDelete);
     }
 
     /**
@@ -88,13 +91,27 @@ public class FoodController {
     }
 
     /**
-     * TODO: add documentation
-     * @param index
-     * @param food
-     * @return
+     * Runs Food Handler and returns a string representation of specifiedFoodList
+     * @return a string representation of specifiedFoodList from Food Handler
      */
-    public String printFood(int index, Object food) {
-        return handler.printFood(index, food);
+    public List<String> printSpecifiedFoodList() {
+        return handler.getSpecifiedFoodListStrings();
+    }
+
+    /**
+     * Returns the corresponding index of a food item in food data, specified by its foodPosition in specifiedFoodList
+     * @param foodPosition the position of the food item in specifiedFoodList, in which the user wishes to delete
+     * @return the corresponding index of a food item in storeFoodList, specified by foodPosition
+     */
+    public int getFoodIndexToDelete(int foodPosition) {
+        int specifiedFoodIndex = foodPosition - 1;
+        return handler.getStoreFoodListIndex(specifiedFoodIndex);
+    }
+
+    /**
+     * Runs Food Handler to delete specifiedFoodList
+     */
+    public void foodDeletedFromSystem() {handler.deleteSpecifiedFoodList();
     }
 }
 
