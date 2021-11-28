@@ -58,23 +58,35 @@ public class CommandInput {
         if (splitInput.length > 1) {
             switch (splitInput[0]) {
                 case "program":
-                    switch (splitInput[1]) {
-                        case "exit" -> exitProgram = false;
-                        case "help" -> userInput.printUserHelper();
+                    switch (splitInput[1]){
+                        case "exit":
+                            exitProgram = false;
+                            break;
+                        case "help":
+                            userInput.printUserHelper();
+                            break;
                     }
                     break;
                 case "food":
                     switch (splitInput[1]) {
-                        case "add" -> foodHelper();
-                        case "delete" -> deleteFoodHelper();
-                        case "check" -> AlertExpiryStatus.alertExpiredFoods();
-                        case "get" -> {
+                        case "add":
+                            foodHelper();
+                            break;
+                        case "delete":
+                            deleteFoodHelper();
+                            break;
+                        case "check":
+                            AlertExpiryStatus.alertExpiredFoods();
+                            break;
+                        case "get":
                             for (String str : foodController.allFoodToString()) {
                                 System.out.println(str);
                             }
                             System.out.println("-----------------------");
-                        }
-                        default -> System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                            break;
+                        default:
+                            System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                            break;
                     }
                     break;
                 case "recipe":
