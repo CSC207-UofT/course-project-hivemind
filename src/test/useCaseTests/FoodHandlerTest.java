@@ -66,11 +66,18 @@ public class FoodHandlerTest {
         chocolateArray.add("2");
         chocolateArray.add("cups");
 
+        //nonperishable chocolate2
+        List<String> chocolateSecondArray = new ArrayList<>();
+        chocolateSecondArray.add("Chocolate");
+        chocolateSecondArray.add("500");
+        chocolateSecondArray.add("pounds");
+
         foods.add(milkArray);
         foods.add(breadArray);
         foods.add(driedMangoArray);
         foods.add(eggsArray);
         foods.add(chocolateArray);
+        foods.add(chocolateSecondArray);
 
         return foods;
     }
@@ -252,6 +259,30 @@ public class FoodHandlerTest {
         expectedValue.add(getFoodHelper(0));
         expectedValue.add(getFoodHelper(1));
         expectedValue.add(getFoodHelper(2));
+
+        assertEquals(expectedValue, FoodHandler.getCreatedFoodList());
+    }
+
+
+    /**
+     * Test deleteFood.
+     */
+    @Test(timeout = 1000)
+    public void testDeleteFood(){
+
+        FoodHandler setupActual = new FoodHandler();
+        setupActual.createFood(getFoodTestCases().get(0));
+        setupActual.createFood(getFoodTestCases().get(4));
+        setupActual.createFood(getFoodTestCases().get(5));
+        setupActual.makeSpecifiedFoodList("Chocolate");
+        setupActual.deleteFood(0);
+
+        List<Food> expectedValue = new ArrayList<>();
+        LocalDate milkLocalDate = LocalDate.of(2020,10,10);
+        PerishableFood milk = new PerishableFood("Milk", 3.0, "cups", milkLocalDate);
+        NonPerishableFood chocolate = new NonPerishableFood("Chocolate", 500.0, "pounds");
+        expectedValue.add(milk);
+        expectedValue.add(chocolate);
 
         assertEquals(expectedValue, FoodHandler.getCreatedFoodList());
     }
