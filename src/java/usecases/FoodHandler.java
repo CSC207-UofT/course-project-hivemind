@@ -84,10 +84,10 @@ public class FoodHandler {
 
     /**
      * Getter method returning the names of all foods in createdFoodList.
-     * @return an ArrayList of strings of names of all foods in createdFoodList.
+     * @return a List of strings of names of all foods in createdFoodList.
      */
-    public static ArrayList<String> getCreatedFoodListNameOnly(){
-        ArrayList<String> names = new ArrayList<>();
+    public static List<String> getCreatedFoodListNameOnly(){
+        List<String> names = new ArrayList<>();
         for(Food foodName : createdFoodList){
             names.add(foodName.getFoodName());
         }
@@ -97,14 +97,13 @@ public class FoodHandler {
 
     /**
      * Getter method returning list of all foods in string form
-     * @return an ArrayList of strings of all foods in createdFoodList.
+     * @return a List of strings of all foods in createdFoodList.
      */
-    public ArrayList<String> getCreatedFoodListFullString(){
-        ArrayList<String> foodStringList = new ArrayList<>();
+    public List<String> getCreatedFoodListFullString(){
+        List<String> foodStringList = new ArrayList<>();
         for (Food foodObjects: getCreatedFoodList()){
             foodStringList.add(foodObjects.toString());
         }
-
         return foodStringList;
     }
 
@@ -127,7 +126,7 @@ public class FoodHandler {
      * @return the size of specifiedFoodList
      */
     public int makeSpecifiedFoodList(String foodName) {
-        ArrayList<Object[]> foodList = new ArrayList<>();
+        List<Object[]> foodList = new ArrayList<>();
         int index = 0;
         for (Food foods : createdFoodList) {
             String foodsLowerCase = foods.getFoodName().toLowerCase(Locale.ROOT);
