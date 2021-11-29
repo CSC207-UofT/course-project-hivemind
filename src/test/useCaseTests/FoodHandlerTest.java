@@ -9,6 +9,7 @@ import entities.NonPerishableFood;
 import controllers.FoodController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDate;
 
 
@@ -126,7 +127,7 @@ public class FoodHandlerTest {
         actualFoodhandler.createFood(getFoodTestCases().get(1));
         actualFoodhandler.createFood(getFoodTestCases().get(2));
         actualFoodhandler.createFood(getFoodTestCases().get(3));
-        ArrayList<String> actualValue = actualFoodhandler.getPerishedFoods();
+        List<String> actualValue = actualFoodhandler.getPerishedFoods();
 
         assertEquals(expectedValue, actualValue);
     }
@@ -166,7 +167,7 @@ public class FoodHandlerTest {
         expectedValue.add(getFoodHelper(1));
         expectedValue.add(getFoodHelper(2));
 
-        assertEquals(expectedValue, FoodHandler.getStoreFoodList());
+        assertEquals(expectedValue, FoodHandler.getCreatedFoodList());
     }
 
     private FoodController initialLoadFood(ArrayList<String> food){
@@ -176,7 +177,7 @@ public class FoodHandlerTest {
     }
 
     private Food getFoodHelper(Integer index) {
-        ArrayList<Food> food = FoodHandler.getStoreFoodList();
+        ArrayList<Food> food = FoodHandler.getCreatedFoodList();
         return (food.get(index));
     }
 

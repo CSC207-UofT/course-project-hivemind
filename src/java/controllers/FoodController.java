@@ -42,7 +42,7 @@ public class FoodController {
                 this.foodList.add(lst2);
             }
             // let the food handler load the controller food list
-             this.handler.initialLoad(this.foodList);
+             this.handler.createMultipleFoods(this.foodList);
     }
 
     /**
@@ -87,7 +87,7 @@ public class FoodController {
      * @return an arraylist of all foods in string form
      */
     public List<String> allFoodToString(){
-        return this.handler.getAllFoodFullString();
+        return this.handler.getCreatedFoodListFullString();
     }
 
     /**
@@ -105,7 +105,7 @@ public class FoodController {
      */
     public int getFoodIndexToDelete(int foodPosition) {
         int specifiedFoodIndex = foodPosition - 1;
-        return handler.getStoreFoodListIndex(specifiedFoodIndex);
+        return handler.getCreatedFoodListIndex(specifiedFoodIndex);
     }
 
     /**

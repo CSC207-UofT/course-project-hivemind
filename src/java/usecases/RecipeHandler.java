@@ -1,7 +1,6 @@
 package usecases;
 import entities.Recipe;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -182,7 +181,7 @@ public class RecipeHandler {
     private boolean recipeDoesContain(String currentIngredient) {
         ArrayList<String> out = new ArrayList<>();
 
-        for (String s: FoodHandler.getStoreFoodListNameOnly()){
+        for (String s: FoodHandler.getCreatedFoodListNameOnly()){
             out.add(s.toLowerCase(Locale.ROOT));
         }
 
