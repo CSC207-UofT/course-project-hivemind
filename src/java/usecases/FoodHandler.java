@@ -21,28 +21,28 @@ public class FoodHandler {
 
 
     /**
-     * Takes in a List of strings, single_array, that describes and contains all the information needed to
+     * Takes in a List of strings, singleArray, that describes and contains all the information needed to
      * create a Food object (Perishable or NonPerishable), and creates the Food object.
      *
-     * @param single_array A List of strings that is in the format of 
+     * @param singleArray A List of strings that is in the format of
      *                     [food name, quantity, measurement(, day, month, year)]
      */
-    public void createFood(List<String> single_array){
-        String foodName = single_array.get(0);
-        Double quantity = Double.parseDouble(single_array.get(1));
-        String measurement = single_array.get(2);
+    public void createFood(List<String> singleArray){
+        String foodName = singleArray.get(0);
+        Double quantity = Double.parseDouble(singleArray.get(1));
+        String measurement = singleArray.get(2);
 
-//         If the length of single_array is less than 4, then there is no expiry date for the food. Then, we know that
+//         If the length of singleArray is less than 4, then there is no expiry date for the food. Then, we know that
 //         it is a NonPerishableFood. Otherwise, we know that the length is greater than four and that it has an expiry
 //         date thus it is a PerishableFood.
-        if (single_array.size() < 4){
+        if (singleArray.size() < 4){
             // Make a NonPerishable food item
             createdFoodList.add(new NonPerishableFood(foodName, quantity, measurement));
         }else{
             // Make a Perishable food item.
-            int day = Integer.parseInt(single_array.get(3));
-            int month = Integer.parseInt(single_array.get(4));
-            int year = Integer.parseInt(single_array.get(5));
+            int day = Integer.parseInt(singleArray.get(3));
+            int month = Integer.parseInt(singleArray.get(4));
+            int year = Integer.parseInt(singleArray.get(5));
             LocalDate expiryDate = LocalDate.of(day, month, year);
 
             createdFoodList.add(new PerishableFood(foodName,quantity, measurement, expiryDate));
@@ -54,10 +54,10 @@ public class FoodHandler {
      * Creates PerishableFood and NonPerishableFood items from an ArrayList of List of strings, where each
      * List of strings describes a Food item
      *
-     * @param multi_array an Arraylist of List of strings for creating food
+     * @param multiArray an Arraylist of List of strings for creating food
      */
-    public void createMultipleFoods(ArrayList<List<String>> multi_array){
-        for(List<String> i:multi_array){
+    public void createMultipleFoods(List<List<String>> multiArray){
+        for(List<String> i:multiArray){
             createFood(i);
         }
     }
@@ -65,20 +65,21 @@ public class FoodHandler {
 
     /**
      * For each food object in createdFoodList, if it is a PeirshableFood, then compare the expiry date of the
-     * Food object to today's date, and return an ArrayList of expired foods called expired_foods.
+     * Food object to today's date, and return an ArrayList of expired foods called expiredFoods.
      *
-     * @return expired_foods the ArrayList that lists all the expired foods.
+     * @return expiredFoods the ArrayList that lists all the expired foods.
      */
     public List<String> getPerishedFoods(){
-        List<String> expired_foods = new ArrayList<>();
+        List<String> expiredFoods = new ArrayList<>();
         for (Food food: createdFoodList){
-            if (food instanceof PerishableFood new_food){
-                if (new_food.getExpiryStatus()){
-                    expired_foods.add(new_food.toString());
+            if (food instanceof PerishableFood){
+                PerishableFood newFood = (PerishableFood)food;
+                if (newFood.getExpiryStatus()){
+                    expiredFoods.add(newFood.toString());
                 }
             }
         }
-        return expired_foods;
+        return expiredFoods;
     }
 
 
