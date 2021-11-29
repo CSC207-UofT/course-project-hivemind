@@ -27,14 +27,6 @@ public class RecipeController {
         return handler.addOneRecipe(recipeName, a2, instruction);
     }
 
-    /**
-     * Search specifically for a recipe
-     * @param name
-     * @return
-     */
-    public String recipeSpecificSearch(String name){
-        return handler.findRecipe(name).toString();
-    }
 
     /**
      * Separates every string in the given ArrayList into separated strings, then puts all separated strings into
