@@ -32,10 +32,10 @@ public class FoodControllerTest {
         foodData.add("Shrimp,,2,,cups");
         foodData.add("Bread,,6,,slices,,2020,,10,,19");
         foodController.loadFoodFromList(foodData);
-        int initialFoodListSize = FoodHandler.getStoreFoodListNameOnly().size();
+        int initialFoodListSize = FoodHandler.getCreatedFoodListNameOnly().size();
         foodController.makeSpecifiedFoodList("Bread");
         foodController.deleteFood(1);
-        assertEquals(initialFoodListSize - 1, FoodHandler.getStoreFoodList().size());
+        assertEquals(initialFoodListSize - 1, FoodHandler.getCreatedFoodList().size());
     }
 
     @Test(timeout=1000)
@@ -60,7 +60,7 @@ public class FoodControllerTest {
         food.add("2.000");
         food.add("grams");
         foodController.runFoodCreation(food);
-        assertEquals(1, foodController.handler.getAllFoodFullString().size());
+        assertEquals(1, foodController.handler.getCreatedFoodListFullString().size());
         assertFalse(foodController.foodList.contains(food));
     }
 

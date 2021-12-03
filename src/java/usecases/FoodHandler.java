@@ -11,119 +11,130 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class FoodHandler {
-    private static ArrayList<Food> storeFoodList;
+    private static ArrayList<Food> createdFoodList;
     public List<Object[]> specifiedFoodList;
 
     public FoodHandler() {
-        storeFoodList = new ArrayList<>();
+        createdFoodList = new ArrayList<>();
         this.specifiedFoodList = null;
     }
 
 
     /**
-     * Create a Food object (Perishable or NonPerishable) based on single_array.
-     * TODO: Extend on this?
-     * @param single_array An ArrayList that is in the format of [food name, quantity, measurement(, day, month, year)]
+     * Takes in a List of strings, singleArray, that describes and contains all the information needed to
+     * create a Food object (Perishable or NonPerishable), and creates the Food object.
+     *
+     * @param singleArray A List of strings that is in the format of
+     *                     [food name, quantity, measurement(, day, month, year)]
      */
-    public void createFood(List<String> single_array){
-        String food = single_array.get(0);
-        Double quantity = Double.parseDouble(single_array.get(1));
-        String measurement = single_array.get(2);
+    public void createFood(List<String> singleArray){
+        String foodName = singleArray.get(0);
+        Double quantity = Double.parseDouble(singleArray.get(1));
+        String measurement = singleArray.get(2);
 
-//         If the length of single_array is less than 4, then there is no expiry date for the food. Then we know that
+//         If the length of singleArray is less than 4, then there is no expiry date for the food. Then, we know that
 //         it is a NonPerishableFood. Otherwise, we know that the length is greater than four and that it has an expiry
 //         date thus it is a PerishableFood.
-        if (single_array.size() < 4){
+        if (singleArray.size() < 4){
             // Make a NonPerishable food item
-            storeFoodList.add(new NonPerishableFood(food, quantity, measurement));
+            createdFoodList.add(new NonPerishableFood(foodName, quantity, measurement));
         }else{
-            // Make a Perishable food item
-            int day = Integer.parseInt(single_array.get(3));
-            int month = Integer.parseInt(single_array.get(4));
-            int year = Integer.parseInt(single_array.get(5));
-            LocalDate local_date = LocalDate.of(day, month, year);
+            // Make a Perishable food item.
+            int day = Integer.parseInt(singleArray.get(3));
+            int month = Integer.parseInt(singleArray.get(4));
+            int year = Integer.parseInt(singleArray.get(5));
+            LocalDate expiryDate = LocalDate.of(day, month, year);
 
-            storeFoodList.add(new PerishableFood(food,quantity, measurement, local_date));
+            createdFoodList.add(new PerishableFood(foodName,quantity, measurement, expiryDate));
         }
     }
 
 
     /**
-     * Creates PerishableFood and NonPerishableFood items from an Array of Array of Strings.
-     * @param multi_array an arraylist of arraylist of strings for creating food
+     * Creates PerishableFood and NonPerishableFood items from an ArrayList of List of strings, where each
+     * List of strings describes a Food item
+     *
+     * @param multiArray an Arraylist of List of strings for creating food
      */
-    public void initialLoad(ArrayList<List<String>> multi_array){
-        for(List<String> i:multi_array){
+    public void createMultipleFoods(List<List<String>> multiArray){
+        for(List<String> i:multiArray){
             createFood(i);
         }
     }
 
+
     /**
-     * Compare the expiry date of the Food object to today's date to return an ArrayList of expired foods called
-     * expired_foods.
-     * @return expired_foods the ArrayList that lists all the expired foods.
+     * For each food object in createdFoodList, if it is a PeirshableFood, then compare the expiry date of the
+     * Food object to today's date, and return an ArrayList of expired foods called expiredFoods.
+     *
+     * @return expiredFoods the ArrayList that lists all the expired foods.
      */
-    public ArrayList<String> getPerishedFoods(){
-        ArrayList<String> expired_foods = new ArrayList<>();
-        for (Food food:storeFoodList){
+    public List<String> getPerishedFoods(){
+        List<String> expiredFoods = new ArrayList<>();
+        for (Food food: createdFoodList){
             if (food instanceof PerishableFood){
-                PerishableFood new_food = (PerishableFood)food;
-                if (new_food.getExpiryStatus()){
-                    expired_foods.add(new_food.toString());
+                PerishableFood newFood = (PerishableFood)food;
+                if (newFood.getExpiryStatus()){
+                    expiredFoods.add(newFood.toString());
                 }
             }
         }
-        return expired_foods;
+        return expiredFoods;
     }
 
 
     /**
-     * Create a getter method so that RecipeHandler can access the names of the array of foods, storeFoodList.
-     * @return an ArrayList of strings of all foods that is loaded in this handler
+     * Getter method returning the names of all foods in createdFoodList.
+     * @return a List of strings of names of all foods in createdFoodList.
      */
-    public static ArrayList<String> getStoreFoodListNameOnly(){
-        ArrayList<String> names = new ArrayList<>();
-        for(Food foodName : storeFoodList){
+    public static List<String> getCreatedFoodListNameOnly(){
+        List<String> names = new ArrayList<>();
+        for(Food foodName : createdFoodList){
             names.add(foodName.getFoodName());
         }
         return names;
     }
 
+
     /**
-     * Getter method for returning list of all foods in string form
-     * @return an ArrayList of foods of all foods that is loaded in this handler
+     * Getter method returning list of all foods in string form
+     * @return a List of strings of all foods in createdFoodList.
      */
-    public ArrayList<String> getAllFoodFullString(){
-        ArrayList<String> foodStrLst = new ArrayList<>();
-        for (Food foodObjects: getStoreFoodList()){
-            foodStrLst.add(foodObjects.toString());
+    public List<String> getCreatedFoodListFullString(){
+        List<String> foodStringList = new ArrayList<>();
+        for (Food foodObjects: getCreatedFoodList()){
+            foodStringList.add(foodObjects.toString());
         }
-        return foodStrLst;
+        return foodStringList;
     }
 
 
     /**
-     * Getter method for returning Arraylist of all food objects stored in storeFoodList
-     * @return an ArrayList containing all the Food Objects in our system
+     * Getter method returning all food objects stored in createdFoodList
+     * @return an ArrayList containing all the Food Objects in createdFoodList.
      */
-    public static ArrayList<Food> getStoreFoodList(){
-        return storeFoodList;
+    public static ArrayList<Food> getCreatedFoodList(){
+        return createdFoodList;
     }
 
 
     /**
-     * Creates an array list of object arrays. Each object array contains a food object matching the name specified by
-     * parameter foodName at index 0, and the food's index in storeFoodList at index 1
-     * @param foodName the name of the food
+     * Creates an ArrayList of object arrays, each of which contains a food object matching the name specified by
+     * parameter foodName at index 0, and the food's index in createdFoodList at index 1. This ArrayList will be stored
+     * as specifiedFoodList, and the size of the ArrayList will be returned.
+     *
+     * @param foodName the name of a Food object
      * @return the size of specifiedFoodList
      */
     public int makeSpecifiedFoodList(String foodName) {
-        ArrayList<Object[]> foodList = new ArrayList<>();
+        List<Object[]> foodList = new ArrayList<>();
         int index = 0;
-        for (Food foods : storeFoodList) {
-            String lowerFoodGetName = foods.getFoodName().toLowerCase(Locale.ROOT);
-            String lowerFoodName = foodName.toLowerCase(Locale.ROOT);
-            if (Objects.equals(lowerFoodGetName, lowerFoodName)) {
+        for (Food foods : createdFoodList) {
+            String foodsLowerCase = foods.getFoodName().toLowerCase(Locale.ROOT);
+            String foodNameLowerCase = foodName.toLowerCase(Locale.ROOT);
+            // if the name from foodName and foods is equal, then add the foods Food object and its corresponding index
+            // in createdFoodList, as an Object, to the final ArrayList that will be returned.
+            if (Objects.equals(foodsLowerCase, foodNameLowerCase)) {
                 Object[] food = {foods, index};
                 foodList.add(food);
             }
@@ -133,33 +144,37 @@ public class FoodHandler {
         return foodList.size();
     }
 
+
     /**
-     * Deletes a Food object from storeFoodList given its index at specifiedFoodListIndex
+     * Deletes a Food object from createdFoodList at index specifiedFoodListIndex.
      * @param specifiedFoodListIndex the index of the Food from specifiedFoodList which is to be deleted from the program
      */
     public void deleteFood(int specifiedFoodListIndex) {
-        Food foodToDelete = (Food) getFoodFromArray(this.specifiedFoodList.get(specifiedFoodListIndex));
-        storeFoodList.remove(foodToDelete);
+        Food foodToDelete = (Food) getFoodFromArrayObject(this.specifiedFoodList.get(specifiedFoodListIndex));
+        createdFoodList.remove(foodToDelete);
     }
 
+
     /**
-     * Returns the index of the given food in storeFoodList, given its corresponding index in specifiedFoodList
+     * Returns the index of the given food in createdFoodList, given its corresponding index in specifiedFoodList
      * @param specifiedFoodListIndex the index of a food item in specifiedFoodList
      * @return the index of a food item in storeFoodList
      */
-    public int getStoreFoodListIndex(int specifiedFoodListIndex) {
-         return getFoodIndexFromArray(this.specifiedFoodList.get(specifiedFoodListIndex));
+    public int getCreatedFoodListIndex(int specifiedFoodListIndex) {
+         return getFoodIndexFromArrayObject(this.specifiedFoodList.get(specifiedFoodListIndex));
     }
 
+
     /**
-     * Returns a list of strings representing foods in specifiedFoodList with their given positions in the list
+     * Returns a list of strings representing foods in specifiedFoodList with their given positions in the list. If the
+     * food is perishable, also print out the expiry status of the food.
      * @return a list of strings representing foods in specifiedFoodList with their given positions in the list
      */
     public List<String> getSpecifiedFoodListStrings() {
         List<String> foodList = new ArrayList<>();
         int index = 1;
         for (Object[] item: this.specifiedFoodList){
-            Food food = (Food) getFoodFromArray(item);
+            Food food = (Food) getFoodFromArrayObject(item);
             if (food instanceof PerishableFood) {
                 String isExpired = "Not Expired";
                 if (((PerishableFood) food).getExpiryStatus()){
@@ -175,17 +190,19 @@ public class FoodHandler {
         return foodList;
     }
 
+
     /**
-     * Helper method which returns a string representing a food item, listed with a specified position
-     * @param position the position corresponding with the given food in specifiedFoodList
-     * @param food a food object
+     * Helper method which returns a string representing a Food item, listed with a specified position
+     * @param position the int position corresponding with the given food in specifiedFoodList
+     * @param food a Food object
      * @return a string representation of the given food object with the given position
      */
     private String getFoodStringHelper(int position, Food food) {
-        String foodString = "";
-        foodString = foodString + position + ". " + food.toString();
+        String foodString;
+        foodString = position + ". " + food.toString();
         return foodString;
     }
+
 
     /**
      * Returns an Object representation of a Food item from an Array
@@ -193,17 +210,20 @@ public class FoodHandler {
      * data at index 1
      * @return an Object representation of a Food
      */
-    private static Object getFoodFromArray(Object[] foodArray){
+    private static Object getFoodFromArrayObject(Object[] foodArray){
         return foodArray[0];
     }
 
+
     /**
-     * Returns the index of a Food item in storeFoodList
+     * Returns the index of a Food item that is stored in an object array in the form:
+     * {Food, index in createdFoodList}
+     *
      * @param foodArray an object array containing a food object at index 0, and the food's corresponding index in
      * storeFoodList at index 1
      * @return an int representing a Food's index in storeFoodList
      */
-    private static int getFoodIndexFromArray(Object[] foodArray){
+    private static int getFoodIndexFromArrayObject(Object[] foodArray){
         return (int) foodArray[1];
     }
 
