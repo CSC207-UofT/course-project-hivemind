@@ -1,12 +1,11 @@
 package controllers;
 import java.util.*;
 
-import entities.Recipe;
 import usecases.RecipeHandler;
 
 public class RecipeController {
     protected ArrayList<ArrayList<String>> recipeRawArray;
-    private final RecipeHandler handler;
+    public final RecipeHandler handler;
 
     public RecipeController() {
         this.recipeRawArray = new ArrayList<>();
@@ -27,6 +26,7 @@ public class RecipeController {
         ArrayList<String> a2 = new ArrayList<>(a1);
         return handler.addOneRecipe(recipeName, a2, instruction);
     }
+
 
     /**
      * Separates every string in the given ArrayList into separated strings, then puts all separated strings into
@@ -51,7 +51,7 @@ public class RecipeController {
      *
      * @return an ArrayList of sorted recommended recipes.
      */
-    public ArrayList<Recipe> recommendRecipe () {
-        return handler.recommendRecipe();
+    public ArrayList<String> recommendRecipe (int amount) {
+        return handler.recommendRecipe(amount);
     }
 }

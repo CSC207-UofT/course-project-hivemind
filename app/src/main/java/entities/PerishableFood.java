@@ -1,7 +1,11 @@
 package entities;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
+/**
+ * Represents a single Perishable Food
+ */
 public class PerishableFood extends Food {
     private boolean isExpired;
     private final LocalDate expiryDate;
@@ -21,18 +25,55 @@ public class PerishableFood extends Food {
     }
 
     /**
-     * Update the expiry status of the PerishableFood
-     *
-     * @return True if the PerishableFood is expired.
+     * Return the string representation of this perishable food object
+     * @return String of desired perishable food item
      */
-    private boolean updateExpired() {
-        LocalDate today = LocalDate.now();
-        return today.isAfter(expiryDate);
+    @Override
+    public String toString(){
+        if (isExpired == Boolean.TRUE){
+            return this.name + ": " + this.quantity.toString() + " " + this.unit + ", Expired on: " +
+                    this.expiryDate.toString();
+        }
+        else{
+            return this.name + ": " + this.quantity.toString() + " " + this.unit + ", Expires on: " +
+                    this.expiryDate.toString();
+        }
+    }
+
+    /**
+     * Override the equals method to check content equality, rather than identity equality.
+     * @param obj The object which is to be compared to NonPerishableFood.
+     * @return True if the content in obj is equivalent to NonPerishableFood. False otherwise.
+     */
+    @Override
+    public boolean equals(Object obj){
+        if (this==obj){
+            return true;
+        }
+        if (obj == null){
+            return false;
+        }
+        if (this.getClass() != obj.getClass()){
+            return false;
+        }
+
+        PerishableFood other = (PerishableFood) obj;
+        if (!Objects.equals(this.name, other.name)){
+            return false;
+        }else if (!Objects.equals(this.quantity, other.quantity)){
+            return false;
+        }else if (!Objects.equals(this.unit, other.unit)){
+            return false;
+        }else if (this.expiryDate.getYear() != other.expiryDate.getYear()){
+            return false;
+        }else if (this.expiryDate.getMonth() != other.expiryDate.getMonth()) {
+            return false;
+        }else return this.expiryDate.getDayOfMonth() == other.expiryDate.getDayOfMonth();
     }
 
     /**
      * Return the expiry status of the PerishableFood
-     * @return True if the PerishableFood is expired
+     * @return True if the PerishableFood is expired. False otherwise.
      */
     public boolean getExpiryStatus() {
         return this.isExpired;
@@ -44,5 +85,14 @@ public class PerishableFood extends Food {
      */
     public LocalDate getExpiryDate() {
         return this.expiryDate;
+    }
+
+    /**
+     * Update the expiry status of the PerishableFood
+     * @return True if the PerishableFood is expired.False otherwise.
+     */
+    private boolean updateExpired() {
+        LocalDate today = LocalDate.now();
+        return today.isAfter(expiryDate);
     }
 }
