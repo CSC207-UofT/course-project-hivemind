@@ -32,9 +32,9 @@ public class RecipeControllerTest {
     @Test(timeout=1000)
     public void testAddRecipeInHandler(){
         assertTrue(c.addRecipe("test", "sugar 1 unit", "cook"));
-        assertEquals("Name: test Ingredients: {sugar=[1, unit]} Instructions: cook", c.recipeSpecificSearch("test"));
+        assertEquals("Name: test Ingredients: {sugar=[1, unit]} Instructions: cook", c.handler.findRecipe("test").toString());
         assertTrue(c.addRecipe("test2", "sugar 1 unit mint 1 unit grass 1 unit", "cook"));
-        assertEquals("Name: test2 Ingredients: {mint=[1, unit], grass=[1, unit], sugar=[1, unit]} Instructions: cook", c.recipeSpecificSearch("test2"));
+        assertEquals("Name: test2 Ingredients: {mint=[1, unit], grass=[1, unit], sugar=[1, unit]} Instructions: cook", c.handler.findRecipe("test2").toString());
 
     }
 }
