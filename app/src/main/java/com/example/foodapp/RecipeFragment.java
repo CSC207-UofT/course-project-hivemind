@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import adapters.Adapter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import android.view.ViewGroup.LayoutParams;
 
@@ -41,7 +42,7 @@ public class RecipeFragment extends Fragment {
 
 //        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
 
-        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat"));
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
         System.out.println(recipeList);

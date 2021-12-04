@@ -16,6 +16,10 @@ public class Adapter {
     }
     // FOOD ADAPTER
     // TODO: Return an ArrayList of Strings instead
+    /**
+     *  output: [["Potato", "2 lbs"], ["Potato", "2 lbs", "Expiry Date: 3/12/2021"]]
+     *
+     */
     public List<List<String>> loadFoods(){
         List<List<String>> presentableFoodList = new ArrayList<>();
         try {
