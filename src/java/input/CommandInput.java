@@ -2,10 +2,8 @@ package input;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.*;
 import input.UserInput;
-
 
 import alerts.AlertExpiryStatus;
 import controllers.FoodController;
@@ -80,12 +78,12 @@ public class CommandInput {
                             break;
                         case "get":
                             for (String str : foodController.allFoodToString()) {
-                                System.out.println(str);
+                                userInput.printMessage(str);
                             }
-                            System.out.println("-----------------------");
+                            userInput.printMessage("-----------------------");
                             break;
                         default:
-                            System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                            userInput.printMessage("Error, argument " + splitInput[1] + " not recognized");
                             break;
                     }
                     break;
@@ -94,14 +92,14 @@ public class CommandInput {
                         try{
                             int amount = Integer.parseInt(splitInput[2]);
                             for(int i = 0; i < recipeController.recommendRecipe(amount).size(); i++){
-                                System.out.println(recipeController.recommendRecipe(amount).get(i));
-                                System.out.println(" ");
+                                userInput.printMessage(recipeController.recommendRecipe(amount).get(i));
+                                userInput.printMessage(" ");
                             }
                         } catch (ArrayIndexOutOfBoundsException e) {
-                            System.out.println("error in input: no number inputted!");
+                            userInput.printMessage("error in input: no number inputted!");
                         }
                         catch (NumberFormatException e){
-                            System.out.println("error in type, try using a number!");
+                            userInput.printMessage("error in type, try using a number!");
                         }
 
 
@@ -111,15 +109,15 @@ public class CommandInput {
                         addRecipeHelper();
                     }
                     else {
-                        System.out.println("Error, argument " + splitInput[1] + " not recognized");
+                        userInput.printMessage("Error, argument " + splitInput[1] + " not recognized");
                     }
                     break;
                 default:
-                    System.out.println("Error: command not recognized");
+                    userInput.printMessage("Error: command not recognized");
             }
         }
         else {
-            System.out.println("Error: not enough arguments in command");
+            userInput.printMessage("Error: not enough arguments in command");
         }
     }
 
@@ -148,7 +146,7 @@ public class CommandInput {
             }
         }
         catch (Exception e){
-            System.out.println("An error occurred, did not successfully delete food. " +
+            userInput.printMessage("An error occurred, did not successfully delete food. " +
                     "Please verify that all arguments are of the proper data type and format");
         }
     }
@@ -157,17 +155,17 @@ public class CommandInput {
      * Prints a message prompting the user to input the number corresponding to which food they wish to delete
      */
     private static void printSpecifiedDeleteFoodPrompt() {
-        System.out.println("Please input the number corresponding to which food item you wish to delete:");
+        userInput.printMessage("Please input the number corresponding to which food item you wish to delete:");
         printSpecifiedFoodList();
-        System.out.print("> ");
+        userInput.printInLineMessage("> ");
     }
 
     /**
      * Prints a message prompting the user to input the name of the Food which they wish to delete
      */
     private static void printDeleteFoodPrompt() {
-        System.out.println("Enter Food Name To Delete:");
-        System.out.print("> ");
+        userInput.printMessage("Enter Food Name To Delete:");
+        userInput.printInLineMessage("> ");
     }
 
     /**
@@ -176,20 +174,20 @@ public class CommandInput {
      */
     private static void printFoodDeletedFromSystem(String deletedFoodString) {
         foodController.foodDeletedFromSystem();
-        System.out.println("The following food item was successfully deleted from the system:");
-        System.out.println(deletedFoodString);
+        userInput.printMessage("The following food item was successfully deleted from the system:");
+        userInput.printMessage(deletedFoodString);
     }
 
     /**
      * Prints a message displaying all the Food objects present in the system
      */
     private static void printAvailableFood() {
-        System.out.println("Here are all your foods in your inventory:");
-        System.out.println("-----------------------");
+        userInput.printMessage("Here are all your foods in your inventory:");
+        userInput.printMessage("-----------------------");
         for (String str : foodController.allFoodToString()) {
-            System.out.println(str);
+            userInput.printMessage(str);
         }
-        System.out.println("-----------------------");
+        userInput.printMessage("-----------------------");
     }
 
     /**
@@ -197,7 +195,7 @@ public class CommandInput {
      */
     private static void printSpecifiedFoodList() {
         for (String food: foodController.printSpecifiedFoodList()) {
-            System.out.println(food);
+            userInput.printMessage(food);
         }
     }
 
@@ -205,38 +203,37 @@ public class CommandInput {
      * Prints a message when the user searches for a food object that is not present in the system
      */
     private static void printFoodNotInSystem() {
-        System.out.println("This food item is not currently stored in the system. " +
+        userInput.printMessage("This food item is not currently stored in the system. " +
                 "Please verify the spelling and existence of this food item");
     }
 
     public static void addRecipeHelper() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter Recipe Name:");
-        System.out.print("> ");
-        String recipeName = scan.nextLine();
+        userInput.printMessage("Enter Recipe Name:");
+        userInput.printInLineMessage("> ");
+        String recipeName = userInput.scanInputLine();
 
-        System.out.println("Enter List of Ingredients: (Ingredient1 Quantity1 Unit1 Ingredient2 Quantity2 Unit2....)");
-        System.out.print("> ");
-        String ingredientString = scan.nextLine();
+        userInput.printMessage("Enter List of Ingredients: (Ingredient1 Quantity1 Unit1 Ingredient2 Quantity2 Unit2....)");
+        userInput.printInLineMessage("> ");
+        String ingredientString = userInput.scanInputLine();
 
-        System.out.println("Enter instructions:");
-        System.out.print("> ");
-        String instructions = scan.nextLine();
+        userInput.printMessage("Enter instructions:");
+        userInput.printInLineMessage("> ");
+        String instructions = userInput.scanInputLine();
 
 
         try {
             String s = ingredientString.replace(" ", ",,");
             DataParser.writeToFile(recipeName + ",," + s + ",," + instructions, DataParser.RECIPE_FILE);
-            System.out.println("Saved to file successfully.");
+            userInput.printMessage("Saved to file successfully.");
         } catch (Exception e){
-            System.out.println("error in saving");
+            userInput.printMessage("error in saving");
         }
 
         if (recipeController.addRecipe(recipeName, ingredientString, instructions)){
-            System.out.println("Successfully added recipe: " + recipeName);
+            userInput.printMessage("Successfully added recipe: " + recipeName);
         }
         else{
-            System.out.println("An error has occurred, did not successfully add recipe");
+            userInput.printMessage("An error has occurred, did not successfully add recipe");
         }
     }
 
@@ -245,27 +242,26 @@ public class CommandInput {
     }
 
     public static void foodHelper() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter Food Name:");
-        System.out.print("> ");
-        String foodName = scan.nextLine();
+        userInput.printMessage("Enter Food Name:");
+        userInput.printInLineMessage("> ");
+        String foodName = userInput.scanInputLine();
 
-        System.out.println("Enter Quantity of Food (number)");
-        System.out.print("> ");
-        String foodQuant = scan.nextLine();
+        userInput.printMessage("Enter Quantity of Food (number)");
+        userInput.printInLineMessage("> ");
+        String foodQuant = userInput.scanInputLine();
         if (!testIsDouble(foodQuant)) {
-            System.out.println("Please make sure that the input is a number, and try again.");
+            userInput.printMessage("Please make sure that the input is a number, and try again.");
             return;
         }
 
-        System.out.println("Enter Unit of Measurement:");
-        System.out.print("> ");
-        String foodUnit = scan.nextLine();
+        userInput.printMessage("Enter Unit of Measurement:");
+        userInput.printInLineMessage("> ");
+        String foodUnit = userInput.scanInputLine();
 
-        System.out.println("Enter the Expiry Date using format" +
+        userInput.printMessage("Enter the Expiry Date using format" +
                 " YYYY/MM/DD (leave this blank if this food is non-perishable");
-        System.out.print("> ");
-        String foodExpiry = scan.nextLine();
+        userInput.printInLineMessage("> ");
+        String foodExpiry = userInput.scanInputLine();
 
         String[] foodInfo;
 
@@ -275,7 +271,7 @@ public class CommandInput {
                 foodInfo = new String[]{foodName, foodQuant, foodUnit, expiryInfo[0], expiryInfo[1], expiryInfo[2]};
             }
             catch (Exception e){
-                System.out.println("Error in loading food, please make sure that the expiry date is either" +
+                userInput.printMessage("Error in loading food, please make sure that the expiry date is either" +
                         "blank, or follows the format \"YYYY/MM/DD\"");
                 return;
             }
@@ -285,12 +281,11 @@ public class CommandInput {
         }
 
         if (handleFoodHelper(foodInfo)) {
-            System.out.println("Food added successfully!");
+            userInput.printMessage("Food added successfully!");
         }
     }
 
     public static boolean handleFoodHelper(String[] foodInfo) {
-        // helper function for foodHelper
         if (foodInfo.length > 3) {
             if (testIsDouble(foodInfo[1]) && testIsDouble(foodInfo[3]) && testIsDouble(foodInfo[5])
                     && testIsDouble(foodInfo[5])) {
@@ -301,12 +296,12 @@ public class CommandInput {
                             ",," + foodInfo[4] + ",," + foodInfo[5], DataParser.FOOD_FILE);
                 }
                 catch (IOException e) {
-                    System.out.println("An error has occurred and the food could not be saved at this time." +
+                    userInput.printMessage("An error has occurred and the food could not be saved at this time." +
                             "  Please try again later");
                 }
             }
             else {
-                System.out.println("Error: command arguments are incorrect, please verify that all" +
+                userInput.printMessage("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");
                 return false;
             }
@@ -321,13 +316,13 @@ public class CommandInput {
                             ",," + foodInfo[2], DataParser.FOOD_FILE);
                 }
                 catch (IOException e) {
-                    System.out.println("An error has occurred and the food could not be saved at this time." +
+                    userInput.printMessage("An error has occurred and the food could not be saved at this time." +
                             "  Please try again later");
                 }
 
             }
             else {
-                System.out.println("Error: command arguments are incorrect, please verify that all" +
+                userInput.printMessage("Error: command arguments are incorrect, please verify that all" +
                         " arguments are of the proper data type");
                 return false;
             }
