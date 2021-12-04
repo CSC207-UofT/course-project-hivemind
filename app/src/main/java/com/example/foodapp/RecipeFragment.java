@@ -3,6 +3,8 @@ package com.example.foodapp;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
@@ -10,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import input.CommandInput;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,7 +25,6 @@ import android.view.ViewGroup.LayoutParams;
 public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     View view;
-    //private EditText
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -49,7 +49,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         fab.setOnClickListener(this);
 
 //        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
-        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d"));
+        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c", "d"));
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
         System.out.println(recipeList);
@@ -83,8 +83,21 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         View recipePopupView = getLayoutInflater().inflate(R.layout.recipe_popup, (ViewGroup) view, false);
 
+        EditText name = recipePopupView.findViewById(R.id.recipe_popup_name);
+        EditText foods = recipePopupView.findViewById(R.id.recipe_popup_foods);
+        EditText instructions = recipePopupView.findViewById(R.id.recipe_popup_instructions);
+
+        Button cancel_button = recipePopupView.findViewById(R.id.cancel_recipe_button);
+        Button save_button = recipePopupView.findViewById(R.id.save_recipe_button);
+
         builder.setView(recipePopupView);
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        cancel_button.setOnClickListener(v -> dialog.dismiss());
+
+        save_button.setOnClickListener(v -> {
+            //Code to parse and save recipe
+        });
     }
 }

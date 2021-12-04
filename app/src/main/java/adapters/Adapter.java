@@ -7,16 +7,12 @@ import java.util.*;
 
 public class Adapter {
 
-    public final FoodController foodController;
-    public final RecipeController recipeController;
+    public static final FoodController foodController = new FoodController();
+    public static final RecipeController recipeController = new RecipeController();
 
-    public Adapter(){
-        this.foodController = new FoodController();
-        this.recipeController = new RecipeController();
-    }
     // FOOD ADAPTER
     // TODO: Return an ArrayList of Strings instead
-    public List<List<String>> loadFoods(){
+    public static List<List<String>> loadFoods(){
         List<List<String>> presentableFoodList = new ArrayList<>();
         try {
             ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
@@ -40,19 +36,19 @@ public class Adapter {
         return presentableFoodList;
     }
 
-    public List<String> createFood(String name, String amount, String unit){
+    public static List<String> createFood(String name, String amount, String unit){
         ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit));
         foodController.runFoodCreation(food);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit));
     }
 
-    public List<String> createFood(String name, String amount, String unit, String day, String month, String year){
+    public static List<String> createFood(String name, String amount, String unit, String day, String month, String year){
         ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, day, month, year));
         foodController.runFoodCreation(food);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit,
                 "Expiry date: " + day + "/" + month + "/" + year));
     }
-    public ArrayList<List<String>> showPerishables(){
+    public static ArrayList<List<String>> showPerishables(){
         try {
             ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
             foodController.loadFoodFromList(foodData);
@@ -61,7 +57,7 @@ public class Adapter {
         }
         return foodController.foodList;
     }
-    public void showDeletedFood(Integer foodPositionToDelete) {
+    public static void showDeletedFood(Integer foodPositionToDelete) {
         int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
         foodController.deleteFood(foodPositionToDelete);
         try{
@@ -74,7 +70,7 @@ public class Adapter {
 
     }
     // RECIPE ADAPTER
-    public List<List<String>> loadRecipes(){
+    public static List<List<String>> loadRecipes(){
         List<List<String>> presentableRecipeList = new ArrayList<>();
         try {
             ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
@@ -91,7 +87,7 @@ public class Adapter {
      * ingredients input: potato 1bs 1 potato lbs 2
      *
      */
-    public List<String> createRecipe(String name, String ingredients, String steps){
+    public static List<String> createRecipe(String name, String ingredients, String steps){
         recipeController.addRecipe(name, ingredients, steps);
         String[] ingrSplit = ingredients.split(" ");
         List<String> a1 = Arrays.asList(ingrSplit);
@@ -107,7 +103,7 @@ public class Adapter {
         }
         return new ArrayList<>(Arrays.asList(name, presentableIngredients, steps));
     }
-    public List<List<String>> recommendRecipes(int amount){
+    public static List<List<String>> recommendRecipes(int amount){
         ArrayList<String> recipes = recipeController.recommendRecipe(amount);
         List<List<String>> presentableRecipeList = new ArrayList<>();
         for(String unpolishedRecipe : recipes){
@@ -125,7 +121,7 @@ public class Adapter {
 
     }
 
-    private void helper(List<List<String>> presentableRecipeList, List<String> recipe) {
+    private static void helper(List<List<String>> presentableRecipeList, List<String> recipe) {
         StringBuilder ingredients = new StringBuilder();
         int i = 1;
         while(i < recipe.size() - 1){
