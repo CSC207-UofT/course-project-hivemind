@@ -161,7 +161,7 @@ public class FoodHandler {
      * @return the index of a food item in storeFoodList
      */
     public int getCreatedFoodListIndex(int specifiedFoodListIndex) {
-        return getFoodIndexFromArrayObject(this.specifiedFoodList.get(specifiedFoodListIndex));
+         return getFoodIndexFromArrayObject(this.specifiedFoodList.get(specifiedFoodListIndex));
     }
 
 

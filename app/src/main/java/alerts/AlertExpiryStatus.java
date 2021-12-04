@@ -42,18 +42,18 @@ public class AlertExpiryStatus implements Runnable{
      */
     @Override
     public void run() {
-        Timer timer = new Timer ();
-        TimerTask hourlyTask = new TimerTask () {
-            @Override
-            // Every hour, check to see if the date has changed. If the date has changed, run alertExpiredFoods.
-            public void run () {
-                Calendar newDate = Calendar.getInstance();
-                if(newDate.get(Calendar.DAY_OF_MONTH) != dateNow.get(Calendar.DAY_OF_MONTH)){
-                    alertExpiredFoods();
-                    dateNow = Calendar.getInstance();
+            Timer timer = new Timer ();
+            TimerTask hourlyTask = new TimerTask () {
+                @Override
+                // Every hour, check to see if the date has changed. If the date has changed, run alertExpiredFoods.
+                public void run () {
+                    Calendar newDate = Calendar.getInstance();
+                    if(newDate.get(Calendar.DAY_OF_MONTH) != dateNow.get(Calendar.DAY_OF_MONTH)){
+                        alertExpiredFoods();
+                        dateNow = Calendar.getInstance();
+                    }
                 }
-            }
-        };
-        timer.schedule(hourlyTask, 0L, 1000 * 60 * 60);
-    }
+            };
+            timer.schedule(hourlyTask, 0L, 1000 * 60 * 60);
+        }
 }

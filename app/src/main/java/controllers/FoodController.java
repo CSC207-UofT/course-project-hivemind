@@ -35,14 +35,14 @@ public class FoodController {
      */
     public void loadFoodFromList(List<String> foodStringList) {
 
-        for (String s : foodStringList) {
-            String[] lst = s.split(",,");
-            List<String> lst2 = new ArrayList<>(Arrays.asList(lst));
-            // add each string representation of food to the controller's food list
-            this.foodList.add(lst2);
-        }
-        // let the food handler load the controller food list
-        this.handler.createMultipleFoods(this.foodList);
+            for (String s : foodStringList) {
+                String[] lst = s.split(",,");
+                List<String> lst2 = new ArrayList<>(Arrays.asList(lst));
+                // add each string representation of food to the controller's food list
+                this.foodList.add(lst2);
+            }
+            // let the food handler load the controller food list
+             this.handler.createMultipleFoods(this.foodList);
     }
 
     /**
