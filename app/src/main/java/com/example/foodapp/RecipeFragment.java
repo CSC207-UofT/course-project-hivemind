@@ -21,12 +21,19 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class RecipeFragment extends Fragment {
 
+    public Adapter adapter;
+    public String str;
+
     public RecipeFragment() {
         // Required empty public constructor
     }
 
     public static RecipeFragment newInstance() {
         return new RecipeFragment();
+    }
+
+    public void setArguments(Bundle args){
+
     }
 
     @Override
@@ -40,6 +47,11 @@ public class RecipeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
 //        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
+
+        Bundle data = getArguments();
+
+        assert data != null;
+        str = data.getString("data");
 
         ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c"));
 

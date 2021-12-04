@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -37,12 +38,23 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                     .commit();
         }
         else if (item.toString().equals("Recipe")) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.placeholder, RecipeFragment.class, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack("recipe") // name can be null
-                    .commit();
+
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.placeholder, RecipeFragment.class, null)
+//                    .setReorderingAllowed(true)
+//                    .addToBackStack("recipe") // name can be null
+//                    .commit();
+
+            RecipeFragment frag = new RecipeFragment();
+            Bundle data = new Bundle();
+            data.putString("data", "data23423");
+            frag.setArguments(data);
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                    .beginTransaction();
+
+            fragmentTransaction.replace(R.id.placeholder, frag).setReorderingAllowed(true).addToBackStack("recipe").commit();
         }
         else if (item.toString().equals("Settings")) {
             FragmentManager fragmentManager = getSupportFragmentManager();
