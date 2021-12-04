@@ -1,5 +1,6 @@
 package com.example.foodapp;
 
+import adapters.Adapter;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

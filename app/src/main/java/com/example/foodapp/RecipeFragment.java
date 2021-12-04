@@ -12,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import adapters.Adapter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import android.view.ViewGroup.LayoutParams;
 
@@ -49,7 +52,9 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         fab.setOnClickListener(this);
 
 //        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
+
         ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c", "d"));
+
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
         System.out.println(recipeList);

@@ -12,7 +12,12 @@ public class Adapter {
 
     // FOOD ADAPTER
     // TODO: Return an ArrayList of Strings instead
-    public static List<List<String>> loadFoods(){
+
+    /**
+     *  output: [["Potato", "2 lbs"], ["Potato", "2 lbs", "Expiry Date: 3/12/2021"]]
+     *
+     */
+    public List<List<String>> loadFoods(){
         List<List<String>> presentableFoodList = new ArrayList<>();
         try {
             ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);

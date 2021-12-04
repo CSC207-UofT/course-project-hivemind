@@ -14,4 +14,5 @@
     <string name="cancel_recipe_button">Cancel</string>
     <string name="save_recipe_button">Save</string>
     <string name="add_recipe_popup">Add Recipe</string>
+    <string name="foodbutton">foodButton</string>
 </resources>
