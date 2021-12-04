@@ -1,5 +1,6 @@
 package com.example.foodapp;
 
+import adapters.Adapter;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +14,14 @@ import android.view.ViewGroup;
  */
 public class FoodFragment extends Fragment {
 
+    Adapter adapter;
+
     public FoodFragment() {
         // Required empty public constructor
+    }
+
+    public FoodFragment(Adapter a){
+        adapter = a;
     }
 
     public static FoodFragment newInstance() {

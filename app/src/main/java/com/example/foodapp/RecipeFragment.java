@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import input.CommandInput;
+import adapters.Adapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,8 +21,14 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class RecipeFragment extends Fragment {
 
+    Adapter adapter;
+
     public RecipeFragment() {
         // Required empty public constructor
+    }
+
+    public RecipeFragment(Adapter a){
+        adapter = a;
     }
 
     public static RecipeFragment newInstance() {
@@ -40,6 +46,7 @@ public class RecipeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
 //        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
+
         ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c"));
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
