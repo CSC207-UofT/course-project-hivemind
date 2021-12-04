@@ -21,14 +21,8 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class RecipeFragment extends Fragment {
 
-    Adapter adapter;
-
     public RecipeFragment() {
         // Required empty public constructor
-    }
-
-    public RecipeFragment(Adapter a){
-        adapter = a;
     }
 
     public static RecipeFragment newInstance() {

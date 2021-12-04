@@ -12,9 +12,6 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     BottomNavigationView bottomNavView;
-    Adapter adapter = new Adapter();
-    FoodFragment foodFragment = new FoodFragment();
-    RecipeFragment recipeFragment = new RecipeFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

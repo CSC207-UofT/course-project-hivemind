@@ -14,14 +14,8 @@ import android.view.ViewGroup;
  */
 public class FoodFragment extends Fragment {
 
-    Adapter adapter;
-
     public FoodFragment() {
         // Required empty public constructor
-    }
-
-    public FoodFragment(Adapter a){
-        adapter = a;
     }
 
     public static FoodFragment newInstance() {
