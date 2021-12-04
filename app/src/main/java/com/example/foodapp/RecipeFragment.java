@@ -72,7 +72,6 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 //        recipeList.addView(testText);
 
         return view;
-
     }
 
     @Override
