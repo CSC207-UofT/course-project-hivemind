@@ -4,7 +4,7 @@ import java.util.*;
 import usecases.RecipeHandler;
 
 public class RecipeController {
-    protected ArrayList<ArrayList<String>> recipeRawArray;
+    public ArrayList<ArrayList<String>> recipeRawArray;
     public final RecipeHandler handler;
 
     public RecipeController() {
