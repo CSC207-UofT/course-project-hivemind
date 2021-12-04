@@ -3,7 +3,16 @@
     <string name="menu_food">Food</string>
     <string name="menu_recipe">Recipe</string>
     <string name="menu_settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recipe_add_button">Add a Recipe</string>
+    <string name="recipe_popup_name">Name</string>
+    <string name="recipe_popup_name_hint">Name of Recipe</string>
+    <string name="recipe_popup_instructions_hint">Instructions of Recipe</string>
+    <string name="recipe_popup_instructions">Instructions</string>
+    <string name="recipe_popup_foods">Food (Food Quant Unit Food Quant Unit...)</string>
+    <string name="recipe_popup_foods_hint">Foods in Recipe</string>
+    <string name="cancel_recipe_button">Cancel</string>
+    <string name="save_recipe_button">Save</string>
+    <string name="add_recipe_popup">Add Recipe</string>
     <string name="foodbutton">foodButton</string>
 </resources>
