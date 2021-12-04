@@ -38,6 +38,8 @@ public class FoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        Adapter.loadFoods();
+
         View view = inflater.inflate(R.layout.fragment_food, container, false);
 
 //        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();

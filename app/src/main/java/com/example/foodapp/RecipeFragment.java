@@ -53,23 +53,24 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
 //        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
 
-        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c", "d"));
-
+        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"));
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
         System.out.println(recipeList);
-        for (String recipe : given_recipes) {
-            System.out.println(recipe);
+        for (List<String> l: Adapter.loadFoods()) {
 
-            TextView textView = new TextView(getContext());
-            textView.setText(recipe);
-            textView.setTextSize(24);
-            textView.setGravity(Gravity.TOP|Gravity.START);
-            textView.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT));
+                System.out.println(l);
 
-            recipeList.addView(textView);
+                TextView textView = new TextView(getContext());
+                textView.setText(l.toString());
+                textView.setTextSize(40);
+                textView.setGravity(Gravity.TOP | Gravity.START);
+                textView.setLayoutParams(new LayoutParams(
+                        LayoutParams.MATCH_PARENT,
+                        LayoutParams.WRAP_CONTENT));
+
+                recipeList.addView(textView);
+
         }
 
 //        TextView testText = new TextView(getContext());
