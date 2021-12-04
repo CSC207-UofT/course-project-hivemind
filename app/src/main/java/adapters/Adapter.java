@@ -41,15 +41,19 @@ public class Adapter {
         return presentableFoodList;
     }
 
-    public static List<String> createFood(String name, String amount, String unit){
+    public static List<String> createFood(String name, String amount, String unit) throws IOException{
         ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit));
         foodController.runFoodCreation(food);
+        DataParser.writeToFile(food.get(0) + ",," + food.get(1) +
+                ",," + food.get(2), DataParser.FOOD_FILE);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit));
     }
 
-    public static List<String> createFood(String name, String amount, String unit, String day, String month, String year){
+    public static List<String> createFood(String name, String amount, String unit, String day, String month, String year) throws IOException{
         ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, day, month, year));
         foodController.runFoodCreation(food);
+        DataParser.writeToFile(food.get(0) + ",," + food.get(1) + ",," + food.get(2) + ",," + food.get(5) +
+                ",," + food.get(4) + ",," + food.get(3), DataParser.FOOD_FILE);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit,
                 "Expiry date: " + day + "/" + month + "/" + year));
     }
@@ -92,7 +96,7 @@ public class Adapter {
      * ingredients input: potato 1bs 1 potato lbs 2
      *
      */
-    public static List<String> createRecipe(String name, String ingredients, String steps){
+    public static List<String> createRecipe(String name, String ingredients, String steps) throws IOException{
         recipeController.addRecipe(name, ingredients, steps);
         String[] ingrSplit = ingredients.split(" ");
         List<String> a1 = Arrays.asList(ingrSplit);
@@ -106,6 +110,8 @@ public class Adapter {
             ingredientsBuilder.append(a2.get(i + 2)).append(". ");
             i += 3;
         }
+        String s = ingredients.replace(" ", ",,");
+        DataParser.writeToFile(name + ",," + s + ",," + steps, DataParser.RECIPE_FILE);
         return new ArrayList<>(Arrays.asList(name, presentableIngredients, steps));
     }
     public static List<List<String>> recommendRecipes(int amount){
@@ -132,8 +138,7 @@ public class Adapter {
         while(i < recipe.size() - 1){
             ingredients.append(recipe.get(i)).append(" ");
             ingredients.append(recipe.get(i + 1)).append(" ");
-            ingredients.append(recipe.get(i + 2)).append(".");
-            ingredients.append(recipe.get(i + 2)).append(" ");
+            ingredients.append(recipe.get(i + 2)).append(".").append(" ");
             i += 3;
         }
         List<String> presentableRecipe = new ArrayList<>(Arrays.asList(recipe.get(0), ingredients.toString(), recipe.get(recipe.size() - 1)));
