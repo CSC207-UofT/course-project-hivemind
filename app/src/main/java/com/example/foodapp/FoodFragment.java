@@ -2,9 +2,13 @@ package com.example.foodapp;
 
 import adapters.Adapter;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Button;
+import android.widget.EditText;
+
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +31,9 @@ import java.util.Objects;
  * Use the {@link FoodFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FoodFragment extends Fragment {
+public class FoodFragment extends Fragment implements View.OnClickListener{
+
+    Adapter adapter;
 
     View view;
     Adapter adapter = new Adapter();
@@ -42,6 +48,7 @@ public class FoodFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        this.adapter = MainActivity.adapter;
         super.onCreate(savedInstanceState);
     }
 
@@ -52,53 +59,20 @@ public class FoodFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_food, container, false);
 
-//        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
-
-//        //output: [["Potato", "2 lbs"], ["Potato", "2 lbs", "Expiry Date: 3/12/2021"]]
-        //Adapter adapter = new Adapter();
-        //List<List<String>> foodsList = adapter.loadFoods();
-
-        ArrayList<String> food1 = new ArrayList<>();
-        food1.add("Soup");
-        food1.add("2 lbs");
-        ArrayList<String> food2 = new ArrayList<>();
-        food2.add("Potato");
-        food2.add("2 lbs");
-        food2.add("Expiry Date: 3/12/2021");
-        ArrayList<String> food3 = new ArrayList<>();
-        food3.add("Meat");
-        food3.add("3 metric tons");
-        ArrayList<String> food4 = new ArrayList<>();
-        food4.add("Meat");
-        food4.add("16 Kilo tons");
-
-        ArrayList<ArrayList<String>> givenFoods = new ArrayList<>();
-        givenFoods.add(food1);
-        givenFoods.add(food2);
-        givenFoods.add(food3);
-        givenFoods.add(food4);
+        FloatingActionButton fab = view.findViewById(R.id.food_fab);
+        fab.setOnClickListener(this);
 
         int index = 0;
 
+        List<List<String>> given_foods = adapter.getAllFoods();
 
         LinearLayout foodList = view.findViewById(R.id.food_list);
-        for (List<String> food : givenFoods) {
-            System.out.println(food);
-
+        if (given_foods == null || given_foods.size() == 0) {
+            String display_string = "You've got no food!";
             TextView textView = new TextView(getContext());
-            String foodDisplay = foodStringHelper(food);
-            textView.setText(foodDisplay);
-            //String foodID = foodIDHelper(food, index);
-            textView.setId(index);
-            textView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    createDeleteFoodPopUp(foodList, v);
-                }
-            });
-
+            textView.setText(display_string);
             textView.setTextSize(24);
-            textView.setGravity(Gravity.TOP|Gravity.START);
+            textView.setGravity(Gravity.TOP | Gravity.START);
             textView.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -106,13 +80,84 @@ public class FoodFragment extends Fragment {
             foodList.addView(textView);
             index ++;
         }
+        else {
+            for (List<String> food : given_foods) {
+                TextView textView = new TextView(getContext());
+                String foodDisplay = foodStringHelper(food);
+                textView.setText(foodDisplay);
+                //String foodID = foodIDHelper(food, index);
+                textView.setId(index);
+                textView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                   public void onClick(View v){
+                       createDeleteFoodPopUp(foodList, v);
+                    }
+                });
+                textView.setText(food.get(0));
+                textView.setTextSize(24);
+                textView.setGravity(Gravity.TOP | Gravity.START);
+                textView.setLayoutParams(new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
 
-//        TextView testText = new TextView(getContext());
-//        testText.setText("test text lol");
-//        recipeList.addView(testText);
-
+                foodList.addView(textView);
+            }
+        }
         return view;
 
+    }
+
+    public void createNewFoodDialog(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+        final View foodPopupView = getLayoutInflater().inflate(R.layout.popup,null);
+        EditText newfoodpopup_foodname = foodPopupView.findViewById(R.id.foodname);
+        EditText newfoodpopup_quantity = foodPopupView.findViewById(R.id.quantity);
+        EditText newfoodpopup_unit = foodPopupView.findViewById(R.id.unit);
+        EditText newfoodpopup_year = foodPopupView.findViewById(R.id.year);
+        EditText newfoodpopup_month = foodPopupView.findViewById(R.id.month);
+        EditText newfoodpopup_day = foodPopupView.findViewById(R.id.day);
+
+        Button newfoodpopup_save = foodPopupView.findViewById(R.id.saveButton);
+        Button newfoodpopup_cancel = foodPopupView.findViewById(R.id.cancelButton);
+
+        dialogBuilder.setView(foodPopupView);
+        Dialog dialog = dialogBuilder.create();
+        dialog.show();
+
+        assert newfoodpopup_day.getText().toString().equals("");
+
+        newfoodpopup_save.setOnClickListener(v -> {
+            try {
+                if (newfoodpopup_day.getText().toString().equals("") &&
+                        newfoodpopup_month.getText().toString().equals("") &&
+                        newfoodpopup_year.getText().toString().equals("")) {
+                    adapter.createFood(newfoodpopup_foodname.getText().toString(),
+                            newfoodpopup_quantity.getText().toString(),
+                            newfoodpopup_unit.getText().toString());
+                }
+                else {
+                    adapter.createFood(newfoodpopup_foodname.getText().toString(),
+                            newfoodpopup_quantity.getText().toString(),
+                            newfoodpopup_unit.getText().toString(),
+                            newfoodpopup_day.getText().toString(),
+                            newfoodpopup_month.getText().toString(),
+                            newfoodpopup_year.getText().toString());
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            dialog.dismiss();
+        });
+
+        newfoodpopup_cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        createNewFoodDialog();
     }
 
     private String foodIDHelper(ArrayList<String> food, int index) {
