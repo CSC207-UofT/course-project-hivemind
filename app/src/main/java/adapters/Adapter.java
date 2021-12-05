@@ -130,13 +130,12 @@ public class Adapter {
     private void helper(List<List<String>> presentableRecipeList, List<String> recipe) {
         StringBuilder ingredients = new StringBuilder();
         int i = 1;
-        while(i < recipe.size() - 1){
+        while(i < recipe.size() - 2){
             ingredients.append(recipe.get(i)).append(" ");
-            ingredients.append(recipe.get(i + 1)).append(" ");
-            ingredients.append(recipe.get(i + 2)).append(".").append(" ");
-            i += 3;
+            i++;
         }
-        List<String> presentableRecipe = new ArrayList<>(Arrays.asList(recipe.get(0), ingredients.toString(), recipe.get(recipe.size() - 1)));
+        List<String> presentableRecipe = new ArrayList<>(Arrays.asList(recipe.get(0),
+                ingredients.toString(), recipe.get(recipe.size() - 1)));
         presentableRecipeList.add(presentableRecipe);
     }
 

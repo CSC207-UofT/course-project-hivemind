@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         this.getAssets();
         MainActivity.adapter = new Adapter(this);
+
+        MainActivity.adapter.loadFoods();
+        MainActivity.adapter.loadRecipes();
     }
 
     @Override

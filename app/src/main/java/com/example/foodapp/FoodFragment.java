@@ -20,6 +20,8 @@ import java.util.Arrays;
  */
 public class FoodFragment extends Fragment {
 
+    Adapter adapter;
+
     public FoodFragment() {
         // Required empty public constructor
     }
@@ -30,6 +32,7 @@ public class FoodFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        this.adapter = MainActivity.adapter;
         super.onCreate(savedInstanceState);
     }
 
