@@ -23,10 +23,13 @@ public class Adapter {
      *  output: [["Potato", "2 lbs"], ["Potato", "2 lbs", "Expiry Date: 3/12/2021"]]
      *
      */
-    public List<List<String>> loadFoods(){
-        List<List<String>> presentableFoodList = new ArrayList<>();
-        ArrayList<String> foodData = adp.readFile(AndroidDataParser.FOOD_FILE);
+    public void loadFoods(){
+        ArrayList<String> foodData = adp.readFoodFile();
         foodController.loadFoodFromList(foodData);
+    }
+
+    public List<List<String>> getAllFoods(){
+        List<List<String>> presentableFoodList = new ArrayList<>();
         for(List<String> food: foodController.foodList){
             List<String> presentableFood;
             if(food.size() < 4){
@@ -61,7 +64,7 @@ public class Adapter {
                 "Expiry date: " + day + "/" + month + "/" + year));
     }
     public ArrayList<List<String>> showPerishables(){
-        ArrayList<String> foodData = adp.readFile(AndroidDataParser.FOOD_FILE);
+        ArrayList<String> foodData = adp.readFoodFile();
         foodController.loadFoodFromList(foodData);
         return foodController.foodList;
     }
@@ -78,15 +81,19 @@ public class Adapter {
 
     }
     // RECIPE ADAPTER
-    public List<List<String>> loadRecipes(){
-        List<List<String>> presentableRecipeList = new ArrayList<>();
-        ArrayList<String> recipeData = adp.readFile(AndroidDataParser.RECIPE_FILE);
+    public void loadRecipes(){
+        ArrayList<String> recipeData = adp.readRecipeFile();
         recipeController.initialLoad(recipeData);
+    }
+
+    public List<List<String>> getAllRecipes() {
+        List<List<String>> presentableRecipeList = new ArrayList<>();
         for(List<String> recipe : recipeController.recipeRawArray){
             helper(presentableRecipeList, recipe);
         }
         return presentableRecipeList;
     }
+
     /**
      * ingredients input: potato 1bs 1 potato lbs 2
      *

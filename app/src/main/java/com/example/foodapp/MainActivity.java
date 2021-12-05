@@ -1,6 +1,7 @@
 package com.example.foodapp;
 
 import adapters.Adapter;
+import android.content.Context;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,9 @@ import android.os.Bundle;
 import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import java.io.File;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -17,6 +21,12 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MainActivity.adapter = new Adapter(this);
+
+        MainActivity.adapter.loadFoods();
+        MainActivity.adapter.loadRecipes();
+
         setContentView(R.layout.activity_main);
     }
 
@@ -25,12 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         super.onStart();
         bottomNavView = findViewById(R.id.navigation);
         bottomNavView.setOnItemSelectedListener(this);
-
-        this.getAssets();
-        MainActivity.adapter = new Adapter(this);
-
-        MainActivity.adapter.loadFoods();
-        MainActivity.adapter.loadRecipes();
     }
 
     @Override
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             fragmentManager.beginTransaction()
                     .replace(R.id.placeholder, SettingsFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
+                    .addToBackStack("setting") // name can be null
                     .commit();
         }
         return true;

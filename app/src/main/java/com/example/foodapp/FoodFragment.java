@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,30 +43,35 @@ public class FoodFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_food, container, false);
-
-//        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
-
-        ArrayList<String> given_foods = new ArrayList<>(Arrays.asList("meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat", "meat"));
+        List<List<String>> given_foods = adapter.getAllFoods();
 
         LinearLayout foodList = view.findViewById(R.id.food_list);
-        for (String food : given_foods) {
-            System.out.println(food);
-
+        if (given_foods == null || given_foods.size() == 0) {
+            String display_string = "You've got no food!";
             TextView textView = new TextView(getContext());
-            textView.setText(food);
+            textView.setText(display_string);
             textView.setTextSize(24);
-            textView.setGravity(Gravity.TOP|Gravity.START);
+            textView.setGravity(Gravity.TOP | Gravity.START);
             textView.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
 
             foodList.addView(textView);
         }
+        else {
+            for (List<String> food : given_foods) {
 
-//        TextView testText = new TextView(getContext());
-//        testText.setText("test text lol");
-//        recipeList.addView(testText);
+                TextView textView = new TextView(getContext());
+                textView.setText(food.get(0));
+                textView.setTextSize(24);
+                textView.setGravity(Gravity.TOP | Gravity.START);
+                textView.setLayoutParams(new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
 
+                foodList.addView(textView);
+            }
+        }
         return view;
 
     }

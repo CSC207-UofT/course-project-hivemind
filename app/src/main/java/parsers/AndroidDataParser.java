@@ -58,19 +58,30 @@ public class AndroidDataParser {
         return readerHelper(inStream);
     }
 
-    public ArrayList<String> readFile(String file) {
+    public ArrayList<String> readRecipeFile() {
         ArrayList<String> read_list = new ArrayList<>();
         try {
-            read_list = readLocalFile(file);
+            read_list = readLocalFile(AndroidDataParser.RECIPE_FILE);
         }
         catch (IOException e) {
             try{
-                read_list = readResourceFile(file);
+                read_list = readResourceFile(AndroidDataParser.RECIPE_FILE);
             }
             catch(IOException e2){
                 System.out.println("An error has occurred: Critical resource file missing");
 
             }
+        }
+        return read_list;
+    }
+
+    public ArrayList<String> readFoodFile() {
+        ArrayList<String> read_list = new ArrayList<>();
+        try {
+            read_list = readLocalFile(AndroidDataParser.FOOD_FILE);
+        }
+        catch (IOException e) {
+                System.out.println("Error: local food file not found");
         }
         return read_list;
     }
@@ -90,7 +101,7 @@ public class AndroidDataParser {
     }
 
     public void deleteRowFromFoodFile(int deletedFoodIndex) throws IOException {
-        ArrayList<String> foodFile = readFile("fooddata.csv");
+        ArrayList<String> foodFile = readFoodFile();
         foodFile.remove(deletedFoodIndex);
         clearFileHelper();
         for (String item: foodFile){

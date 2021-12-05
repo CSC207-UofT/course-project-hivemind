@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import adapters.Adapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,9 +57,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         List<List<String>> given_recipes = adapter.recommendRecipes(20);
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
-        System.out.println(recipeList);
         for (List<String> recipe : given_recipes) {
-            System.out.println(recipe);
 
             TextView textView = new TextView(getContext());
             textView.setText(recipe.get(0));
@@ -96,8 +95,12 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         cancel_button.setOnClickListener(v -> dialog.dismiss());
 
         save_button.setOnClickListener(v -> {
-//            Adapter.createRecipe(name.getText().toString(), foods.getText().toString(),
-//                    instructions.getText().toString());
+            try {
+                adapter.createRecipe(name.getText().toString(), foods.getText().toString(),
+                        instructions.getText().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 }
