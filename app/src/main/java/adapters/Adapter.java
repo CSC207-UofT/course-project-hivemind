@@ -68,9 +68,8 @@ public class Adapter {
         foodController.loadFoodFromList(foodData);
         return foodController.foodList;
     }
-    public void showDeletedFood(Integer foodPositionToDelete) {
-        int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
-        foodController.deleteFood(foodPositionToDelete);
+    public void showDeletedFood(Integer foodIndexToDelete) {
+        foodController.deleteFoodAndroid(foodIndexToDelete);
         try{
             adp.deleteRowFromFoodFile(foodIndexToDelete);
         }
@@ -78,6 +77,15 @@ public class Adapter {
             System.out.println("An error occurred, did not successfully delete food. " +
                     "Please verify that all arguments are of the proper data type and format");
         }
+//        int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
+//        foodController.deleteFood(foodPositionToDelete);
+//        try{
+//            adp.deleteRowFromFoodFile(foodIndexToDelete);
+//        }
+//        catch (Exception e){
+//            System.out.println("An error occurred, did not successfully delete food. " +
+//                    "Please verify that all arguments are of the proper data type and format");
+//        }
 
     }
     // RECIPE ADAPTER
