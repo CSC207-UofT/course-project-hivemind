@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,6 +156,9 @@ public class FoodFragment extends Fragment {
                 int index = food.getId();
                 //Adapter.showDeletedFood(index);
                 dialog.dismiss();
+                Snackbar snackbar = Snackbar.make(view, "Food Deleted Successfully",
+                        BaseTransientBottomBar.LENGTH_SHORT);
+                snackbar.show();
             }
         });
         cancelDeleteFood.setOnClickListener(new View.OnClickListener(){
