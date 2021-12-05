@@ -28,6 +28,7 @@ import java.util.Objects;
 public class FoodFragment extends Fragment {
 
     View view;
+    Adapter adapter = new Adapter();
 
     public FoodFragment() {
         // Required empty public constructor
@@ -75,7 +76,7 @@ public class FoodFragment extends Fragment {
         givenFoods.add(food3);
         givenFoods.add(food4);
 
-        int index = 1;
+        int index = 0;
 
 
         LinearLayout foodList = view.findViewById(R.id.food_list);
@@ -150,6 +151,8 @@ public class FoodFragment extends Fragment {
             public void onClick(View v){
                 //define delete button
                 foodList.removeView(food);
+                int index = food.getId();
+                //Adapter.showDeletedFood(index);
                 dialog.dismiss();
             }
         });
