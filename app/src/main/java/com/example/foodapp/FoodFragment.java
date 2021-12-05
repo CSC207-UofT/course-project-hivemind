@@ -1,23 +1,30 @@
 package com.example.foodapp;
 
 import adapters.Adapter;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +34,9 @@ import java.util.List;
 public class FoodFragment extends Fragment implements View.OnClickListener{
 
     Adapter adapter;
+
+    View view;
+    Adapter adapter = new Adapter();
 
     public FoodFragment() {
         // Required empty public constructor
@@ -47,10 +57,12 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_food, container, false);
+        view = inflater.inflate(R.layout.fragment_food, container, false);
 
         FloatingActionButton fab = view.findViewById(R.id.food_fab);
         fab.setOnClickListener(this);
+
+        int index = 0;
 
         List<List<String>> given_foods = adapter.getAllFoods();
 
@@ -66,11 +78,21 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     ViewGroup.LayoutParams.WRAP_CONTENT));
 
             foodList.addView(textView);
+            index ++;
         }
         else {
             for (List<String> food : given_foods) {
-
                 TextView textView = new TextView(getContext());
+                String foodDisplay = foodStringHelper(food);
+                textView.setText(foodDisplay);
+                //String foodID = foodIDHelper(food, index);
+                textView.setId(index);
+                textView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                   public void onClick(View v){
+                       createDeleteFoodPopUp(foodList, v);
+                    }
+                });
                 textView.setText(food.get(0));
                 textView.setTextSize(24);
                 textView.setGravity(Gravity.TOP | Gravity.START);
@@ -136,5 +158,60 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         createNewFoodDialog();
+    }
+
+    private String foodIDHelper(ArrayList<String> food, int index) {
+        return food.get(0) + index;
+    }
+
+    private String foodStringHelper(List<String> food) {
+        StringBuilder name = new StringBuilder();
+        for (int i = 0; i < food.size(); i++){
+            if (i == 0) {
+                name.append(food.get(i).toUpperCase()).append(" ");
+            }
+            else if (i == food.size() -1) {
+                name.append(food.get(i));
+            }
+            else{
+                name.append(food.get(i)).append(" ");
+            }
+        }
+        return name.toString();
+    }
+
+    public void createDeleteFoodPopUp(LinearLayout foodList, View food){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog dialog;
+        Button confirmDeleteFood, cancelDeleteFood;
+
+        dialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(this.getContext()));
+        final View deleteFoodPopUpView = getLayoutInflater().inflate(R.layout.deletefood_popup, null);
+        confirmDeleteFood = (Button) deleteFoodPopUpView.findViewById(R.id.confirmDeleteFood);
+        cancelDeleteFood = (Button) deleteFoodPopUpView.findViewById(R.id.cancelDeleteFood);
+        dialogBuilder.setView(deleteFoodPopUpView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        confirmDeleteFood.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //define delete button
+                foodList.removeView(food);
+                int index = food.getId();
+                Adapter.showDeletedFood(index);
+                dialog.dismiss();
+                Snackbar snackbar = Snackbar.make(view, "Food Deleted Successfully",
+                        BaseTransientBottomBar.LENGTH_SHORT);
+                snackbar.show();
+            }
+        });
+        cancelDeleteFood.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //define cancel button
+                dialog.dismiss();
+            }
+        });
     }
 }
