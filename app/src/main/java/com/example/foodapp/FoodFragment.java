@@ -154,7 +154,7 @@ public class FoodFragment extends Fragment {
                 //define delete button
                 foodList.removeView(food);
                 int index = food.getId();
-                //Adapter.showDeletedFood(index);
+                Adapter.showDeletedFood(index);
                 dialog.dismiss();
                 Snackbar snackbar = Snackbar.make(view, "Food Deleted Successfully",
                         BaseTransientBottomBar.LENGTH_SHORT);
