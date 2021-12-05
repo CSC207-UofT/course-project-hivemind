@@ -62,6 +62,7 @@ public class AndroidDataParser {
         ArrayList<String> read_list = new ArrayList<>();
         try {
             read_list = readLocalFile(AndroidDataParser.RECIPE_FILE);
+            read_list.addAll(readResourceFile(AndroidDataParser.RECIPE_FILE));
         }
         catch (IOException e) {
             try{
