@@ -75,25 +75,29 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         }
         else {
             for (List<String> food : given_foods) {
-                TextView textView = new TextView(getContext());
-                String foodDisplay = foodStringHelper(food);
-                textView.setText(foodDisplay);
-                //String foodID = foodIDHelper(food, index);
-                textView.setId(index);
-                textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
-                textView.setText(food.get(0));
-                textView.setTextSize(24);
-                textView.setGravity(Gravity.TOP | Gravity.START);
-                textView.setLayoutParams(new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                foodList.addView(textView);
+                addToFoodList(foodList, food, index);
                 index ++;
             }
         }
         return view;
 
+    }
+
+    public void addToFoodList(LinearLayout foodList, List<String> food, int i){
+        TextView textView = new TextView(getContext());
+        String foodDisplay = foodStringHelper(food);
+        textView.setText(foodDisplay);
+        //String foodID = foodIDHelper(food, index);
+        textView.setId(i);
+        textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
+        textView.setText(food.get(0));
+        textView.setTextSize(24);
+        textView.setGravity(Gravity.TOP | Gravity.START);
+        textView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        foodList.addView(textView);
     }
 
     public void createNewFoodDialog(){
@@ -136,6 +140,15 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             catch (Exception e) {
                 e.printStackTrace();
             }
+
+//            // make input into List of strings
+//            List<String> labelList = new ArrayList<>();
+//            try{
+//
+//            }
+
+
+
             dialog.dismiss();
         });
 
@@ -172,7 +185,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         AlertDialog dialog;
         Button confirmDeleteFood, cancelDeleteFood;
 
-        dialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(this.getContext()));
+        dialogBuilder = new AlertDialog.Builder(this.requireContext());
         final View deleteFoodPopUpView = getLayoutInflater().inflate(R.layout.deletefood_popup, null);
         confirmDeleteFood = deleteFoodPopUpView.findViewById(R.id.confirmDeleteFood);
         cancelDeleteFood = deleteFoodPopUpView.findViewById(R.id.cancelDeleteFood);

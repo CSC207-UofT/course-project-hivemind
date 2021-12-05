@@ -72,6 +72,7 @@ public class Adapter {
         foodController.deleteFoodAndroid(foodIndexToDelete);
         try{
             adp.deleteRowFromFoodFile(foodIndexToDelete);
+            foodController.deleteFoodAndroid(foodIndexToDelete);
         }
         catch (Exception e){
             System.out.println("An error occurred, did not successfully delete food. " +
