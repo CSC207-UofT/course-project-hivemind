@@ -1,18 +1,14 @@
 package com.example.foodapp;
 
 import adapters.Adapter;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +29,8 @@ import java.util.Objects;
  */
 public class FoodFragment extends Fragment implements View.OnClickListener{
 
-    Adapter adapter;
-
     View view;
-    Adapter adapter = new Adapter();
+    Adapter adapter;
 
     public FoodFragment() {
         // Required empty public constructor
@@ -78,7 +72,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     ViewGroup.LayoutParams.WRAP_CONTENT));
 
             foodList.addView(textView);
-            index ++;
         }
         else {
             for (List<String> food : given_foods) {
@@ -87,12 +80,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                 textView.setText(foodDisplay);
                 //String foodID = foodIDHelper(food, index);
                 textView.setId(index);
-                textView.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                   public void onClick(View v){
-                       createDeleteFoodPopUp(foodList, v);
-                    }
-                });
+                textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
                 textView.setText(food.get(0));
                 textView.setTextSize(24);
                 textView.setGravity(Gravity.TOP | Gravity.START);
@@ -101,6 +89,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 foodList.addView(textView);
+                index ++;
             }
         }
         return view;
@@ -150,9 +139,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             dialog.dismiss();
         });
 
-        newfoodpopup_cancel.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        newfoodpopup_cancel.setOnClickListener(v -> dialog.dismiss());
     }
 
     @Override
@@ -187,31 +174,25 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
         dialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(this.getContext()));
         final View deleteFoodPopUpView = getLayoutInflater().inflate(R.layout.deletefood_popup, null);
-        confirmDeleteFood = (Button) deleteFoodPopUpView.findViewById(R.id.confirmDeleteFood);
-        cancelDeleteFood = (Button) deleteFoodPopUpView.findViewById(R.id.cancelDeleteFood);
+        confirmDeleteFood = deleteFoodPopUpView.findViewById(R.id.confirmDeleteFood);
+        cancelDeleteFood = deleteFoodPopUpView.findViewById(R.id.cancelDeleteFood);
         dialogBuilder.setView(deleteFoodPopUpView);
         dialog = dialogBuilder.create();
         dialog.show();
 
-        confirmDeleteFood.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //define delete button
-                foodList.removeView(food);
-                int index = food.getId();
-                Adapter.showDeletedFood(index);
-                dialog.dismiss();
-                Snackbar snackbar = Snackbar.make(view, "Food Deleted Successfully",
-                        BaseTransientBottomBar.LENGTH_SHORT);
-                snackbar.show();
-            }
+        confirmDeleteFood.setOnClickListener(v -> {
+            //define delete button
+            foodList.removeView(food);
+            int index = food.getId();
+            adapter.showDeletedFood(index);
+            dialog.dismiss();
+            Snackbar snackbar = Snackbar.make(view, "Food Deleted Successfully",
+                    BaseTransientBottomBar.LENGTH_SHORT);
+            snackbar.show();
         });
-        cancelDeleteFood.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //define cancel button
-                dialog.dismiss();
-            }
+        cancelDeleteFood.setOnClickListener(v -> {
+            //define cancel button
+            dialog.dismiss();
         });
     }
 }
