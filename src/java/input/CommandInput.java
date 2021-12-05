@@ -24,6 +24,7 @@ public class CommandInput {
             ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
             foodController.loadFoodFromList(foodData);
             ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
+            System.out.println(recipeData.get(0));
             recipeController.initialLoad(recipeData);
             userInput.printUserHelper();
             AlertExpiryStatus.alertExpiredFoods();

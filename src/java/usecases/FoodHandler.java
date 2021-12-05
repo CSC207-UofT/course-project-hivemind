@@ -52,7 +52,7 @@ public class FoodHandler {
 
     /**
      * Creates PerishableFood and NonPerishableFood items from an ArrayList of List of strings, where each
-     * List of strings describes a Food item
+     * List of strings describes Food item
      *
      * @param multiArray an Arraylist of List of strings for creating food
      */
@@ -64,7 +64,7 @@ public class FoodHandler {
 
 
     /**
-     * For each food object in createdFoodList, if it is a PeirshableFood, then compare the expiry date of the
+     * For each food object in createdFoodList, if it is a PerishableFood, then compare the expiry date of the
      * Food object to today's date, and return an ArrayList of expired foods called expiredFoods.
      *
      * @return expiredFoods the ArrayList that lists all the expired foods.
@@ -123,7 +123,7 @@ public class FoodHandler {
      * parameter foodName at index 0, and the food's index in createdFoodList at index 1. This ArrayList will be stored
      * as specifiedFoodList, and the size of the ArrayList will be returned.
      *
-     * @param foodName the name of a Food object
+     * @param foodName the name of Food object
      * @return the size of specifiedFoodList
      */
     public int makeSpecifiedFoodList(String foodName) {
@@ -194,7 +194,7 @@ public class FoodHandler {
     /**
      * Helper method which returns a string representing a Food item, listed with a specified position
      * @param position the int position corresponding with the given food in specifiedFoodList
-     * @param food a Food object
+     * @param food Food object
      * @return a string representation of the given food object with the given position
      */
     private String getFoodStringHelper(int position, Food food) {

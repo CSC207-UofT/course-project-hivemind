@@ -16,6 +16,7 @@ public class Adapter {
     }
     // FOOD ADAPTER
     // TODO: Return an ArrayList of Strings instead
+
     public List<List<String>> loadFoods(){
         List<List<String>> presentableFoodList = new ArrayList<>();
         try {
@@ -50,33 +51,61 @@ public class Adapter {
 
 
 
-    public List<String> createFood(String name, String amount, String unit, String day, String month, String year) throws IOException {
-        ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, day, month, year));
+    public List<String> createFood(String name, String amount, String unit, String year, String month, String day) throws IOException {
+        ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, year, month, day));
         foodController.runFoodCreation(food);
         DataParser.writeToFile(food.get(0) + ",," + food.get(1) + ",," + food.get(2) + ",," + food.get(5) +
                 ",," + food.get(4) + ",," + food.get(3), DataParser.FOOD_FILE);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit,
                 "Expiry date: " + day + "/" + month + "/" + year));
     }
-    public ArrayList<List<String>> showPerishables(){
+    public List<List<String>> showPerishables(){
         try {
             ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
             foodController.loadFoodFromList(foodData);
+            List<String> expiredFoodList = foodController.checkPerishables();
+            List<List<String>> presentableExpiredFoods = new ArrayList<>();
+            for(String food : expiredFoodList){
+                String[] foodSplit = food.split(" ");
+                String[] foodNameSplit = foodSplit[0].split(":");
+                String foodName = foodNameSplit[0];
+                String foodAmount = foodSplit[2];
+                String[] foodUnitSplit = foodSplit[3].split(",");
+                String foodUnit = foodUnitSplit[0];
+                String[] foodExpirySplit = foodSplit[6].split(",");
+                String[] foodExpirySplitByNum = foodExpirySplit[0].split("-");
+                String foodAmountAndUnit = foodAmount + " " + foodUnit;
+                String foodExpiryDate = "Expiry date: " + foodExpirySplitByNum[2] + "/" + foodExpirySplitByNum[1] + "/" + foodExpirySplitByNum[0];
+                List<String> presentableExpiredFood = new ArrayList<>(Arrays.asList(foodName, foodAmountAndUnit, foodExpiryDate));
+                presentableExpiredFoods.add(presentableExpiredFood);
+            }
+            return presentableExpiredFoods;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return foodController.foodList;
+        return null;
     }
-    public void showDeletedFood(Integer foodPositionToDelete) {
-        int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
-        foodController.deleteFood(foodPositionToDelete);
-        try{
-            DataParser.deleteRowFromFoodFile(foodIndexToDelete);
+
+    public void showDeletedFood(List<String> foodToDelete) {
+        int foodAmountList = foodController.makeSpecifiedFoodList(foodToDelete.get(0));
+        for (String food: foodController.printSpecifiedFoodList()) {
+            String[] foodSplit = food.split(" ");
+            String foodAmount = foodSplit[2];
+            String[] foodUnitSplit = foodSplit[3].split(",");
+            String foodUnit = foodUnitSplit[0];
+            String[] foodExpirySplit = foodSplit[6].split(",");
+            String[] foodExpirySplitByNum = foodExpirySplit[0].split("-");
+            String foodAmountAndUnit = foodAmount + " " + foodUnit;
+            String foodExpiryDate = "Expiry date: " + foodExpirySplitByNum[2] + "/" + foodExpirySplitByNum[1] + "/" + foodExpirySplitByNum[0];
+            if(Objects.equals(foodToDelete.get(1), foodAmountAndUnit) && foodExpiryDate.equals(foodToDelete.get(2))){
+                String[] numToDeleteSplit = foodSplit[0].split(".");
+                int numToDelete = Integer.parseInt(numToDeleteSplit[0]);
+                foodController.deleteFood(numToDelete);
+                break;
+            }
+
         }
-        catch (Exception e){
-            System.out.println("An error occurred, did not successfully delete food. " +
-                    "Please verify that all arguments are of the proper data type and format");
-        }
+
 
     }
     // RECIPE ADAPTER

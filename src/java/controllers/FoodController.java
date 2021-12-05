@@ -54,6 +54,8 @@ public class FoodController {
         /* handler will return an array list of the perished foods */
         List<String> expired_foods = this.handler.getPerishedFoods();
         if(expired_foods.size() > 0){
+            System.out.println(expired_foods);
+            System.out.println(expired_foods.size());
             return expired_foods;
         }
         else{
