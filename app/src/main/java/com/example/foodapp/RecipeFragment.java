@@ -20,7 +20,7 @@ import android.view.ViewGroup.LayoutParams;
  * Use the {@link RecipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecipeFragment extends Fragment {
+public class RecipeFragment extends Fragment{
 
     public RecipeFragment() {
         // Required empty public constructor
