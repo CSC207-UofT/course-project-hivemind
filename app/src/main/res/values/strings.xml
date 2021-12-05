@@ -9,10 +9,19 @@
     <string name="recipe_popup_name_hint">Name of Recipe</string>
     <string name="recipe_popup_instructions_hint">Instructions of Recipe</string>
     <string name="recipe_popup_instructions">Instructions</string>
-    <string name="recipe_popup_foods">Food (Food Quant Unit Food Quant Unit...)</string>
+    <string name="recipe_popup_foods">Food (Food Quant Unit Food Quant Unit…)</string>
     <string name="recipe_popup_foods_hint">Foods in Recipe</string>
     <string name="cancel_recipe_button">Cancel</string>
     <string name="save_recipe_button">Save</string>
     <string name="add_recipe_popup">Add Recipe</string>
     <string name="foodbutton">foodButton</string>
+    <string name="popuptitle">Add Your Food!</string>
+    <string name="food_name">Food Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="unit">Unit</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="day">Day</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>
