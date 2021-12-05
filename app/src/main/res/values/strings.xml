@@ -15,4 +15,8 @@
     <string name="save_recipe_button">Save</string>
     <string name="add_recipe_popup">Add Recipe</string>
     <string name="foodbutton">foodButton</string>
+    <string name="are_you_sure_you_want_to_delete_this_food">Are you sure you want to delete this food?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="foods">Foods</string>
 </resources>
