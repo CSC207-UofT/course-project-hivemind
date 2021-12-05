@@ -113,5 +113,12 @@ public class FoodController {
      */
     public void foodDeletedFromSystem() {handler.deleteSpecifiedFoodList();
     }
+
+    /**
+     * Calls food handler to delete a food item at the given index
+     */
+    public void deleteFoodAndroid(int index){
+        handler.deleteFoodAndroid(index);
+    }
 }
 

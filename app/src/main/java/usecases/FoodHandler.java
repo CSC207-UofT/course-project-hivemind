@@ -154,6 +154,15 @@ public class FoodHandler {
         createdFoodList.remove(foodToDelete);
     }
 
+    /**
+     * Deletes a Food object from createdFoodList at index createdFoodListIndex.
+     * @param createdFoodListIndex the index of the Food from createdFoodList which is to be deleted from the program
+     */
+    public void deleteFoodAndroid(int createdFoodListIndex) {
+        Food foodToDelete = createdFoodList.get(createdFoodListIndex);
+        createdFoodList.remove(foodToDelete);
+    }
+
 
     /**
      * Returns the index of the given food in createdFoodList, given its corresponding index in specifiedFoodList

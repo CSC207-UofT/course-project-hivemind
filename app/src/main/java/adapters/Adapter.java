@@ -1,14 +1,20 @@
 package adapters;
+import android.content.Context;
 import controllers.FoodController;
 import controllers.RecipeController;
-import parsers.DataParser;
+import parsers.AndroidDataParser;
 import java.io.IOException;
 import java.util.*;
 
 public class Adapter {
 
-    public static final FoodController foodController = new FoodController();
-    public static final RecipeController recipeController = new RecipeController();
+    public final FoodController foodController = new FoodController();
+    public final RecipeController recipeController = new RecipeController();
+    public final AndroidDataParser adp;
+
+    public Adapter(Context context) {
+        adp = new AndroidDataParser(context);
+    }
 
     // FOOD ADAPTER
     // TODO: Return an ArrayList of Strings instead
@@ -17,14 +23,13 @@ public class Adapter {
      *  output: [["Potato", "2 lbs"], ["Potato", "2 lbs", "Expiry Date: 3/12/2021"]]
      *
      */
-    public List<List<String>> loadFoods(){
+    public void loadFoods(){
+        ArrayList<String> foodData = adp.readFoodFile();
+        foodController.loadFoodFromList(foodData);
+    }
+
+    public List<List<String>> getAllFoods(){
         List<List<String>> presentableFoodList = new ArrayList<>();
-        try {
-            ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
-            foodController.loadFoodFromList(foodData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for(List<String> food: foodController.foodList){
             List<String> presentableFood;
             if(food.size() < 4){
@@ -41,62 +46,67 @@ public class Adapter {
         return presentableFoodList;
     }
 
-    public static List<String> createFood(String name, String amount, String unit) throws IOException{
+    public List<String> createFood(String name, String amount, String unit) throws IOException{
         ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit));
         foodController.runFoodCreation(food);
-        DataParser.writeToFile(food.get(0) + ",," + food.get(1) +
-                ",," + food.get(2), DataParser.FOOD_FILE);
+        adp.writeFile(food.get(0) + ",," + food.get(1) +
+                ",," + food.get(2), AndroidDataParser.FOOD_FILE);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit));
     }
 
-    public static List<String> createFood(String name, String amount, String unit, String day, String month, String year) throws IOException{
+    public List<String> createFood(String name, String amount, String unit, String day,
+                                   String month, String year) throws IOException{
         ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, day, month, year));
         foodController.runFoodCreation(food);
-        DataParser.writeToFile(food.get(0) + ",," + food.get(1) + ",," + food.get(2) + ",," + food.get(5) +
-                ",," + food.get(4) + ",," + food.get(3), DataParser.FOOD_FILE);
+        adp.writeFile(food.get(0) + ",," + food.get(1) + ",," + food.get(2) + ",," + food.get(5) +
+                ",," + food.get(4) + ",," + food.get(3), AndroidDataParser.FOOD_FILE);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit,
                 "Expiry date: " + day + "/" + month + "/" + year));
     }
-    public static ArrayList<List<String>> showPerishables(){
-        try {
-            ArrayList<String> foodData = DataParser.readFile(DataParser.FOOD_FILE);
-            foodController.loadFoodFromList(foodData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public ArrayList<List<String>> showPerishables(){
+        ArrayList<String> foodData = adp.readFoodFile();
+        foodController.loadFoodFromList(foodData);
         return foodController.foodList;
     }
-    public static void showDeletedFood(Integer foodPositionToDelete) {
-        int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
-        foodController.deleteFood(foodPositionToDelete);
+    public void showDeletedFood(Integer foodIndexToDelete) {
+        foodController.deleteFoodAndroid(foodIndexToDelete);
         try{
-            DataParser.deleteRowFromFoodFile(foodIndexToDelete);
+            adp.deleteRowFromFoodFile(foodIndexToDelete);
         }
         catch (Exception e){
             System.out.println("An error occurred, did not successfully delete food. " +
                     "Please verify that all arguments are of the proper data type and format");
         }
+//        int foodIndexToDelete = foodController.getFoodIndexToDelete(foodPositionToDelete);
+//        foodController.deleteFood(foodPositionToDelete);
+//        try{
+//            adp.deleteRowFromFoodFile(foodIndexToDelete);
+//        }
+//        catch (Exception e){
+//            System.out.println("An error occurred, did not successfully delete food. " +
+//                    "Please verify that all arguments are of the proper data type and format");
+//        }
 
     }
     // RECIPE ADAPTER
-    public static List<List<String>> loadRecipes(){
+    public void loadRecipes(){
+        ArrayList<String> recipeData = adp.readRecipeFile();
+        recipeController.initialLoad(recipeData);
+    }
+
+    public List<List<String>> getAllRecipes() {
         List<List<String>> presentableRecipeList = new ArrayList<>();
-        try {
-            ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
-            recipeController.initialLoad(recipeData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for(List<String> recipe : recipeController.recipeRawArray){
             helper(presentableRecipeList, recipe);
         }
         return presentableRecipeList;
     }
+
     /**
      * ingredients input: potato 1bs 1 potato lbs 2
      *
      */
-    public static List<String> createRecipe(String name, String ingredients, String steps) throws IOException{
+    public List<String> createRecipe(String name, String ingredients, String steps) throws IOException{
         recipeController.addRecipe(name, ingredients, steps);
         String[] ingrSplit = ingredients.split(" ");
         List<String> a1 = Arrays.asList(ingrSplit);
@@ -111,10 +121,10 @@ public class Adapter {
             i += 3;
         }
         String s = ingredients.replace(" ", ",,");
-        DataParser.writeToFile(name + ",," + s + ",," + steps, DataParser.RECIPE_FILE);
+        adp.writeFile(name + ",," + s + ",," + steps, AndroidDataParser.RECIPE_FILE);
         return new ArrayList<>(Arrays.asList(name, presentableIngredients, steps));
     }
-    public static List<List<String>> recommendRecipes(int amount){
+    public List<List<String>> recommendRecipes(int amount){
         ArrayList<String> recipes = recipeController.recommendRecipe(amount);
         List<List<String>> presentableRecipeList = new ArrayList<>();
         for(String unpolishedRecipe : recipes){
@@ -132,16 +142,15 @@ public class Adapter {
 
     }
 
-    private static void helper(List<List<String>> presentableRecipeList, List<String> recipe) {
+    private void helper(List<List<String>> presentableRecipeList, List<String> recipe) {
         StringBuilder ingredients = new StringBuilder();
         int i = 1;
-        while(i < recipe.size() - 1){
+        while(i < recipe.size() - 2){
             ingredients.append(recipe.get(i)).append(" ");
-            ingredients.append(recipe.get(i + 1)).append(" ");
-            ingredients.append(recipe.get(i + 2)).append(".").append(" ");
-            i += 3;
+            i++;
         }
-        List<String> presentableRecipe = new ArrayList<>(Arrays.asList(recipe.get(0), ingredients.toString(), recipe.get(recipe.size() - 1)));
+        List<String> presentableRecipe = new ArrayList<>(Arrays.asList(recipe.get(0),
+                ingredients.toString(), recipe.get(recipe.size() - 1)));
         presentableRecipeList.add(presentableRecipe);
     }
 

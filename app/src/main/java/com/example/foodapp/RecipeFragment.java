@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import adapters.Adapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ import android.view.ViewGroup.LayoutParams;
 public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     View view;
+    Adapter adapter;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -39,6 +41,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        this.adapter = MainActivity.adapter;
         super.onCreate(savedInstanceState);
     }
 
@@ -51,18 +54,13 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
         fab.setOnClickListener(this);
 
-//        ArrayList<String> given_recipes = CommandInput.getRecipeRecommendation();
-
-        ArrayList<String> given_recipes = new ArrayList<>(Arrays.asList("a", "b", "c", "d"));
-
+        List<List<String>> given_recipes = adapter.recommendRecipes(20);
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
-        System.out.println(recipeList);
-        for (String recipe : given_recipes) {
-            System.out.println(recipe);
+        for (List<String> recipe : given_recipes) {
 
             TextView textView = new TextView(getContext());
-            textView.setText(recipe);
+            textView.setText(recipe.get(0));
             textView.setTextSize(24);
             textView.setGravity(Gravity.TOP|Gravity.START);
             textView.setLayoutParams(new LayoutParams(
@@ -71,11 +69,6 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
             recipeList.addView(textView);
         }
-
-//        TextView testText = new TextView(getContext());
-//        testText.setText("test text lol");
-//        recipeList.addView(testText);
-
         return view;
     }
 
@@ -102,7 +95,12 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         cancel_button.setOnClickListener(v -> dialog.dismiss());
 
         save_button.setOnClickListener(v -> {
-            //Code to parse and save recipe
+            try {
+                adapter.createRecipe(name.getText().toString(), foods.getText().toString(),
+                        instructions.getText().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 }
