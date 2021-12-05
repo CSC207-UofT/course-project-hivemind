@@ -71,11 +71,6 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
             recipeList.addView(textView);
         }
-
-//        TextView testText = new TextView(getContext());
-//        testText.setText("test text lol");
-//        recipeList.addView(testText);
-
         return view;
     }
 
@@ -102,7 +97,8 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         cancel_button.setOnClickListener(v -> dialog.dismiss());
 
         save_button.setOnClickListener(v -> {
-            //Code to parse and save recipe
+//            Adapter.createRecipe(name.getText().toString(), foods.getText().toString(),
+//                    instructions.getText().toString());
         });
     }
 }

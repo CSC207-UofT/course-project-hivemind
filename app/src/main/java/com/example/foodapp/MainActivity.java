@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
+    public static Adapter adapter;
     BottomNavigationView bottomNavView;
 
     @Override
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         super.onStart();
         bottomNavView = findViewById(R.id.navigation);
         bottomNavView.setOnItemSelectedListener(this);
+
+        this.getAssets();
+        MainActivity.adapter = new Adapter(this);
     }
 
     @Override
