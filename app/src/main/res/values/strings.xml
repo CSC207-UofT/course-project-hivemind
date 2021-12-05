@@ -9,7 +9,7 @@
     <string name="recipe_popup_name_hint">Name of Recipe</string>
     <string name="recipe_popup_instructions_hint">Instructions of Recipe</string>
     <string name="recipe_popup_instructions">Instructions</string>
-    <string name="recipe_popup_foods">Food (Food Quant Unit Food Quant Unit...)</string>
+    <string name="recipe_popup_foods">Food (Food, Quant, Unit, Food, Quant, Unit…)</string>
     <string name="recipe_popup_foods_hint">Foods in Recipe</string>
     <string name="cancel_recipe_button">Cancel</string>
     <string name="save_recipe_button">Save</string>
