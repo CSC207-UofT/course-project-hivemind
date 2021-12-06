@@ -16,11 +16,8 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,7 +84,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         System.out.println(foodDisplay);
         textView.setText(foodDisplay);
         //String foodID = foodIDHelper(food, index);
-        textView.setId(i);
+        //textView.setId(i);
         textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
         textView.setTextSize(SettingsFragment.fontSize);
         textView.setGravity(Gravity.TOP | Gravity.START);
@@ -124,7 +121,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
         LinearLayout foodList = view.findViewById(R.id.food_list);
 
-        // make a food object
         newfoodpopup_save.setOnClickListener(v -> {
             List<String> labelList = new ArrayList<>();
             try {

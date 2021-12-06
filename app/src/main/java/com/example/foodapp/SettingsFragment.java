@@ -86,6 +86,9 @@ public class SettingsFragment extends Fragment {
 
         recipeBar.setMax(20);
         recipeBar.setMin(5);
+
+        seekbar.setMax(42);
+        seekbar.setMin(24);
         recipeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

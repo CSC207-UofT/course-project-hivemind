@@ -66,6 +66,8 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
             textView.setTextSize(SettingsFragment.fontSize);
 
+            textView.setOnClickListener(v -> openRecipeDialog(recipeList, v, recipe));
+
             textView.setPadding(10, 10, 10, 10);
             textView.setGravity(Gravity.TOP|Gravity.START);
             textView.setLayoutParams(new LayoutParams(
@@ -74,7 +76,33 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
             recipeList.addView(textView);
         }
+
+
         return view;
+    }
+
+    private void openRecipeDialog(LinearLayout recipeList, View v, List<String> recipe) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        View recipePopupView = getLayoutInflater().inflate(R.layout.recipe_view_popup,
+                (ViewGroup) view, false);
+
+        TextView recipe_text = recipePopupView.findViewById(R.id.recipe_display);
+        StringBuilder sb = new StringBuilder();
+        sb.append(recipe.get(0)).append(":\n");
+        System.out.println(recipe.size());
+//        for (int i = 1 ; i<recipe.size()-2 ; i++) {
+//            sb.append(recipe.get(i));
+//        }
+        sb.append(recipe.get(1));
+        sb.append("\n").append(recipe.get(recipe.size()-1));
+
+        String recipe_display_string = sb.toString();
+        recipe_text.setText(recipe_display_string);
+        recipe_text.setTextSize(SettingsFragment.fontSize - 10);
+
+        builder.setView(recipePopupView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
