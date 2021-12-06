@@ -17,6 +17,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         MainActivity.adapter.loadRecipes();
 
         setContentView(R.layout.activity_main);
+        showAlertDialogButtonClicked();
     }
 
     @Override
@@ -69,5 +71,31 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                     .commit();
         }
         return true;
+    }
+    public void showAlertDialogButtonClicked() {
+
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Your food status: ");
+        List<List<String>> expiredFoodList = adapter.showPerishables();
+        StringBuilder presentableFoodString = new StringBuilder();
+        if(expiredFoodList.size() > 0){
+            for(List<String> food : expiredFoodList){
+                String presentableExpiredFood = food.get(0) + ": " + food.get(1) + ". " + food.get(2) + ". ";
+                presentableFoodString = new StringBuilder(presentableFoodString + presentableExpiredFood);
+            }
+
+        }
+        else {
+            presentableFoodString = new StringBuilder("All your food is fresh!");
+        }
+        builder.setMessage(presentableFoodString);
+
+        // add a button
+        builder.setPositiveButton("OK", null);
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
