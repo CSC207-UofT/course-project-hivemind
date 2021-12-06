@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         StringBuilder presentableFoodString = new StringBuilder();
         if(expiredFoodList.size() > 0){
             for(List<String> food : expiredFoodList){
-                String presentableExpiredFood = food.get(0) + ": " + food.get(1) + ". " + food.get(2) + ". ";
+                String presentableExpiredFood = food.get(0) + ": " + food.get(1) + ". " + food.get(2) + ".\n ";
                 presentableFoodString = new StringBuilder(presentableFoodString + presentableExpiredFood);
             }
 
