@@ -95,10 +95,27 @@ public class Adapter {
      * Returns the perishable foods from the foodList
      * @return foodList the list of perishable foods.
      */
-    public ArrayList<List<String>> showPerishables(){
+    public List<List<String>> showPerishables(){
         ArrayList<String> foodData = adp.readFoodFile();
         foodController.loadFoodFromList(foodData);
-        return foodController.foodList;
+        List<String> expiredFoodList = foodController.checkPerishables();
+        List<List<String>> presentableExpiredFoods = new ArrayList<>();
+        for(String food : expiredFoodList){
+            String[] foodSplit = food.split(" ");
+            String[] foodNameSplit = foodSplit[0].split(":");
+            String foodName = foodNameSplit[0];
+            String foodAmount = foodSplit[2];
+            String[] foodUnitSplit = foodSplit[3].split(",");
+            String foodUnit = foodUnitSplit[0];
+            String[] foodExpirySplit = foodSplit[6].split(",");
+            String[] foodExpirySplitByNum = foodExpirySplit[0].split("-");
+            String foodAmountAndUnit = foodAmount + " " + foodUnit;
+            String foodExpiryDate = "Expiry date: " + foodExpirySplitByNum[2] + "/" + foodExpirySplitByNum[1] + "/" + foodExpirySplitByNum[0];
+            List<String> presentableExpiredFood = new ArrayList<>(Arrays.asList(foodName, foodAmountAndUnit, foodExpiryDate));
+            presentableExpiredFoods.add(presentableExpiredFood);
+        }
+        return presentableExpiredFoods;
+
     }
 
     /**
