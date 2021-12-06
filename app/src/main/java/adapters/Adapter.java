@@ -54,12 +54,12 @@ public class Adapter {
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit));
     }
 
-    public List<String> createFood(String name, String amount, String unit, String day,
-                                   String month, String year) throws IOException{
-        ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, day, month, year));
+    public List<String> createFood(String name, String amount, String unit, String year,
+                                   String month, String day) throws IOException{
+        ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, year, month, day));
         foodController.runFoodCreation(food);
-        adp.writeFile(food.get(0) + ",," + food.get(1) + ",," + food.get(2) + ",," + food.get(5) +
-                ",," + food.get(4) + ",," + food.get(3), AndroidDataParser.FOOD_FILE);
+        adp.writeFile(food.get(0) + ",," + food.get(1) + ",," + food.get(2) + ",," + food.get(3) +
+                ",," + food.get(4) + ",," + food.get(5), AndroidDataParser.FOOD_FILE);
         return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit,
                 "Expiry date: " + day + "/" + month + "/" + year));
     }
