@@ -15,8 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import adapters.Adapter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.view.ViewGroup.LayoutParams;
@@ -66,7 +64,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
             textView.setTextSize(SettingsFragment.fontSize);
 
-            textView.setOnClickListener(v -> openRecipeDialog(recipeList, v, recipe));
+            textView.setOnClickListener(v -> openRecipeDialog(recipe));
 
             textView.setPadding(10, 10, 10, 10);
             textView.setGravity(Gravity.TOP|Gravity.START);
@@ -81,22 +79,16 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void openRecipeDialog(LinearLayout recipeList, View v, List<String> recipe) {
+    private void openRecipeDialog(List<String> recipe) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         View recipePopupView = getLayoutInflater().inflate(R.layout.recipe_view_popup,
                 (ViewGroup) view, false);
 
         TextView recipe_text = recipePopupView.findViewById(R.id.recipe_display);
-        StringBuilder sb = new StringBuilder();
-        sb.append(recipe.get(0)).append(":\n");
-        System.out.println(recipe.size());
-//        for (int i = 1 ; i<recipe.size()-2 ; i++) {
-//            sb.append(recipe.get(i));
-//        }
-        sb.append(recipe.get(1));
-        sb.append("\n").append(recipe.get(recipe.size()-1));
 
-        String recipe_display_string = sb.toString();
+        String recipe_display_string = recipe.get(0) + ":\n\n" +
+                recipe.get(1) +
+                "\n\n" + recipe.get(2);
         recipe_text.setText(recipe_display_string);
         recipe_text.setTextSize(SettingsFragment.fontSize - 10);
 

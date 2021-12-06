@@ -176,8 +176,6 @@ public class Adapter {
             try {
                 double res = Double.parseDouble(a2.get(j));
             } catch (Exception e) {
-                System.out.println(j);
-                System.out.println("tried to parse double");
                 throw new IOException();
             }
             j+=3;
@@ -233,7 +231,7 @@ public class Adapter {
         StringBuilder ingredients = new StringBuilder();
         int i = 1;
         // for each of the ingredient in the recipe, adding a " " at the end of it.
-        while(i < recipe.size() - 2){
+        while(i < recipe.size() - 1){
             ingredients.append(recipe.get(i)).append(" ");
             i++;
         }

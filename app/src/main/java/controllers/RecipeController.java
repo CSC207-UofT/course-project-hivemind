@@ -24,6 +24,13 @@ public class RecipeController {
         String[] ingrSplit = ingrString.split(" ");
         List<String> a1 = Arrays.asList(ingrSplit);
         ArrayList<String> a2 = new ArrayList<>(a1);
+
+        ArrayList<String> storage_list = new ArrayList<>();
+        storage_list.add(recipeName);
+        storage_list.addAll(a2);
+        storage_list.add(instruction);
+
+        this.recipeRawArray.add(storage_list);
         return handler.addOneRecipe(recipeName, a2, instruction);
     }
 
