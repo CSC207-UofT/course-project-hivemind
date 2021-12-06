@@ -93,12 +93,12 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
     public void addToFoodList(LinearLayout foodList, List<String> food, int i){
         TextView textView = new TextView(getContext());
         String foodDisplay = foodStringHelper(food);
+        System.out.println(foodDisplay);
         textView.setText(foodDisplay);
         //String foodID = foodIDHelper(food, index);
         textView.setId(i);
         textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
-        textView.setText(food.get(0));
-        textView.setTextSize(24);
+        textView.setTextSize(SettingsFragment.fontSize);
         textView.setGravity(Gravity.TOP | Gravity.START);
         textView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -145,7 +145,8 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                             newfoodpopup_unit.getText().toString());
                     // create an array of strings
                     labelList.add(newfoodpopup_foodname.getText().toString());
-                    labelList.add(newfoodpopup_quantity.getText().toString() + newfoodpopup_unit.getText().toString());
+                    labelList.add(newfoodpopup_quantity.getText().toString() + " " +
+                            newfoodpopup_unit.getText().toString());
                     addToFoodList(foodList,labelList,index);
                     index ++;
                 }
@@ -159,13 +160,18 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
                     //create an array of strings
                     labelList.add(newfoodpopup_foodname.getText().toString());
-                    labelList.add(newfoodpopup_quantity.getText().toString() + newfoodpopup_unit.getText().toString());
-                    labelList.add(newfoodpopup_year.getText().toString() + "/" + newfoodpopup_month.getText().toString()
+                    labelList.add(newfoodpopup_quantity.getText().toString() + " " +
+                            newfoodpopup_unit.getText().toString());
+                    labelList.add("Expiry Date: " + newfoodpopup_year.getText().toString() + "/" +
+                            newfoodpopup_month.getText().toString()
                     + "/" + newfoodpopup_day.getText().toString());
                     addToFoodList(foodList,labelList,index);
                     index ++;
 
                 }
+                Snackbar snackbar = Snackbar.make(view, "Food Added Successfully",
+                        BaseTransientBottomBar.LENGTH_SHORT);
+                snackbar.show();
             }
             catch (Exception e) {
                 e.printStackTrace();

@@ -106,10 +106,9 @@ public class Adapter {
      * @param foodIndexToDelete An Integer value for index of the food to be deleted
      */
     public void showDeletedFood(Integer foodIndexToDelete) {
-        foodController.deleteFoodAndroid(foodIndexToDelete);
         try{
-            adp.deleteRowFromFoodFile(foodIndexToDelete);
             foodController.deleteFoodAndroid(foodIndexToDelete);
+            adp.deleteRowFromFoodFile(foodIndexToDelete);
         }
         // Exception when the food is not deleted for reasons potentially related to input.
         catch (Exception e){
@@ -159,6 +158,7 @@ public class Adapter {
             try {
                 double res = Double.parseDouble(a2.get(j));
             } catch (Exception e) {
+                System.out.println(j);
                 System.out.println("tried to parse double");
                 throw new IOException();
             }

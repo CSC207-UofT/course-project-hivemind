@@ -108,10 +108,10 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
                 snackbar.show();
             } catch (IOException e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(view, "Error Creating Recipe",
+                        BaseTransientBottomBar.LENGTH_SHORT);
+                snackbar.show();
             }
-            Snackbar snackbar = Snackbar.make(view, "Error Creating Recipe",
-                    BaseTransientBottomBar.LENGTH_SHORT);
-            snackbar.show();
             dialog.dismiss();
         });
     }
