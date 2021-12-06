@@ -84,7 +84,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         System.out.println(foodDisplay);
         textView.setText(foodDisplay);
         //String foodID = foodIDHelper(food, index);
-        //textView.setId(i);
+        textView.setId(i);
         textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
         textView.setTextSize(SettingsFragment.fontSize);
         textView.setGravity(Gravity.TOP | Gravity.START);
