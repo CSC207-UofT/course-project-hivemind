@@ -108,13 +108,25 @@ public class Adapter {
      *
      */
     public List<String> createRecipe(String name, String ingredients, String steps) throws IOException{
-        recipeController.addRecipe(name, ingredients, steps);
         String[] ingrSplit = ingredients.split(" ");
         List<String> a1 = Arrays.asList(ingrSplit);
         ArrayList<String> a2 = new ArrayList<>(a1);
+
+        int j = 1;
+        while (j < a2.size() - 1) {
+            try {
+                double res = Double.parseDouble(a2.get(j));
+            } catch (Exception e) {
+                System.out.println("tried to parse double");
+                throw new IOException();
+            }
+            j+=3;
+        }
+
+        recipeController.addRecipe(name, ingredients, steps);
         String presentableIngredients = "";
-        int i = 1;
-        StringBuilder ingredientsBuilder = new StringBuilder(ingredients);
+        int i = 0;
+        StringBuilder ingredientsBuilder = new StringBuilder(presentableIngredients);
         while(i < a2.size() - 1){
             ingredientsBuilder.append(a2.get(i)).append(" ");
             ingredientsBuilder.append(a2.get(i + 1)).append(" ");
