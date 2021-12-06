@@ -50,7 +50,7 @@ public class FoodFragment extends Fragment {
             String display_string = "You've got no food!";
             TextView textView = new TextView(getContext());
             textView.setText(display_string);
-            textView.setTextSize(24);
+            textView.setTextSize(SettingsFragment.fontSize);
             textView.setGravity(Gravity.TOP | Gravity.START);
             textView.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -63,7 +63,7 @@ public class FoodFragment extends Fragment {
 
                 TextView textView = new TextView(getContext());
                 textView.setText(food.get(0));
-                textView.setTextSize(24);
+                textView.setTextSize(SettingsFragment.fontSize);
                 textView.setGravity(Gravity.TOP | Gravity.START);
                 textView.setLayoutParams(new ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,

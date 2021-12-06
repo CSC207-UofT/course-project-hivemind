@@ -54,14 +54,14 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
         fab.setOnClickListener(this);
 
-        List<List<String>> given_recipes = adapter.recommendRecipes(20);
+        List<List<String>> given_recipes = adapter.recommendRecipes(SettingsFragment.recipeAmount);
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
         for (List<String> recipe : given_recipes) {
 
             TextView textView = new TextView(getContext());
             textView.setText(recipe.get(0));
-            textView.setTextSize(24);
+            textView.setTextSize(SettingsFragment.fontSize);
             textView.setGravity(Gravity.TOP|Gravity.START);
             textView.setLayoutParams(new LayoutParams(
                     LayoutParams.MATCH_PARENT,
