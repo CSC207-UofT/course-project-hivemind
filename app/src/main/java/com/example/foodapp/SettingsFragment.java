@@ -2,6 +2,9 @@ package com.example.foodapp;
 
 import adapters.Adapter;
 import android.os.Bundle;
+import android.widget.*;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,18 @@ public class SettingsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    public static int fontSize = 30;
+    public static int recipeAmount = 7;
+    public static boolean isDark = true;
+    View view;
+    SeekBar seekbar;
+    TextView textSettings;
+    SeekBar recipeBar;
+    TextView fontExample;
+    TextView recipeText;
+
+//    int barProgress = 50;
 
     // TODO: Rename and change types of parameters
 //    private String mParam1;
@@ -37,12 +52,11 @@ public class SettingsFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-//        Bundle args = new Bundle();
+        //        Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
 //        fragment.setArguments(args);
-        return fragment;
+        return new SettingsFragment();
     }
 
     @Override
@@ -58,6 +72,59 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        textSettings = view.findViewById(R.id.settingsText);
+        textSettings.setTextSize(35);
+        seekbar = view.findViewById(R.id.seekbar);
+//        spinner = view.findViewById(R.id.numbers_spinner);
+        fontExample = view.findViewById(R.id.fontExample);
+        recipeText = view.findViewById(R.id.recipeText);
+        recipeText.setTextSize(20);
+
+        recipeBar = view.findViewById(R.id.seekbarRecipe);
+
+        recipeBar.setMax(20);
+        recipeBar.setMin(5);
+        recipeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                recipeAmount = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                fontSize = progress;
+                fontExample.setTextSize(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+
+        seekbar.setProgress(fontSize);
+        recipeBar.setProgress(recipeAmount);
+        return view;
     }
 }

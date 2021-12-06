@@ -31,6 +31,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
     View view;
     Adapter adapter;
+    int index = 0;
 
     public FoodFragment() {
         // Required empty public constructor
@@ -46,26 +47,25 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_food, container, false);
+        LinearLayout foodList = view.findViewById(R.id.food_list);
 
         FloatingActionButton fab = view.findViewById(R.id.food_fab);
         fab.setOnClickListener(this);
 
-        int index = 0;
-
         List<List<String>> given_foods = adapter.getAllFoods();
 
-        LinearLayout foodList = view.findViewById(R.id.food_list);
         if (given_foods == null || given_foods.size() == 0) {
             String display_string = "You've got no food!";
             TextView textView = new TextView(getContext());
             textView.setText(display_string);
-            textView.setTextSize(24);
+            textView.setTextSize(SettingsFragment.fontSize);
             textView.setGravity(Gravity.TOP | Gravity.START);
             textView.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -83,6 +83,13 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    /**
+     * Creates a TextView and sets the text in the text using a List of String, food.
+     * It also takes in an index, which the delete food function uses.
+     * @param foodList
+     * @param food
+     * @param i
+     */
     public void addToFoodList(LinearLayout foodList, List<String> food, int i){
         TextView textView = new TextView(getContext());
         String foodDisplay = foodStringHelper(food);
@@ -100,6 +107,11 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         foodList.addView(textView);
     }
 
+    /**
+     * Takes the user input to make and display a Food object.
+     * [["Potato", "2 lbs"], ["Potato", "2 lbs", "Expiry Date: 3/12/2021"]]
+     *
+     */
     public void createNewFoodDialog(){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
         final View foodPopupView = getLayoutInflater().inflate(R.layout.popup,null);
@@ -119,7 +131,11 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
         assert newfoodpopup_day.getText().toString().equals("");
 
+        LinearLayout foodList = view.findViewById(R.id.food_list);
+
+        // make a food object
         newfoodpopup_save.setOnClickListener(v -> {
+            List<String> labelList = new ArrayList<>();
             try {
                 if (newfoodpopup_day.getText().toString().equals("") &&
                         newfoodpopup_month.getText().toString().equals("") &&
@@ -127,30 +143,40 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     adapter.createFood(newfoodpopup_foodname.getText().toString(),
                             newfoodpopup_quantity.getText().toString(),
                             newfoodpopup_unit.getText().toString());
+                    // create an array of strings
+                    labelList.add(newfoodpopup_foodname.getText().toString());
+                    labelList.add(newfoodpopup_quantity.getText().toString() + newfoodpopup_unit.getText().toString());
+                    addToFoodList(foodList,labelList,index);
+                    index ++;
                 }
                 else {
                     adapter.createFood(newfoodpopup_foodname.getText().toString(),
                             newfoodpopup_quantity.getText().toString(),
                             newfoodpopup_unit.getText().toString(),
-                            newfoodpopup_day.getText().toString(),
+                            newfoodpopup_year.getText().toString(),
                             newfoodpopup_month.getText().toString(),
-                            newfoodpopup_year.getText().toString());
+                            newfoodpopup_day.getText().toString());
+
+                    //create an array of strings
+                    labelList.add(newfoodpopup_foodname.getText().toString());
+                    labelList.add(newfoodpopup_quantity.getText().toString() + newfoodpopup_unit.getText().toString());
+                    labelList.add(newfoodpopup_year.getText().toString() + "/" + newfoodpopup_month.getText().toString()
+                    + "/" + newfoodpopup_day.getText().toString());
+                    addToFoodList(foodList,labelList,index);
+                    index ++;
+
                 }
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
 
-//            // make input into List of strings
-//            List<String> labelList = new ArrayList<>();
-//            try{
-//
-//            }
-
-
+            // make input into List of strings
 
             dialog.dismiss();
         });
+
+
 
         newfoodpopup_cancel.setOnClickListener(v -> dialog.dismiss());
     }
@@ -159,6 +185,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         createNewFoodDialog();
     }
+
 
     private String foodIDHelper(ArrayList<String> food, int index) {
         return food.get(0) + index;
