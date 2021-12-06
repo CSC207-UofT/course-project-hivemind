@@ -61,24 +61,13 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
         List<List<String>> given_foods = adapter.getAllFoods();
 
-        if (given_foods == null || given_foods.size() == 0) {
-            String display_string = "You've got no food!";
-            TextView textView = new TextView(getContext());
-            textView.setText(display_string);
-            textView.setTextSize(SettingsFragment.fontSize);
-            textView.setGravity(Gravity.TOP | Gravity.START);
-            textView.setLayoutParams(new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            foodList.addView(textView);
-        }
-        else {
+        if (!(given_foods == null || given_foods.size() == 0)) {
             for (List<String> food : given_foods) {
                 addToFoodList(foodList, food, index);
                 index ++;
             }
         }
+
         return view;
 
     }
@@ -86,11 +75,13 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
     /**
      * Creates a TextView and sets the text in the text using a List of String, food.
      * It also takes in an index, which the delete food function uses.
-     * @param foodList
-     * @param food
-     * @param i
+     * @param foodList A list of the foods
+     * @param food the List of string of food that is being added
+     * @param i the integer that represents the index of the food item
      */
     public void addToFoodList(LinearLayout foodList, List<String> food, int i){
+        TextView no_food_text = view.findViewById(R.id.nofood);
+        no_food_text.setVisibility(View.GONE);
         TextView textView = new TextView(getContext());
         String foodDisplay = foodStringHelper(food);
         System.out.println(foodDisplay);
@@ -149,6 +140,10 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                             newfoodpopup_unit.getText().toString());
                     addToFoodList(foodList,labelList,index);
                     index ++;
+                    Snackbar snackbar = Snackbar.make(view, "Food Added Successfully",
+                            BaseTransientBottomBar.LENGTH_SHORT);
+                    snackbar.show();
+
                 }
                 else {
                     adapter.createFood(newfoodpopup_foodname.getText().toString(),
@@ -167,6 +162,9 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     + "/" + newfoodpopup_day.getText().toString());
                     addToFoodList(foodList,labelList,index);
                     index ++;
+                    Snackbar snackbar = Snackbar.make(view, "Food Added Successfully",
+                            BaseTransientBottomBar.LENGTH_SHORT);
+                    snackbar.show();
 
                 }
                 Snackbar snackbar = Snackbar.make(view, "Food Added Successfully",
