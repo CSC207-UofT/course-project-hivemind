@@ -61,7 +61,7 @@ public class FoodControllerTest {
         food.add("grams");
         foodController.runFoodCreation(food);
         assertEquals(1, foodController.handler.getCreatedFoodListFullString().size());
-        assertFalse(foodController.foodList.contains(food));
+        assertTrue(foodController.foodList.contains(food));
     }
 
     @Test(timeout=1000)
