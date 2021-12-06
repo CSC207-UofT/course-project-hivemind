@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.view.ViewGroup.LayoutParams;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +63,10 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
             TextView textView = new TextView(getContext());
             textView.setText(recipe.get(0));
+
             textView.setTextSize(SettingsFragment.fontSize);
+
+            textView.setPadding(10, 10, 10, 10);
             textView.setGravity(Gravity.TOP|Gravity.START);
             textView.setLayoutParams(new LayoutParams(
                     LayoutParams.MATCH_PARENT,
@@ -98,9 +103,16 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
             try {
                 adapter.createRecipe(name.getText().toString(), foods.getText().toString(),
                         instructions.getText().toString());
+                Snackbar snackbar = Snackbar.make(view, "Recipe Created Successfully",
+                        BaseTransientBottomBar.LENGTH_SHORT);
+                snackbar.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Snackbar snackbar = Snackbar.make(view, "Error Creating Recipe",
+                    BaseTransientBottomBar.LENGTH_SHORT);
+            snackbar.show();
+            dialog.dismiss();
         });
     }
 }
