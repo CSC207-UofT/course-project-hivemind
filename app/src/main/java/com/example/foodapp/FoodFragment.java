@@ -175,10 +175,10 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             }
             catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(view, "Food Add Failed",
+                        BaseTransientBottomBar.LENGTH_SHORT);
+                snackbar.show();
             }
-
-            // make input into List of strings
-
             dialog.dismiss();
         });
 
