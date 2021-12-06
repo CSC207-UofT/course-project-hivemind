@@ -25,6 +25,7 @@ public class FoodController {
     public void runFoodCreation(List<String> food) {
         // Note: hands off the work to the use case class.
         this.handler.createFood(food);
+        this.foodList.add(food);
         // createFood will return true or false depending on whether the food has been made
     }
 
@@ -119,6 +120,8 @@ public class FoodController {
      */
     public void deleteFoodAndroid(int index){
         handler.deleteFoodAndroid(index);
+        List<String> food_to_del = this.foodList.get(index);
+        this.foodList.remove(food_to_del);
     }
 }
 

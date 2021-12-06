@@ -153,9 +153,9 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     adapter.createFood(newfoodpopup_foodname.getText().toString(),
                             newfoodpopup_quantity.getText().toString(),
                             newfoodpopup_unit.getText().toString(),
-                            newfoodpopup_day.getText().toString(),
+                            newfoodpopup_year.getText().toString(),
                             newfoodpopup_month.getText().toString(),
-                            newfoodpopup_year.getText().toString());
+                            newfoodpopup_day.getText().toString());
 
                     //create an array of strings
                     labelList.add(newfoodpopup_foodname.getText().toString());
@@ -164,6 +164,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     + "/" + newfoodpopup_day.getText().toString());
                     addToFoodList(foodList,labelList,index);
                     index ++;
+
                 }
             }
             catch (Exception e) {
