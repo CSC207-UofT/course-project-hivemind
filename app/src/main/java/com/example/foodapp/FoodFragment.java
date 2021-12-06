@@ -65,7 +65,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             String display_string = "You've got no food!";
             TextView textView = new TextView(getContext());
             textView.setText(display_string);
-            textView.setTextSize(24);
+            textView.setTextSize(SettingsFragment.fontSize);
             textView.setGravity(Gravity.TOP | Gravity.START);
             textView.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -176,6 +176,8 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             dialog.dismiss();
         });
 
+
+
         newfoodpopup_cancel.setOnClickListener(v -> dialog.dismiss());
     }
 
@@ -183,6 +185,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         createNewFoodDialog();
     }
+
 
     private String foodIDHelper(ArrayList<String> food, int index) {
         return food.get(0) + index;
