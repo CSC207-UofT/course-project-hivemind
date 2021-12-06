@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".SettingsFragment">
 
     <TextView
-            android:text="This is the SettingsFragment"
+            android:text="@string/settings"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/textView"/>
+            android:layout_height="match_parent"
+            android:id="@+id/settingsText"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"/>
 
-</FrameLayout>
+    <SeekBar android:layout_width="413dp"
+             android:layout_height="81dp"
+             android:id="@+id/seekbar"
+             android:layout_alignParentStart="true" android:layout_alignParentTop="true"
+             android:layout_marginTop="163dp" android:layout_marginStart="-1dp" android:layout_alignParentEnd="true"
+             android:layout_marginEnd="-1dp" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:text="@string/change_font_size_this_text_is_example"
+            android:id="@+id/fontExample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" android:layout_marginTop="101dp" android:layout_centerHorizontal="true"
+            android:layout_marginStart="0dp"/>
+    <SeekBar android:layout_width="413dp"
+             android:layout_height="81dp"
+             android:id="@+id/seekbarRecipe"
+             android:layout_alignParentStart="true" android:layout_alignParentTop="true"
+             android:layout_marginTop="303dp" android:layout_marginStart="-1dp" android:layout_alignParentEnd="true"
+             android:layout_marginEnd="-1dp" android:layout_centerInParent="true"/>
+    <TextView
+            android:text="@string/amount_of_recipes_min_5_max_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" android:layout_marginTop="261dp" android:id="@+id/recipeText"/>
+
+</RelativeLayout>
