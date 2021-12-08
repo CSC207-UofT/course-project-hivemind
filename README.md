@@ -58,3 +58,6 @@ In the recipes menu, you can see a scrollable list of all the recipes in the app
 #### Settings:
 In the settings menu, you can change the font size, as well as the number of recipes recommended by adjusting the sliders as you see fit.
 
+#### Trouble Fixing:
+If a box appears saying 'System UI isn't working', this is an issue with your emulator and press 'wait'.
+If the app is crashing, uninstall and freshly install the app (there was likely an error with installation or app storage).
