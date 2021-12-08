@@ -64,42 +64,4 @@ public class RecipeHandlerTest {
         recipeController.recommendRecipe(3);
         assertEquals(recipes_array, recipeController.recommendRecipe(3));
     }
-
-    @Test(timeout = 1000)
-    public void test_recommendRecipetwo() throws IOException {
-        FoodController foodController = new FoodController();
-        RecipeController recipeController = new RecipeController();
-        ArrayList<String> foodData = new ArrayList<>();
-
-        foodData.add("all-purpose flour,,2,,cups");
-        foodData.add("baking soda,,12.0,,teaspoon");
-        foodData.add("salt,,3.0,,teaspoon");
-        foodData.add("butter,,6.0,,cup");
-        foodData.add("brown sugar,,1,,cup");
-        foodData.add("white sugar,,1,,cup");
-        foodData.add("vanilla extract,,1,,tablespoon");
-        foodData.add("egg,,1,,unit");
-        foodData.add("egg yolk,,1,,unit");
-        foodData.add("chocolate chips,,2,,cups");
-
-        foodController.loadFoodFromList(foodData);
-
-        ArrayList<String> recipeData = DataParser.readFile(DataParser.RECIPE_FILE);
-        recipeController.initialLoad(recipeData);
-        ArrayList<Recipe> recipes = recipeController.handler.getAllRecipes();
-        String name = "Best Big Chewy Chocolate Chip Cookies";
-        String recipe = getRecipeFromList(recipes, name).toString();
-        ArrayList<String> cookie = new ArrayList<>();
-        cookie.add(recipe);
-        assertEquals(cookie, recipeController.handler.recommendRecipe(1));
-    }
-    public Recipe getRecipeFromList(ArrayList<Recipe> recipes, String name){
-        int i;
-        for (i = 0; i < recipes.size(); i++){
-            if (Objects.equals(recipes.get(i).getRecipeName(), name)){
-                return recipes.get(i);
-            }
-        }
-        return recipes.get(0);
-    }
 }
