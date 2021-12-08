@@ -1,12 +1,14 @@
 package controllerTests;
 
 import controllers.FoodController;
+import entities.Food;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import usecases.FoodHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -99,5 +101,85 @@ public class FoodControllerTest {
         Object[] item = controller.handler.specifiedFoodList.get(0);
         return item[0];
     }
+
+    @Test(timeout=1000)
+    public void testFoodDeleteFromSystem() {
+        FoodController foodController = new FoodController();
+        ArrayList<String> foodData = new ArrayList<>();
+        foodData.add("Shrimp,,2,,cups,,2020,,10,,19");
+        foodData.add("Bread,,6,,slices,,2020,,10,,19");
+        foodController.loadFoodFromList(foodData);
+        foodController.foodDeletedFromSystem();
+        assertNull(foodController.handler.specifiedFoodList);
+    }
+
+    @Test(timeout=1000)
+    public void testGetFoodIndexToDelete() {
+        ArrayList<String> sampleFoodData = new ArrayList<>();
+        sampleFoodData.add("Shrimp,,2,,cups");
+        sampleFoodData.add("Bread,,6,,slices,,2020,,10,,19");
+        sampleFoodData.add("Shrimp,,5,,tons");
+
+        FoodController controller = initialLoadFood(sampleFoodData);
+
+
+        ArrayList<Object[]> shrimpList = new ArrayList<>();
+        Object[] shrimp1 = {getFoodHelper(0), 0};
+        Object[] shrimp2 = {getFoodHelper(2), 2};
+        shrimpList.add(shrimp1);
+        shrimpList.add(shrimp2);
+
+        int listSize = controller.handler.makeSpecifiedFoodList("Shrimp");
+
+        assertEquals(shrimpList.size(), listSize);
+
+        int a = controller.getFoodIndexToDelete(1);
+
+        assertEquals(0, a);
+
+
+    }
+
+    @Test(timeout=1000)
+    public void testPrintSpecifiedFoodList() {
+        ArrayList<String> sampleFoodData = new ArrayList<>();
+        sampleFoodData.add("Shrimp,,2,,cups");
+        sampleFoodData.add("Bread,,6,,slices,,2020,,10,,19");
+        sampleFoodData.add("Shrimp,,5,,tons");
+
+        FoodController controller = initialLoadFood(sampleFoodData);
+
+
+        ArrayList<Object[]> shrimpList = new ArrayList<>();
+        Object[] shrimp1 = {getFoodHelper(0), 0};
+        Object[] shrimp2 = {getFoodHelper(2), 2};
+        shrimpList.add(shrimp1);
+        shrimpList.add(shrimp2);
+
+        int listSize = controller.handler.makeSpecifiedFoodList("Shrimp");
+
+        assertEquals(shrimpList.size(), listSize);
+
+        List<String> actual = Arrays.asList("1. Shrimp: 2.0 cups", "2. Shrimp: 5.0 tons");
+
+        assertEquals(actual , controller.printSpecifiedFoodList());
+
+    }
+
+
+
+
+
+    private Food getFoodHelper(Integer index) {
+        ArrayList<Food> food = FoodHandler.getCreatedFoodList();
+        return (food.get(index));
+    }
+
+    private FoodController initialLoadFood(ArrayList<String> food){
+        FoodController foodController = new FoodController();
+        foodController.loadFoodFromList(food);
+        return foodController;
+    }
+
 }
 
