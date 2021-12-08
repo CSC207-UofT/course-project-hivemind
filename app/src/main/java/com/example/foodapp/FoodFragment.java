@@ -21,6 +21,7 @@ import java.util.List;
 
 public class FoodFragment extends Fragment implements View.OnClickListener{
 
+    private List<TextView> listFoodList = new ArrayList<>();
     private View view;
     private Adapter adapter;
     private int index = 0;
@@ -82,7 +83,10 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
+
         foodList.addView(textView); // Add the created textview to the view of the list
+        listFoodList.add(textView);
+
     }
 
     /**
@@ -224,10 +228,12 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         confirmDeleteFood.setOnClickListener(v -> {
             //define delete button
             foodList.removeView(food);
-            int index = food.getId();
-            adapter.showDeletedFood(index);
+            int foodIndex = food.getId();
+            adapter.showDeletedFood(foodIndex);
+            updateFoodIndexes(foodIndex);
+            index = index - 1;
             dialog.dismiss();
-            Snackbar snackbar = Snackbar.make(view, "Food Deleted Successfully",
+            Snackbar snackbar = Snackbar.make(view,"Food Deleted Successfully",
                     BaseTransientBottomBar.LENGTH_SHORT);
             snackbar.show();
         });
@@ -235,5 +241,15 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             //define cancel button
             dialog.dismiss();
         });
+    }
+
+    private void updateFoodIndexes(int foodIndex) {
+        listFoodList.remove(foodIndex);
+        for (int i = foodIndex; i <= listFoodList.size(); i++){
+            TextView foodItem = listFoodList.get(i);
+            int currId = foodItem.getId();
+            int newId = currId - 1;
+            foodItem.setId(newId);
+        }
     }
 }
