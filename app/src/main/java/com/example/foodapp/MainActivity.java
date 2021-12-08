@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         bottomNavView.setOnItemSelectedListener(this);
     }
 
+    /**
+     * Allows the user to switch between the food, recipe and settings fragments.
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.toString().equals("Food")) {
@@ -64,9 +67,14 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         }
         return true;
     }
+
+    /**
+     * Creates an AlertDialog that shows all the foods that have expired. If no
+     * foods have expired, let the user know their food is fresh.
+     */
     public void showExpiredFoodsAlert() {
 
-        // setup the alert builder
+        // set up the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Your food status: ");
         List<List<String>> expiredFoodList = adapter.showPerishables();
