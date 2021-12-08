@@ -107,8 +107,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         Dialog dialog = dialogBuilder.create();
         dialog.show();
 
-        // assert newfoodpopup_day.getText().toString().equals("");
-
         LinearLayout foodList = view.findViewById(R.id.food_list);
 
         newfoodpopup_save.setOnClickListener(v -> {

@@ -124,31 +124,6 @@ public class FoodHandlerTest {
         assertEquals(expectedValue, actualValue);
     }
 
-
-//    /**
-//     * Test createMultipleFoods accurately creates multiple food items.
-//     */
-//    @Test(timeout = 1000)
-//    public void testCreateMultipleFoods(){
-//        // create actual value
-//        FoodHandler foodhandler = new FoodHandler();
-//        List<List<String>> shortenedArray = new ArrayList<>();
-//        shortenedArray.add(getFoodTestCases().get(3));
-//        shortenedArray.add(getFoodTestCases().get(4));
-//        foodhandler.createMultipleFoods(shortenedArray);
-//        ArrayList<Food> expectedValue = FoodHandler.getCreatedFoodList();
-//
-//        // creating the expected value
-//        LocalDate milkLocalDate = LocalDate.of(2300,10,11);
-//        PerishableFood milk = new PerishableFood ("Milk", 3.0, "cups", milkLocalDate);
-//        NonPerishableFood chocolate = new NonPerishableFood("Chocolate", 2.0, "cups");
-//        ArrayList<Food> actualValue = null;
-//        actualValue.add(milk);
-//        actualValue.add(chocolate);
-//        assertEquals(actualValue, expectedValue);
-//    }
-
-
     /**
      * Test method getPerishedFoods
      */
