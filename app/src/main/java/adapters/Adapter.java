@@ -106,7 +106,7 @@ public class Adapter {
             String[] foodExpirySplit = foodSplit[5].split(",");
             String[] foodExpirySplitByNum = foodExpirySplit[0].split("-");
             String foodAmountAndUnit = foodAmount + " " + foodUnit;
-            String foodExpiryDate = "Expiry date: " + foodExpirySplitByNum[2] + "/" + foodExpirySplitByNum[1] + "/" + foodExpirySplitByNum[0];
+            String foodExpiryDate = "Expired On: " + foodExpirySplitByNum[2] + "/" + foodExpirySplitByNum[1] + "/" + foodExpirySplitByNum[0];
             List<String> presentableExpiredFood = new ArrayList<>(Arrays.asList(foodName, foodAmountAndUnit, foodExpiryDate));
             System.out.println(foodAmountAndUnit);
             System.out.println(foodName);
