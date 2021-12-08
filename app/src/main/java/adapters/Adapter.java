@@ -8,8 +8,8 @@ import java.util.*;
 
 public class Adapter {
 
-    public final FoodController foodController = new FoodController();
-    public final RecipeController recipeController = new RecipeController();
+    private final FoodController foodController = new FoodController();
+    private final RecipeController recipeController = new RecipeController();
     public final AndroidDataParser adp;
 
     public Adapter(Context context) {
