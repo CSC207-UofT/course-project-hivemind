@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class UserInput {
     private final Scanner inputScanner = new Scanner(System.in);
-    String lastCommand;
 
     /**
      * This class is used to get input from the user in the console
@@ -12,8 +11,7 @@ public class UserInput {
      */
     public String getInput() {
         System.out.print("> ");
-        lastCommand = inputScanner.nextLine();
-        return lastCommand;
+        return inputScanner.nextLine();
     }
 
     /**
