@@ -21,27 +21,19 @@ import android.view.ViewGroup.LayoutParams;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class RecipeFragment extends Fragment implements View.OnClickListener {
 
-    View view;
-    Adapter adapter;
+    private View view;
+    private Adapter adapter;
 
     public RecipeFragment() {
         // Required empty public constructor
     }
 
-    public static RecipeFragment newInstance() {
-        return new RecipeFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        this.adapter = MainActivity.adapter;
+        this.adapter = MainActivity.adapter; // get the instance of the adapter from MainActivity, so that we use the same one
         super.onCreate(savedInstanceState);
     }
 
@@ -50,14 +42,14 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        FloatingActionButton fab = view.findViewById(R.id.recipe_fab);
+        FloatingActionButton fab = view.findViewById(R.id.recipe_fab); // get the button from the view
 
-        fab.setOnClickListener(this);
+        fab.setOnClickListener(this); // set a listener
 
         List<List<String>> given_recipes = adapter.recommendRecipes(SettingsFragment.recipeAmount);
 
         LinearLayout recipeList = view.findViewById(R.id.recipe_list);
-        for (List<String> recipe : given_recipes) {
+        for (List<String> recipe : given_recipes) { // For each recipe, generate a clickable text view and add it to the list
 
             TextView textView = new TextView(getContext());
             textView.setText(recipe.get(0));
@@ -76,9 +68,14 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         }
 
 
-        return view;
+        return view; // Return the new view with all the recommended recipes added
     }
 
+
+    /**
+     * Opens an Android Dialog to display a full recipe when the name is clicked
+     * @param recipe the recipe that is being displayed
+     */
     private void openRecipeDialog(List<String> recipe) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         View recipePopupView = getLayoutInflater().inflate(R.layout.recipe_view_popup,
@@ -102,11 +99,14 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         createRecipeDialog();
     }
 
-    public void createRecipeDialog() {
+    /**
+     * Creates a new Android Dialog on screen that takes information from the user and creates a new recipe
+     */
+    private void createRecipeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         View recipePopupView = getLayoutInflater().inflate(R.layout.recipe_popup, (ViewGroup) view, false);
 
-        EditText name = recipePopupView.findViewById(R.id.recipe_popup_name);
+        EditText name = recipePopupView.findViewById(R.id.recipe_popup_name); // Get the information entered
         EditText foods = recipePopupView.findViewById(R.id.recipe_popup_foods);
         EditText instructions = recipePopupView.findViewById(R.id.recipe_popup_instructions);
 
@@ -121,7 +121,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
         save_button.setOnClickListener(v -> {
             try {
-                adapter.createRecipe(name.getText().toString(), foods.getText().toString(),
+                adapter.createRecipe(name.getText().toString(), foods.getText().toString(), // Try to create
                         instructions.getText().toString());
                 Snackbar snackbar = Snackbar.make(view, "Recipe Created Successfully",
                         BaseTransientBottomBar.LENGTH_SHORT);

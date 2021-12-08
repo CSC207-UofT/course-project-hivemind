@@ -19,29 +19,20 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FoodFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FoodFragment extends Fragment implements View.OnClickListener{
 
-    View view;
-    Adapter adapter;
-    int index = 0;
-    List<TextView> listFoodList = new ArrayList<>();
+    private List<TextView> listFoodList = new ArrayList<>();
+    private View view;
+    private Adapter adapter;
+    private int index = 0;
 
     public FoodFragment() {
         // Required empty public constructor
     }
 
-    public static FoodFragment newInstance() {
-        return new FoodFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        this.adapter = MainActivity.adapter;
+        this.adapter = MainActivity.adapter; // get the instance of the adapter from MainActivity, so that we use the same one
         super.onCreate(savedInstanceState);
     }
 
@@ -55,11 +46,11 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         LinearLayout foodList = view.findViewById(R.id.food_list);
 
         FloatingActionButton fab = view.findViewById(R.id.food_fab);
-        fab.setOnClickListener(this);
+        fab.setOnClickListener(this); // Set a listener on the add food button
 
         List<List<String>> given_foods = adapter.getAllFoods();
 
-        if (!(given_foods == null || given_foods.size() == 0)) {
+        if (!(given_foods == null || given_foods.size() == 0)) { // If we do have food, then we can add them
             for (List<String> food : given_foods) {
                 addToFoodList(foodList, food, index);
                 index ++;
@@ -77,8 +68,8 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
      * @param food the List of string of food that is being added
      * @param i the integer that represents the index of the food item
      */
-    public void addToFoodList(LinearLayout foodList, List<String> food, int i){
-        TextView no_food_text = view.findViewById(R.id.nofood);
+    private void addToFoodList(LinearLayout foodList, List<String> food, int i){
+        TextView no_food_text = view.findViewById(R.id.nofood); // Creates a new TextView, sets its properties
         no_food_text.setVisibility(View.GONE);
         TextView textView = new TextView(getContext());
         String foodDisplay = foodStringHelper(food);
@@ -92,19 +83,21 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        foodList.addView(textView);
+
+        foodList.addView(textView); // Add the created textview to the view of the list
         listFoodList.add(textView);
+
     }
 
     /**
-     * Takes the user input to make and display a Food object.
+     * Takes the user input using an Android Dialog to make and display a Food object.
      * [["Potato", "2 lbs"], ["Potato", "2 lbs", "Expiry Date: 3/12/2021"]]
      *
      */
-    public void createNewFoodDialog(){
+    private void createNewFoodDialog(){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
         final View foodPopupView = getLayoutInflater().inflate(R.layout.popup,null);
-        EditText newfoodpopup_foodname = foodPopupView.findViewById(R.id.foodname);
+        EditText newfoodpopup_foodname = foodPopupView.findViewById(R.id.foodname); // Get all inputs of the food
         EditText newfoodpopup_quantity = foodPopupView.findViewById(R.id.quantity);
         EditText newfoodpopup_unit = foodPopupView.findViewById(R.id.unit);
         EditText newfoodpopup_year = foodPopupView.findViewById(R.id.year);
@@ -118,14 +111,14 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         Dialog dialog = dialogBuilder.create();
         dialog.show();
 
-        assert newfoodpopup_day.getText().toString().equals("");
+        // assert newfoodpopup_day.getText().toString().equals("");
 
         LinearLayout foodList = view.findViewById(R.id.food_list);
 
         newfoodpopup_save.setOnClickListener(v -> {
             List<String> labelList = new ArrayList<>();
             try {
-                if (newfoodpopup_day.getText().toString().equals("") &&
+                if (newfoodpopup_day.getText().toString().equals("") && // If there is no date specified, add nonperishable
                         newfoodpopup_month.getText().toString().equals("") &&
                         newfoodpopup_year.getText().toString().equals("")) {
                     adapter.createFood(newfoodpopup_foodname.getText().toString(),
@@ -138,7 +131,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     addToFoodList(foodList,labelList,index);
                     index ++;
                 }
-                else {
+                else { // Otherwise, add a perishablefood
                     adapter.createFood(newfoodpopup_foodname.getText().toString(),
                             newfoodpopup_quantity.getText().toString(),
                             newfoodpopup_unit.getText().toString(),
@@ -195,11 +188,11 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         createNewFoodDialog();
     }
 
-
-    private String foodIDHelper(ArrayList<String> food, int index) {
-        return food.get(0) + index;
-    }
-
+    /**
+     * A helper method used to change the list of strings representing the food into a string
+     * @param food the list representing the food
+     * @return A string of the elements of the list representing the food put together to be displayed
+     */
     private String foodStringHelper(List<String> food) {
         StringBuilder name = new StringBuilder();
         for (int i = 0; i < food.size(); i++){
@@ -216,7 +209,12 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         return name.toString();
     }
 
-    public void createDeleteFoodPopUp(LinearLayout foodList, View food){
+    /**
+     * Create an Android Dialog to delete food from the list
+     * @param foodList the view of the list containing the food
+     * @param food the food that we are deleting
+     */
+    private void createDeleteFoodPopUp(LinearLayout foodList, View food){
         AlertDialog.Builder dialogBuilder;
         AlertDialog dialog;
         Button confirmDeleteFood, cancelDeleteFood;

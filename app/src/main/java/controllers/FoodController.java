@@ -1,6 +1,5 @@
 package controllers;
 
-
 import usecases.FoodHandler;
 
 import java.util.ArrayList;

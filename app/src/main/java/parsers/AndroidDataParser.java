@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class AndroidDataParser {
-    public Context context;
+    private final Context context;
     final public static String FOOD_FILE = "fooddata.csv";
     final public static String RECIPE_FILE = "recipedata.csv";
 
