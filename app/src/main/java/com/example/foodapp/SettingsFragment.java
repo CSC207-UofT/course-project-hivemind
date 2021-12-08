@@ -15,7 +15,6 @@ public class SettingsFragment extends Fragment {
 
     public static int fontSize = 30;
     public static int recipeAmount = 7;
-    public static boolean isDark = true;
     View view;
     SeekBar seekbar;
     TextView textSettings;
@@ -34,7 +33,6 @@ public class SettingsFragment extends Fragment {
      *
      * @return A new instance of fragment SettingsFragment.
      */
-
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
