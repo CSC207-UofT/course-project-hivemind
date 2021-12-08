@@ -29,6 +29,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
     View view;
     Adapter adapter;
     int index = 0;
+    List<TextView> listFoodList = new ArrayList<>();
 
     public FoodFragment() {
         // Required empty public constructor
@@ -83,7 +84,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         String foodDisplay = foodStringHelper(food);
         System.out.println(foodDisplay);
         textView.setText(foodDisplay);
-        //String foodID = foodIDHelper(food, index);
         textView.setId(i);
         textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
         textView.setTextSize(SettingsFragment.fontSize);
@@ -93,6 +93,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         foodList.addView(textView);
+        listFoodList.add(textView);
     }
 
     /**
@@ -231,10 +232,12 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         confirmDeleteFood.setOnClickListener(v -> {
             //define delete button
             foodList.removeView(food);
-            int index = food.getId();
-            adapter.showDeletedFood(index);
+            int foodIndex = food.getId();
+            adapter.showDeletedFood(foodIndex);
+            updateFoodIndexes(foodIndex);
+            index = index - 1;
             dialog.dismiss();
-            Snackbar snackbar = Snackbar.make(view, "Food Deleted Successfully",
+            Snackbar snackbar = Snackbar.make(view,"Food Deleted Successfully",
                     BaseTransientBottomBar.LENGTH_SHORT);
             snackbar.show();
         });
@@ -242,5 +245,15 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             //define cancel button
             dialog.dismiss();
         });
+    }
+
+    private void updateFoodIndexes(int foodIndex) {
+        listFoodList.remove(foodIndex);
+        for (int i = foodIndex; i <= listFoodList.size(); i++){
+            TextView foodItem = listFoodList.get(i);
+            int currId = foodItem.getId();
+            int newId = currId - 1;
+            foodItem.setId(newId);
+        }
     }
 }
