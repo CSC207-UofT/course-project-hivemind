@@ -4,6 +4,7 @@ import controllers.FoodController;
 import controllers.RecipeController;
 import parsers.AndroidDataParser;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Adapter {
@@ -240,4 +241,14 @@ public class Adapter {
         presentableRecipeList.add(presentableRecipe);
     }
 
+    // check variable names
+    public boolean expiredFoodAdded(String year, String month, String day){
+        int day1 = Integer.parseInt(day);
+        int month1 = Integer.parseInt(month);
+        int year1 = Integer.parseInt(year);
+        LocalDate expiryDate = LocalDate.of(year1, month1, day1);
+
+        LocalDate today = LocalDate.now();
+        return today.isAfter(expiryDate);
+    }
 }

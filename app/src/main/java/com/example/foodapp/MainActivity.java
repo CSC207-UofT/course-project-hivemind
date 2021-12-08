@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         MainActivity.adapter.loadRecipes();
 
         setContentView(R.layout.activity_main);
-        showAlertDialogButtonClicked();
+        showExpiredFoodsAlert();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         }
         return true;
     }
-    public void showAlertDialogButtonClicked() {
+    public void showExpiredFoodsAlert() {
 
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

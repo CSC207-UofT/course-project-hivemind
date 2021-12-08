@@ -136,10 +136,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                             newfoodpopup_unit.getText().toString());
                     addToFoodList(foodList,labelList,index);
                     index ++;
-                    Snackbar snackbar = Snackbar.make(view, "Food Added Successfully",
-                            BaseTransientBottomBar.LENGTH_SHORT);
-                    snackbar.show();
-
                 }
                 else {
                     adapter.createFood(newfoodpopup_foodname.getText().toString(),
@@ -158,10 +154,12 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
                     + "/" + newfoodpopup_day.getText().toString());
                     addToFoodList(foodList,labelList,index);
                     index ++;
-                    Snackbar snackbar = Snackbar.make(view, "Food Added Successfully",
-                            BaseTransientBottomBar.LENGTH_SHORT);
-                    snackbar.show();
 
+                    //popup for adding an expired foods
+                    if (adapter.expiredFoodAdded(newfoodpopup_year.getText().toString(),
+                            newfoodpopup_month.getText().toString(), newfoodpopup_day.getText().toString())){
+                        showExpiredFoodAlertDialogButtonClicked();
+                    }
                 }
                 Snackbar snackbar = Snackbar.make(view, "Food Added Successfully",
                         BaseTransientBottomBar.LENGTH_SHORT);
@@ -169,16 +167,26 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
             }
             catch (Exception e) {
                 e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(view, "Food Add Failed",
+                Snackbar snackbar = Snackbar.make(view, "Food Add Failed. Please try again.",
                         BaseTransientBottomBar.LENGTH_SHORT);
                 snackbar.show();
             }
             dialog.dismiss();
         });
-
-
-
         newfoodpopup_cancel.setOnClickListener(v -> dialog.dismiss());
+    }
+
+
+    public void showExpiredFoodAlertDialogButtonClicked() {
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        builder.setTitle("Warning: Expired Food Added");
+        builder.setMessage("The food you just added is expired. Click on the food to delete it from your list.");
+        // add a button
+        builder.setPositiveButton("OK", null);
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
