@@ -10,7 +10,7 @@ public class Adapter {
 
     private final FoodController foodController = new FoodController();
     private final RecipeController recipeController = new RecipeController();
-    public final AndroidDataParser adp;
+    private final AndroidDataParser adp;
 
     public Adapter(Context context) {
         adp = new AndroidDataParser(context);
@@ -77,18 +77,15 @@ public class Adapter {
      * @param day the string of the day of expiry date
      * @param month the string of the month of the expiry date
      * @param year the string of the yea of the expiry date
-     * @return the created food in the form of [peas, 2, beans, 05/12/2021]
      * @throws IOException throws an exception when the food cannot be added
      */
-    public List<String> createFood(String name, String amount, String unit, String year,
+    public void createFood(String name, String amount, String unit, String year,
                                    String month, String day) throws IOException{
         ArrayList<String> food = new ArrayList<>( Arrays. asList(name, amount, unit, year, month, day));
         foodController.runFoodCreation(food);
         adp.writeFile(food.get(0) + ",," + food.get(1) + ",," + food.get(2) + ",," + food.get(3) +
                 ",," + food.get(4) + ",," + food.get(5), AndroidDataParser.FOOD_FILE);
 
-        return new ArrayList<>( Arrays. asList(name, amount + ' ' + unit,
-                "Expiry date: " + day + "/" + month + "/" + year));
     }
 
     /**
@@ -146,27 +143,14 @@ public class Adapter {
     }
 
     /**
-     * The method to get all recipes from the recipeRawArray
-     * @return recipeRawArray returns all the recipes in the database.
-     */
-    public List<List<String>> getAllRecipes() {
-        List<List<String>> presentableRecipeList = new ArrayList<>();
-        for(List<String> recipe : recipeController.recipeRawArray){
-            helper(presentableRecipeList, recipe);
-        }
-        return presentableRecipeList;
-    }
-
-    /**
      * Method to help create a recipe, from string inputs
      * ingredients input: potato 1bs 1 potato lbs 2
      * @param name string of the name of the recipe
      * @param ingredients string of the required ingredient amount and unit for the recipe
      * @param steps string for the instructions for cooking that recipe.
-     * @return createdRecipe the recipe added to the database in its string representation.
      * @throws IOException throws the exception when recipe fails to be created
      */
-    public List<String> createRecipe(String name, String ingredients, String steps) throws IOException{
+    public void createRecipe(String name, String ingredients, String steps) throws IOException{
         String[] ingrSplit = ingredients.split(" ");
         List<String> a1 = Arrays.asList(ingrSplit);
         ArrayList<String> a2 = new ArrayList<>(a1);
@@ -195,7 +179,6 @@ public class Adapter {
         //Adding the new Recipe to the database, in the format of name,,ingredients,,steps, where ingredients are in the
         // format of name,,amount,,unit,,(expiry date = [day,,month,,year] if applicable)
         adp.writeFile(name + ",," + s + ",," + steps, AndroidDataParser.RECIPE_FILE);
-        return new ArrayList<>(Arrays.asList(name, presentableIngredients, steps));
     }
 
     /**

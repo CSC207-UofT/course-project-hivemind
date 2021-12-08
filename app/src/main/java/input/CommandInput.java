@@ -1,9 +1,9 @@
 package input;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.*;
-import input.UserInput;
+import java.util.Scanner;
 
 import alerts.AlertExpiryStatus;
 import controllers.FoodController;
@@ -127,7 +127,7 @@ public class CommandInput {
      * A method to delete a specified Food Object from the inventory and fooddata
      */
     private static void deleteFoodHelper() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // fix this
         printAvailableFood();
         printDeleteFoodPrompt();
         int foodAmount = foodController.makeSpecifiedFoodList(scanner.nextLine());

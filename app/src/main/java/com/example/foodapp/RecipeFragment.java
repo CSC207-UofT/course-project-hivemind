@@ -21,11 +21,7 @@ import android.view.ViewGroup.LayoutParams;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     private View view;
@@ -33,10 +29,6 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     public RecipeFragment() {
         // Required empty public constructor
-    }
-
-    public static RecipeFragment newInstance() {
-        return new RecipeFragment();
     }
 
     @Override

@@ -29,10 +29,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
 
-    public static FoodFragment newInstance() {
-        return new FoodFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         this.adapter = MainActivity.adapter; // get the instance of the adapter from MainActivity, so that we use the same one
@@ -78,7 +74,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         String foodDisplay = foodStringHelper(food);
         System.out.println(foodDisplay);
         textView.setText(foodDisplay);
-        //String foodID = foodIDHelper(food, index);
         textView.setId(i);
         textView.setOnClickListener(v -> createDeleteFoodPopUp(foodList, v));
         textView.setTextSize(SettingsFragment.fontSize);
@@ -112,7 +107,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
         Dialog dialog = dialogBuilder.create();
         dialog.show();
 
-        assert newfoodpopup_day.getText().toString().equals(""); // ???
+        // assert newfoodpopup_day.getText().toString().equals("");
 
         LinearLayout foodList = view.findViewById(R.id.food_list);
 
@@ -179,11 +174,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         createNewFoodDialog();
-    }
-
-    // can we delete this?
-    private String foodIDHelper(ArrayList<String> food, int index) {
-        return food.get(0) + index;
     }
 
     /**

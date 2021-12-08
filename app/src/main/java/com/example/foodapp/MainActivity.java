@@ -1,12 +1,7 @@
 package com.example.foodapp;
 
-
 import adapters.Adapter;
-import android.content.Context;
-
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +9,6 @@ import android.os.Bundle;
 import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
-import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
