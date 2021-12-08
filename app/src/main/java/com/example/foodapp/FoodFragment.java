@@ -245,7 +245,7 @@ public class FoodFragment extends Fragment implements View.OnClickListener{
 
     private void updateFoodIndexes(int foodIndex) {
         listFoodList.remove(foodIndex);
-        for (int i = foodIndex; i <= listFoodList.size(); i++){
+        for (int i = foodIndex; i < listFoodList.size(); i++){
             TextView foodItem = listFoodList.get(i);
             int currId = foodItem.getId();
             int newId = currId - 1;
