@@ -67,16 +67,12 @@ public class SettingsFragment extends Fragment {
         textSettings = view.findViewById(R.id.settingsText);
         textSettings.setTextSize(35);
         seekbar = view.findViewById(R.id.seekbar);
-//        spinner = view.findViewById(R.id.numbers_spinner);
         fontExample = view.findViewById(R.id.fontExample);
         recipeText = view.findViewById(R.id.recipeText);
         recipeText.setTextSize(20);
-
         recipeBar = view.findViewById(R.id.seekbarRecipe);
-
         recipeBar.setMax(20);
         recipeBar.setMin(5);
-
         seekbar.setMax(42);
         seekbar.setMin(24);
         recipeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -94,7 +90,6 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -112,7 +107,6 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-
         seekbar.setProgress(fontSize);
         recipeBar.setProgress(recipeAmount);
         return view;
